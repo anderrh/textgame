@@ -1,0 +1,4587 @@
+{
+  "world": [
+    {
+      "id": 1,
+      "name": "Sinister Lane",
+      "description": "A narrow, grimy lane of sagging houses and leaning streetlamps. Crows sometimes perch on the wires. It connects Mr. Olivander’s dilapidated home to Judge Strausson’s tidy townhouse.",
+      "exits": {
+        "E": [
+          {
+            "to": 2,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "W": [
+          {
+            "to": 7,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "N": [
+          {
+            "to": 9,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "IN": [
+          {
+            "to": 3,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "name": "Mr. Olivander: Front Steps",
+      "description": "Cracked concrete steps with flaking paint and an eye symbol chalked on the stoop. The door hangs crooked on its hinges.",
+      "exits": {
+        "IN": [
+          {
+            "to": 3,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "W": [
+          {
+            "to": 1,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "name": "Mr. Olivander: Living Room",
+      "description": "A cluttered, dusty room used for ill-rehearsed theater productions; mismatched chairs, stained curtains, and the faint smell of cold soup.",
+      "exits": {
+        "W": [
+          {
+            "to": 4,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "U": [
+          {
+            "to": 5,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "OUT": [
+          {
+            "to": 1,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 2,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "name": "Mr. Olivander: Kitchen",
+      "description": "Greasy counters and a leaning icebox. Knives are dull, pots dented; children are expected to cook elaborate meals here.",
+      "exits": {
+        "S": [
+          {
+            "to": 6,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "E": [
+          {
+            "to": 3,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Dull Knife",
+          "find_difficulty": 2,
+          "notice": "Taking a moment to look around Mr. Olivander: Kitchen, you notice a Dull Knife where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Dented Pot",
+          "find_difficulty": 3,
+          "notice": "Taking a moment to look around Mr. Olivander: Kitchen, you notice a Dented Pot where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Greasy Apron",
+          "find_difficulty": 2,
+          "notice": "Taking a moment to look around Mr. Olivander: Kitchen, you notice a Greasy Apron where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "name": "Mr. Olivander: Tower",
+      "description": "A narrow, drafty tower with barred windows and a rope coil. It is more prison than bedroom.",
+      "exits": {
+        "D": [
+          {
+            "to": 3,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Coil of Rope",
+          "find_difficulty": 3,
+          "notice": "While adjusting to the light in Mr. Olivander: Tower, you spot a Coil of Rope hanging from a hook near the shadows.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Lighting conditions improve visibility."
+          }
+        },
+        {
+          "name": "Barred Window",
+          "find_difficulty": 4,
+          "notice": "Taking a moment to look around Mr. Olivander: Tower, you notice a Barred Window where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 4,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Old Curtain",
+          "find_difficulty": 3,
+          "notice": "Taking a moment to look around Mr. Olivander: Tower, you notice a Old Curtain where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "name": "Mr. Olivander: Backyard Garden",
+      "description": "A scraggly patch of weeds, broken statuary, and a rickety fence painted with a staring eye.",
+      "exits": {
+        "N": [
+          {
+            "to": 4,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "name": "Judge Strausson: Garden",
+      "description": "Neatly trimmed hedges, a cobblestone path, and a small arbor dripping with vines—an oasis beside the squalor next door.",
+      "exits": {
+        "IN": [
+          {
+            "to": 8,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "E": [
+          {
+            "to": 1,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "name": "Judge Strausson: Library",
+      "description": "Warm light on rows of well-loved books, a ladder on rails, and a cushioned reading window that smells faintly of tea.",
+      "exits": {
+        "OUT": [
+          {
+            "to": 7,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Law Book",
+          "find_difficulty": 3,
+          "notice": "Taking a moment to look around Judge Strausson: Library, you notice a Law Book where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Dictionary",
+          "find_difficulty": 3,
+          "notice": "Taking a moment to look around Judge Strausson: Library, you notice a Dictionary where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Rolling Ladder",
+          "find_difficulty": 4,
+          "notice": "Taking a moment to look around Judge Strausson: Library, you notice a Rolling Ladder where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 4,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        }
+      ],
+      "npcs": [
+        {
+          "name": "Judge Strausson",
+          "accepts": [
+            "Law Book",
+            "Case File"
+          ],
+          "dialogue": "Oh, my dears! Take any book, but mind the index.",
+          "gives": [
+            "Case File"
+          ],
+          "flavor": "She adjusts her glasses and smiles whenever you handle books gently.",
+          "reacts_to": {
+            "types": [
+              "paper.casefile",
+              "paper.law"
+            ],
+            "items": [
+              "Case File",
+              "Law Book"
+            ]
+          }
+        }
+      ],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "name": "City Street",
+      "description": "A busier avenue with shops with ‘IN’ and ‘OUT’ signs switching by the week; leads to apartments and public transit.",
+      "exits": {
+        "N": [
+          {
+            "to": 10,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 90,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "E": [
+          {
+            "to": 34,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 92,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "S": [
+          {
+            "to": 1,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "name": "Regional Rail Junction",
+      "description": "A soot-smudged platform web where many uncertain journeys begin; lines stretch toward towns, mountains, and the lake.",
+      "exits": {
+        "S": [
+          {
+            "to": 48,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 28,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 43,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 9,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 34,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "W": [
+          {
+            "to": 23,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "E": [
+          {
+            "to": 73,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "N": [
+          {
+            "to": 38,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 62,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "name": "Country Road",
+      "description": "A gravel road bordered by fields and the occasional heron. It connects the city to a warm, herpetological home.",
+      "exits": {
+        "S": [
+          {
+            "to": 12,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "E": [
+          {
+            "to": 90,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "name": "Dr. Montrose: Foyer",
+      "description": "Coat pegs, rubber boots by the door, and the comforting sense that science may yet be kind.",
+      "exits": {
+        "E": [
+          {
+            "to": 13,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "W": [
+          {
+            "to": 14,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "N": [
+          {
+            "to": 11,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [
+        {
+          "name": "Dr. Montgomery",
+          "accepts": [
+            "Field Notes",
+            "Specimen Jar"
+          ],
+          "dialogue": "Science is a lamp in a very dark room. Mind the snakes.",
+          "gives": [
+            "Field Notes"
+          ],
+          "flavor": "His eyes light up at proper fieldwork and labeled jars.",
+          "reacts_to": {
+            "types": [
+              "paper.notes",
+              "container.specimen"
+            ],
+            "items": [
+              "Field Notes",
+              "Specimen Jar"
+            ]
+          }
+        }
+      ],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "name": "Dr. Montrose: Reptile Room",
+      "description": "Steam-warm air hugs rows of terrariums: snakes slither, frogs blink, and specimen jars glint with labels in tidy handwriting.",
+      "exits": {
+        "W": [
+          {
+            "to": 12,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Specimen Jar",
+          "find_difficulty": 4,
+          "notice": "A chemical tang in Dr. Montrose: Reptile Room draws you to a shelf where a Specimen Jar sits half-concealed.",
+          "check": {
+            "skill": "search",
+            "dc": 4,
+            "advantage_if_types": [
+              "eyepro.chem",
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Chemical smell or labels can guide you."
+          }
+        },
+        {
+          "name": "Grabber Tool",
+          "find_difficulty": 2,
+          "notice": "Taking a moment to look around Dr. Montrose: Reptile Room, you notice a Grabber Tool where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Field Notes",
+          "find_difficulty": 4,
+          "notice": "Leafing through a stack of papers in Dr. Montrose: Reptile Room, you notice the edge of a Field Notes that doesn’t quite match the others.",
+          "check": {
+            "skill": "search",
+            "dc": 4,
+            "advantage_if_types": [
+              "paper.index",
+              "paper.catalog",
+              "paper.codebook",
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Sorting papers, checking spines and misfiled edges helps."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "name": "Dr. Montrose: Kitchen",
+      "description": "A bright kitchen with citrus in a bowl and a kettle that always seems about to sing.",
+      "exits": {
+        "S": [
+          {
+            "to": 15,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "E": [
+          {
+            "to": 12,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "name": "Dr. Montrose: Garden",
+      "description": "Stamped-earth paths around banana trees and netted pens where unusual lizards sun themselves.",
+      "exits": {
+        "N": [
+          {
+            "to": 14,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "name": "Clifftop Path",
+      "description": "Wind-shaved limestone steps with a railing that screams in a storm. The path ends in a house that clings to the cliff.",
+      "exits": {
+        "E": [
+          {
+            "to": 17,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "name": "Aunt Josephine (harbor (lakefront)): Living Room",
+      "description": "A room of lace doilies and forbidding notices about every imaginable hazard; windows rattle over the grey lake.",
+      "exits": {
+        "N": [
+          {
+            "to": 19,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "W": [
+          {
+            "to": 18,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 16,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "S": [
+          {
+            "to": 20,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "name": "Aunt Josephine (harbor (lakefront)): Kitchen",
+      "description": "Appliances unplugged and labeled DANGEROUS; the pantry bulges with cold tins of food.",
+      "exits": {
+        "E": [
+          {
+            "to": 17,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "name": "Aunt Josephine (harbor (lakefront)): Study",
+      "description": "Towering grammar texts, a desk with perfectly sharpened pencils, and a dictionary set like an altar.",
+      "exits": {
+        "S": [
+          {
+            "to": 17,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Grammar Text",
+          "find_difficulty": 2,
+          "notice": "Taking a moment to look around Aunt Josephine (harbor (lakefront)): Study, you notice a Grammar Text where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Fountain Pen",
+          "find_difficulty": 4,
+          "notice": "Taking a moment to look around Aunt Josephine (harbor (lakefront)): Study, you notice a Fountain Pen where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 4,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Dictionary",
+          "find_difficulty": 3,
+          "notice": "Taking a moment to look around Aunt Josephine (harbor (lakefront)): Study, you notice a Dictionary where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "name": "Aunt Josephine (harbor (lakefront)): Porch",
+      "description": "A precarious porch jutting above the whitecaps of Lake Lachrymose.",
+      "exits": {
+        "D": [
+          {
+            "to": 21,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "N": [
+          {
+            "to": 17,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "name": "Lake Lachrymose: lakeshore",
+      "description": "Pebbly, windblown lakeshore with bleached driftwood and ominous ‘NO SWIMMING (LEECHES)’ signs.",
+      "exits": {
+        "E": [
+          {
+            "to": 22,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "U": [
+          {
+            "to": 20,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "W": [
+          {
+            "to": 23,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Fishing Line",
+          "find_difficulty": 3,
+          "notice": "Taking a moment to look around Lake Lachrymose: lakeshore, you notice a Fishing Line where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Life Preserver",
+          "find_difficulty": 3,
+          "notice": "Taking a moment to look around Lake Lachrymose: lakeshore, you notice a Life Preserver where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 22,
+      "name": "Lake Lachrymose: Caves",
+      "description": "Damp limestone hollows smelling of salt and secrets. Echoes do not always return the truth.",
+      "exits": {
+        "W": [
+          {
+            "to": 21,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": true,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 23,
+      "name": "Coastal Road",
+      "description": "A road that follows the gnashing line of surf; it bears tire ruts, crow prints, and uneasy memories.",
+      "exits": {
+        "S": [
+          {
+            "to": 68,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "E": [
+          {
+            "to": 21,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 10,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "N": [
+          {
+            "to": 57,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 24,
+      "name": "Paltryville Road",
+      "description": "A long, splintered road lined with billboards for gum and eyewear, all slightly crooked.",
+      "exits": {
+        "S": [
+          {
+            "to": 25,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "E": [
+          {
+            "to": 90,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "name": "Lucky Smells: Mill Floor",
+      "description": "Sawdust fog, shrieking blades, and the whisper of stamped coupons instead of wages.",
+      "exits": {
+        "E": [
+          {
+            "to": 27,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "N": [
+          {
+            "to": 26,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 24,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Wood Shavings",
+          "find_difficulty": 3,
+          "notice": "Taking a moment to look around Lucky Smells: Mill Floor, you notice a Wood Shavings where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Coupon Book",
+          "find_difficulty": 4,
+          "notice": "Taking a moment to look around Lucky Smells: Mill Floor, you notice a Coupon Book where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 4,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 26,
+      "name": "Lucky Smells: Bunks",
+      "description": "Rows of sagging beds with a single dangling bulb and the smell of wood glue.",
+      "exits": {
+        "S": [
+          {
+            "to": 25,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 27,
+      "name": "Lucky Smells: Foreman Office",
+      "description": "Metal desk, clipboard of punishments, and a window no one can see out of.",
+      "exits": {
+        "W": [
+          {
+            "to": 25,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [
+        {
+          "name": "Foreman Flacutono",
+          "accepts": [
+            "Coupon Book"
+          ],
+          "dialogue": "Safety first. Productivity zeroth.",
+          "gives": [
+            "Coupon Book"
+          ]
+        }
+      ],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 28,
+      "name": "School Road",
+      "description": "A cracked sidewalk bordered by thorny hedges and a sign that says Beatrice was here, which is not strictly helpful.",
+      "exits": {
+        "S": [
+          {
+            "to": 29,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 90,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "N": [
+          {
+            "to": 10,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 29,
+      "name": "Prufrock: Entrance",
+      "description": "Stone archway with the school crest: a mismatched pair of glasses and a frown.",
+      "exits": {
+        "W": [
+          {
+            "to": 30,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "E": [
+          {
+            "to": 31,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "S": [
+          {
+            "to": 32,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "N": [
+          {
+            "to": 28,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 30,
+      "name": "Prufrock: Orphans’ Shack",
+      "description": "A leaning hut with fungus in the corners and crabs under the bed. It does not pass any inspection worth having.",
+      "exits": {
+        "E": [
+          {
+            "to": 29,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Fungus Sample",
+          "find_difficulty": 3,
+          "notice": "Taking a moment to look around Prufrock: Orphans’ Shack, you notice a Fungus Sample where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Broken Broom",
+          "find_difficulty": 3,
+          "notice": "Taking a moment to look around Prufrock: Orphans’ Shack, you notice a Broken Broom where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 31,
+      "name": "Prufrock: Library",
+      "description": "Almost empty stacks, a shrieking librarian, and three books actually worth reading if you can find them.",
+      "exits": {
+        "S": [
+          {
+            "to": 33,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "W": [
+          {
+            "to": 29,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 32,
+      "name": "Prufrock: Cafeteria",
+      "description": "Grey porridge in grey bowls on grey trays. The cutlery is loud enough to be cruel.",
+      "exits": {
+        "N": [
+          {
+            "to": 29,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 33,
+      "name": "Prufrock: Vice Principal Office",
+      "description": "Nero’s violins are everywhere; detentions are posted like recital programs.",
+      "exits": {
+        "N": [
+          {
+            "to": 31,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [
+        {
+          "name": "Vice Principal Nero",
+          "accepts": [
+            "Violin"
+          ]
+        }
+      ],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 34,
+      "name": "City Avenue of In/Out",
+      "description": "A fashionable boulevard where citizens adopt trends before understanding them.",
+      "exits": {
+        "S": [
+          {
+            "to": 35,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "N": [
+          {
+            "to": 10,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "W": [
+          {
+            "to": 9,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 35,
+      "name": "Squalor: Lobby",
+      "description": "A cavernous lobby with ‘IN’ art installations and a concierge who takes messages but never delivers them.",
+      "exits": {
+        "U": [
+          {
+            "to": 37,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "D": [
+          {
+            "to": 36,
+            "requires": [
+              "climbing-gear"
+            ],
+            "blocked_text": "Something unseen prevents passage."
+          }
+        ],
+        "N": [
+          {
+            "to": 34,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Face Shield (Spare)",
+          "find_difficulty": 2,
+          "notice": "You notice a Face Shield (Spare) tucked where anyone might find it.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        },
+        {
+          "name": "Spare Rope",
+          "find_difficulty": 2,
+          "notice": "A bellhop’s cart carries a neatly coiled rope.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 36,
+      "name": "Squalor: Elevator Shaft",
+      "description": "A dark, empty void where elevators used to be. Cables hang like spider silk.",
+      "exits": {
+        "U": [
+          {
+            "to": 35,
+            "requires": [
+              "climbing-gear"
+            ],
+            "blocked_text": "Something unseen prevents passage."
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": true,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 37,
+      "name": "Squalor: Jerome & Esmé Apartment",
+      "description": "Sprawling rooms full of ‘in’ items arranged impractically; windows look out onto rumors.",
+      "exits": {
+        "D": [
+          {
+            "to": 35,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "In-Style Magazine",
+          "find_difficulty": 3,
+          "notice": "Taking a moment to look around Squalor: Jerome & Esmé Apartment, you notice a In-Style Magazine where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Needlessly Long Cigarette Holder",
+          "find_difficulty": 2,
+          "notice": "Taking a moment to look around Squalor: Jerome & Esmé Apartment, you notice a Needlessly Long Cigarette Holder where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        }
+      ],
+      "npcs": [
+        {
+          "name": "Esmé Squalor",
+          "accepts": [
+            "In-Style Magazine",
+            "Rare Accessory"
+          ],
+          "flavor": "Fashion first, meaning later.",
+          "reacts_to": {
+            "items": [
+              "In-Style Magazine",
+              "Rare Accessory"
+            ]
+          }
+        }
+      ],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 38,
+      "name": "Crow Road",
+      "description": "A road white with droppings at dawn when the crows lift, and black with birds at dusk when they return.",
+      "exits": {
+        "W": [
+          {
+            "to": 39,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "S": [
+          {
+            "to": 10,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 39,
+      "name": "VFD Village: Town Square",
+      "description": "Rule plaques on every post; a fountain surrounded by cawing spectators.",
+      "exits": {
+        "N": [
+          {
+            "to": 40,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "S": [
+          {
+            "to": 41,
+            "requires": [
+              "warrant"
+            ],
+            "blocked_text": "Something unseen prevents passage."
+          }
+        ],
+        "E": [
+          {
+            "to": 38,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "W": [
+          {
+            "to": 42,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Temporary Work Permit",
+          "find_difficulty": 2,
+          "notice": "You notice a Temporary Work Permit tucked where anyone might find it.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        },
+        {
+          "name": "Temporary Work Permit",
+          "find_difficulty": 2,
+          "notice": "A notice board has a Temporary Work Permit tucked under a thumbtack.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        }
+      ],
+      "npcs": [
+        {
+          "name": "Hector",
+          "accepts": [
+            "Balloon Kit",
+            "Blueprints"
+          ],
+          "dialogue": "One day the balloons will lift us above all this noise.",
+          "gives": [
+            "Balloon Kit"
+          ],
+          "flavor": "He stares at the sky as if it might finally lift him away.",
+          "reacts_to": {
+            "types": [
+              "kit.balloon"
+            ],
+            "items": [
+              "Balloon Kit"
+            ]
+          }
+        }
+      ],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 40,
+      "name": "VFD Village: Council Hall",
+      "description": "Long benches, stern portraits, and a bell that rings more often than it is needed.",
+      "exits": {
+        "S": [
+          {
+            "to": 39,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Gavel",
+          "find_difficulty": 4,
+          "notice": "A scuffed dais in VFD Village: Council Hall reveals a neglected Gavel beneath the bench.",
+          "check": {
+            "skill": "search",
+            "dc": 4,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Rulebook",
+          "find_difficulty": 4,
+          "notice": "A scuffed dais in VFD Village: Council Hall reveals a neglected Rulebook beneath the bench.",
+          "check": {
+            "skill": "search",
+            "dc": 4,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 41,
+      "name": "VFD Village: Jailhouse",
+      "description": "Iron bars and a key that is always missing when justice is required.",
+      "exits": {
+        "N": [
+          {
+            "to": 39,
+            "requires": [
+              "warrant"
+            ],
+            "blocked_text": "Something unseen prevents passage."
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Rusty Bars",
+          "find_difficulty": 3,
+          "notice": "Taking a moment to look around VFD Village: Jailhouse, you notice a Rusty Bars where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Cotteny Blanket",
+          "find_difficulty": 3,
+          "notice": "Taking a moment to look around VFD Village: Jailhouse, you notice a Cotteny Blanket where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 42,
+      "name": "VFD Village: Hector’s House",
+      "description": "A tinkerer’s paradise of balloons, contraptions, and blueprints for impossible freedom.",
+      "exits": {
+        "E": [
+          {
+            "to": 39,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 43,
+      "name": "Hospital Drive",
+      "description": "A bleak driveway edged with dying hedges and optimistic signage.",
+      "exits": {
+        "E": [
+          {
+            "to": 44,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "N": [
+          {
+            "to": 10,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 44,
+      "name": "Heimlich: Lobby",
+      "description": "Flickering fluorescents and pamphlets that cure nothing.",
+      "exits": {
+        "N": [
+          {
+            "to": 45,
+            "requires": [
+              "access-pass"
+            ],
+            "blocked_text": "Something unseen prevents passage."
+          }
+        ],
+        "S": [
+          {
+            "to": 46,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "U": [
+          {
+            "to": 47,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "W": [
+          {
+            "to": 43,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Visitor Badge",
+          "find_difficulty": 2,
+          "notice": "A plastic Visitor Badge sits in a tray near the desk.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        }
+      ],
+      "npcs": [
+        {
+          "name": "Bursar",
+          "accepts": [
+            "Patient File"
+          ],
+          "flavor": "One stamp in the wrong place and it’s the end of the world.",
+          "reacts_to": {
+            "types": [
+              "paper.patient"
+            ],
+            "items": [
+              "Patient File"
+            ]
+          }
+        }
+      ],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 45,
+      "name": "Heimlich: Records Library",
+      "description": "Dust and index cards; the truth is filed under letters no one checks.",
+      "exits": {
+        "S": [
+          {
+            "to": 44,
+            "requires": [
+              "access-pass"
+            ],
+            "blocked_text": "Something unseen prevents passage."
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Index Card",
+          "find_difficulty": 7,
+          "notice": "Leafing through a stack of papers in Heimlich: Records Library, you notice the edge of a Index Card that doesn’t quite match the others.",
+          "check": {
+            "skill": "search",
+            "dc": 7,
+            "advantage_if_types": [
+              "paper.index",
+              "paper.catalog",
+              "paper.codebook",
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Sorting papers, checking spines and misfiled edges helps."
+          }
+        },
+        {
+          "name": "Patient File",
+          "find_difficulty": 4,
+          "notice": "Leafing through a stack of papers in Heimlich: Records Library, you notice the edge of a Patient File that doesn’t quite match the others.",
+          "check": {
+            "skill": "search",
+            "dc": 4,
+            "advantage_if_types": [
+              "paper.index",
+              "paper.catalog",
+              "paper.codebook",
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Sorting papers, checking spines and misfiled edges helps."
+          }
+        },
+        {
+          "name": "Employee Badge",
+          "find_difficulty": 2,
+          "notice": "Taking a moment to look around Heimlich: Records Library, you notice a Employee Badge where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Maintenance Badge",
+          "find_difficulty": 2,
+          "notice": "You notice a Maintenance Badge tucked where anyone might find it.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": true,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 46,
+      "name": "Heimlich: Operating Theater",
+      "description": "Sharp lights, sharper tools, and a curtain people hide behind when they ought to leave.",
+      "exits": {
+        "N": [
+          {
+            "to": 44,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 47,
+      "name": "Heimlich: Rooftop",
+      "description": "Gravel, exhaust vents, and a long way down.",
+      "exits": {
+        "D": [
+          {
+            "to": 44,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 48,
+      "name": "Desert Road",
+      "description": "A ribbon of dust leading to a carnival that pretends to be cheerful and mountains that do not pretend at all.",
+      "exits": {
+        "W": [
+          {
+            "to": 49,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "N": [
+          {
+            "to": 52,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 10,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 49,
+      "name": "Caligari: Big Top",
+      "description": "A tent of faded stripes and forced applause.",
+      "exits": {
+        "N": [
+          {
+            "to": 50,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "E": [
+          {
+            "to": 51,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 48,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 50,
+      "name": "Caligari: House of Freaks",
+      "description": "A drafty side tent where kindness is an act and cruelty is the audience.",
+      "exits": {
+        "S": [
+          {
+            "to": 49,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 51,
+      "name": "Caligari: Fortune Teller Tent",
+      "description": "Madame Lulu’s perfumed drapery and a crystal ball that knows only what it is told.",
+      "exits": {
+        "W": [
+          {
+            "to": 49,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Tarot Card",
+          "find_difficulty": 3,
+          "notice": "Taking a moment to look around Caligari: Fortune Teller Tent, you notice a Tarot Card where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Ticket Stub",
+          "find_difficulty": 2,
+          "notice": "Taking a moment to look around Caligari: Fortune Teller Tent, you notice a Ticket Stub where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Donation Box",
+          "find_difficulty": 5,
+          "notice": "Your foot bumps something solid in Caligari: Fortune Teller Tent; dust puffs up around a Donation Box hidden behind crates.",
+          "check": {
+            "skill": "search",
+            "dc": 5,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Look behind crates and under furniture."
+          }
+        }
+      ],
+      "npcs": [
+        {
+          "name": "Madame Lulu",
+          "accepts": [
+            "Donation Box",
+            "Information Scrap"
+          ],
+          "dialogue": "People ask me many questions. I answer the ones they pay for.",
+          "gives": [
+            "Information Scrap"
+          ],
+          "flavor": "Perfumed air and a pointed look suggest donations are appreciated.",
+          "reacts_to": {
+            "items": [
+              "Donation Box",
+              "Ticket Stub"
+            ]
+          }
+        }
+      ],
+      "darkness": {
+        "is_dark": true,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 52,
+      "name": "Mountain Road",
+      "description": "A switchback track littered with snowshoe prints and splinters of sleds.",
+      "exits": {
+        "N": [
+          {
+            "to": 53,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "S": [
+          {
+            "to": 48,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 53,
+      "name": "Mortmain: Mountain Path",
+      "description": "Ice-glazed ledges, rope bridges, and signs eaten by goats.",
+      "exits": {
+        "E": [
+          {
+            "to": 54,
+            "requires": [
+              "light.source"
+            ],
+            "blocked_text": "Beyond this point is pitch-dark; without a reliable light source, moving forward would be reckless."
+          }
+        ],
+        "U": [
+          {
+            "to": 56,
+            "requires": [
+              "climbing-gear",
+              "cold-gear"
+            ],
+            "blocked_text": "Something unseen prevents passage."
+          }
+        ],
+        "S": [
+          {
+            "to": 52,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Climbing Rope",
+          "find_difficulty": 2,
+          "notice": "A scuff mark on the floor of Mortmain: Mountain Path leads your eyes to the Climbing Rope propped against the wall.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Snow Goggles",
+          "find_difficulty": 1,
+          "notice": "A scuff mark on the floor of Mortmain: Mountain Path leads your eyes to the Snow face shield propped against the wall.",
+          "check": {
+            "skill": "search",
+            "dc": 1,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Rope Coil",
+          "find_difficulty": 2,
+          "notice": "You notice a Rope Coil tucked where anyone might find it.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        },
+        {
+          "name": "Headlamp",
+          "find_difficulty": 2,
+          "notice": "A battered Headlamp hangs from a trail marker.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 54,
+      "name": "Clustered Pines",
+      "description": "Trees clustered so tight they gossip in scrapes; headlamp light barely fits between trunks.",
+      "exits": {
+        "N": [
+          {
+            "to": 55,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "W": [
+          {
+            "to": 53,
+            "requires": [
+              "light-source"
+            ],
+            "blocked_text": "Something unseen prevents passage."
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Lantern",
+          "find_difficulty": 3,
+          "notice": "While adjusting to the light in Clustered Pines, you spot a headlamp hanging from a hook near the shadows.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Lighting conditions improve visibility."
+          }
+        },
+        {
+          "name": "Oil Flask",
+          "find_difficulty": 3,
+          "notice": "While adjusting to the light in Clustered Pines, you spot a Oil Flask hanging from a hook near the shadows.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Lighting conditions improve visibility."
+          }
+        },
+        {
+          "name": "Rust Seal",
+          "find_difficulty": 6,
+          "notice": "Hidden in a hollow trunk, a carved seal pulses faintly with old V.F.D. marks.",
+          "check": {
+            "skill": "search",
+            "dc": 6,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Well-concealed; thorough search required."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": true,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 55,
+      "name": "Snow Scouts: Camp",
+      "description": "Neat rows of tents with badges for nearly everything but bravery.",
+      "exits": {
+        "S": [
+          {
+            "to": 54,
+            "requires": [
+              "light.source"
+            ],
+            "blocked_text": "Beyond this point is pitch-dark; without a reliable light source, moving forward would be reckless."
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Headlamp",
+          "find_difficulty": 2,
+          "notice": "A battered Headlamp hangs from a trail marker, just before the dark stretch ahead.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        }
+      ],
+      "npcs": [
+        {
+          "name": "Carmelita Spats",
+          "accepts": [
+            "Snacks",
+            "Badge"
+          ]
+        }
+      ],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 56,
+      "name": "Mount Fraught: Vantage",
+      "description": "A ledge that sees too much: valleys of smoke, eagles, and misfortune.",
+      "exits": {
+        "D": [
+          {
+            "to": 53,
+            "requires": [
+              "climbing-gear",
+              "cold-gear"
+            ],
+            "blocked_text": "Something unseen prevents passage."
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 57,
+      "name": "Stricken Stream: Dock",
+      "description": "A wavering pier over waters that look clean and aren’t.",
+      "exits": {
+        "D": [
+          {
+            "to": 58,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "S": [
+          {
+            "to": 23,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 58,
+      "name": "Queequeg: Control Room",
+      "description": "Periscopes, valves, and a logbook of disasters narrowly avoided.",
+      "exits": {
+        "S": [
+          {
+            "to": 59,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "W": [
+          {
+            "to": 60,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "E": [
+          {
+            "to": 61,
+            "requires": [
+              "underwater-gear"
+            ],
+            "blocked_text": "Something unseen prevents passage."
+          }
+        ],
+        "U": [
+          {
+            "to": 57,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Safety Hardhat",
+          "find_difficulty": 2,
+          "notice": "A scuff mark on the floor of Queequeg: Control Room leads your eyes to the Safety Hardhat propped against the wall.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Compressed Air Tank",
+          "find_difficulty": 1,
+          "notice": "A scuff mark on the floor of Queequeg: Control Room leads your eyes to the Compressed Air Tank propped against the wall.",
+          "check": {
+            "skill": "search",
+            "dc": 1,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Logbook",
+          "find_difficulty": 4,
+          "notice": "Taking a moment to look around Queequeg: Control Room, you notice a Logbook where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 4,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Old Safety Hardhat",
+          "find_difficulty": 2,
+          "notice": "You notice a Old Safety Hardhat tucked where anyone might find it.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        },
+        {
+          "name": "Compressed Air Tank",
+          "find_difficulty": 2,
+          "notice": "You notice a Compressed Air Tank tucked where anyone might find it.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": true,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 59,
+      "name": "Queequeg: Galley",
+      "description": "A tiny kitchen where soup sloshes with each turn of the propeller.",
+      "exits": {
+        "N": [
+          {
+            "to": 58,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": true,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 60,
+      "name": "Queequeg: Bunks",
+      "description": "Narrow bunks that insist on dreams about drowning.",
+      "exits": {
+        "E": [
+          {
+            "to": 58,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": true,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 61,
+      "name": "Gorgonian sump",
+      "description": "An underwater cave whose spores do not accept apologies.",
+      "exits": {
+        "W": [
+          {
+            "to": 58,
+            "requires": [
+              "underwater-gear"
+            ],
+            "blocked_text": "Something unseen prevents passage."
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Medusoid Mycelium",
+          "find_difficulty": 3,
+          "notice": "Taking a moment to look around Gorgonian sump, you notice a Medusoid Mycelium where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": true,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 62,
+      "name": "Hotel: Drive",
+      "description": "A sweeping drive that reflects the building twice—once in the puddles and once in your doubts.",
+      "exits": {
+        "E": [
+          {
+            "to": 63,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "S": [
+          {
+            "to": 10,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 63,
+      "name": "Hotel: Lobby",
+      "description": "Mirrored walls, mirrored guests, and mirrored intentions.",
+      "exits": {
+        "D": [
+          {
+            "to": 64,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 67,
+            "requires": [
+              "key-lowsec"
+            ],
+            "blocked_text": "Something unseen prevents passage."
+          }
+        ],
+        "E": [
+          {
+            "to": 65,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "U": [
+          {
+            "to": 66,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "W": [
+          {
+            "to": 62,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Lantern",
+          "find_difficulty": 2,
+          "notice": "You notice a headlamp tucked where anyone might find it.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        },
+        {
+          "name": "Master Key (Spare)",
+          "find_difficulty": 2,
+          "notice": "A brass key on a worn tag reads MASTER.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 64,
+      "name": "Hotel: Laundry",
+      "description": "Hot, damp air and sheets that try to hide messages.",
+      "exits": {
+        "U": [
+          {
+            "to": 63,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 65,
+      "name": "Hotel: Sauna",
+      "description": "Steam thick enough to swallow secrets whole.",
+      "exits": {
+        "W": [
+          {
+            "to": 63,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 66,
+      "name": "Hotel: Rooftop",
+      "description": "Sun loungers, signaling flags, and a view of fires yet to start.",
+      "exits": {
+        "D": [
+          {
+            "to": 63,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 67,
+      "name": "Hotel: Basement Library",
+      "description": "An index by water and a catalog by courage.",
+      "exits": {
+        "U": [
+          {
+            "to": 63,
+            "requires": [
+              "key-lowsec"
+            ],
+            "blocked_text": "Something unseen prevents passage."
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Index Drawer Key",
+          "find_difficulty": 10,
+          "notice": "As you test a loose drawer in Hotel: Basement Library, a glint catches your eye—the Index Drawer Key wedged beneath the track.",
+          "check": {
+            "skill": "search",
+            "dc": 10,
+            "advantage_if_types": [
+              "paper.index",
+              "paper.catalog",
+              "paper.codebook",
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Listen and feel for hidden catches and false bottoms."
+          }
+        },
+        {
+          "name": "Catalog Map",
+          "find_difficulty": 4,
+          "notice": "Leafing through a stack of papers in Hotel: Basement Library, you notice the edge of a Catalog Map that doesn’t quite match the others.",
+          "check": {
+            "skill": "search",
+            "dc": 4,
+            "advantage_if_types": [
+              "paper.index",
+              "paper.catalog",
+              "paper.codebook",
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Sorting papers, checking spines and misfiled edges helps."
+          }
+        }
+      ],
+      "npcs": [
+        {
+          "name": "Dewey Denouement",
+          "accepts": [
+            "Index Card",
+            "Catalog Map"
+          ],
+          "dialogue": "The catalog is a living thing. Treat it kindly.",
+          "gives": [
+            "Catalog Map"
+          ],
+          "flavor": "He relaxes when you keep your voice down and your citations up.",
+          "reacts_to": {
+            "types": [
+              "paper.index",
+              "paper.catalog"
+            ],
+            "items": [
+              "Index Card",
+              "Catalog Map"
+            ]
+          }
+        }
+      ],
+      "darkness": {
+        "is_dark": true,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 68,
+      "name": "lake Route",
+      "description": "A treacherous span of open water plied by dinghies and dubious moral lessons.",
+      "exits": {
+        "S": [
+          {
+            "to": 69,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "N": [
+          {
+            "to": 23,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 69,
+      "name": "Island: lakeshore",
+      "description": "White sand, pale sun, and the squeak of sandals avoiding responsibility.",
+      "exits": {
+        "W": [
+          {
+            "to": 70,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "E": [
+          {
+            "to": 72,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "N": [
+          {
+            "to": 68,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 70,
+      "name": "Island: Colony Tent",
+      "description": "A communal tent where decisions are made by the loudest cough.",
+      "exits": {
+        "S": [
+          {
+            "to": 71,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "E": [
+          {
+            "to": 69,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 71,
+      "name": "Island: Ishmael’s Hut",
+      "description": "A clay chair, a robe, and the soft authority of someone who says ‘we don’t do that here’.",
+      "exits": {
+        "N": [
+          {
+            "to": 70,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 72,
+      "name": "Island: Orchard",
+      "description": "Twisted trees heavy with apples that cure and cause in equal measure.",
+      "exits": {
+        "W": [
+          {
+            "to": 69,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 73,
+      "name": "Rust Junction Station",
+      "description": "A forlorn platform where trains pause out of habit more than schedule.",
+      "exits": {
+        "S": [
+          {
+            "to": 74,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "W": [
+          {
+            "to": 10,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 74,
+      "name": "Foundry Row (Rust)",
+      "description": "Shuttered storefronts, creaking signs, and the smell of ink even where ink should not be.",
+      "exits": {
+        "E": [
+          {
+            "to": 75,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 79,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 78,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 100,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "S": [
+          {
+            "to": 77,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 84,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 85,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 88,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "W": [
+          {
+            "to": 86,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "N": [
+          {
+            "to": 87,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 80,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 81,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 73,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 75,
+      "name": "The Iron Arms: Lobby",
+      "description": "A crumbling foyer with a guestbook that contains more rumors than names.",
+      "exits": {
+        "U": [
+          {
+            "to": 76,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "W": [
+          {
+            "to": 74,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Attic Key",
+          "find_difficulty": 6,
+          "notice": "As you test a loose drawer in The Iron Arms: Lobby, a glint catches your eye—the Attic Key wedged beneath the track.",
+          "check": {
+            "skill": "search",
+            "dc": 6,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Listen and feel for hidden catches and false bottoms."
+          }
+        },
+        {
+          "name": "Spare Locker Key",
+          "find_difficulty": 2,
+          "notice": "You notice a Spare Locker Key tucked where anyone might find it.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        },
+        {
+          "name": "Oil Flask",
+          "find_difficulty": 2,
+          "notice": "You notice a Oil Flask tucked where anyone might find it.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 76,
+      "name": "The Iron Arms: Room",
+      "description": "Peeling wallpaper, creaky bed, suitcase on a chair, hope on the floor.",
+      "exits": {
+        "D": [
+          {
+            "to": 75,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 77,
+      "name": "Copper Mug Café",
+      "description": "Clinking cups, a scratched counter, and conversations that dodge the truth.",
+      "exits": {
+        "U": [
+          {
+            "to": 91,
+            "requires": [
+              "key-lowsec"
+            ],
+            "blocked_text": "Something unseen prevents passage."
+          },
+          {
+            "to": 91,
+            "requires": [
+              "mechanism.button"
+            ],
+            "blocked_text": "A small panel awaits a Silver Access Button press—it clicks invitingly."
+          }
+        ],
+        "N": [
+          {
+            "to": 74,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "To-Go Mug",
+          "find_difficulty": 3,
+          "notice": "The smell in Copper Mug Café is unmistakable—you trace it to a To-Go Mug set just out of sight.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Receipt Book",
+          "find_difficulty": 3,
+          "notice": "Leafing through a stack of papers in Copper Mug Café, you notice the edge of a Receipt Book that doesn’t quite match the others.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "paper.index",
+              "paper.catalog",
+              "paper.codebook",
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Sorting papers, checking spines and misfiled edges helps."
+          }
+        },
+        {
+          "name": "Silver Access Button",
+          "find_difficulty": 2,
+          "notice": "A nickel-sized Silver Access Button is tucked beneath the counter lip.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        }
+      ],
+      "npcs": [
+        {
+          "name": "Jake Hix",
+          "accepts": [
+            "Fresh Brew"
+          ],
+          "dialogue": "Refills for friends and detectives.",
+          "gives": [
+            "Receipt Book"
+          ]
+        }
+      ],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 78,
+      "name": "Rust Refinery: Factory Floor",
+      "description": "Vats the size of secrets and catwalks that never quite meet in the middle.",
+      "exits": {
+        "W": [
+          {
+            "to": 74,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Grease Canister",
+          "find_difficulty": 3,
+          "notice": "A chemical tang in Rust Refinery: Factory Floor draws you to a shelf where a Grease Canister sits half-concealed.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "eyepro.chem",
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Chemical smell or labels can guide you."
+          }
+        },
+        {
+          "name": "Safety Goggles",
+          "find_difficulty": 2,
+          "notice": "A scuff mark on the floor of Rust Refinery: Factory Floor leads your eyes to the Safety face shield propped against the wall.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 79,
+      "name": "Company Clinic: Ward",
+      "description": "Quiet halls where prescriptions are written in code.",
+      "exits": {
+        "W": [
+          {
+            "to": 74,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 80,
+      "name": "Copperview Children’s Home",
+      "description": "An orphanage that prefers order to children.",
+      "exits": {
+        "S": [
+          {
+            "to": 74,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 81,
+      "name": "Brassgate Manor: Ballroom",
+      "description": "A grand room gone threadbare, chandelier crystals missing like extracted teeth.",
+      "exits": {
+        "N": [
+          {
+            "to": 82,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "S": [
+          {
+            "to": 74,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 82,
+      "name": "Brassgate Manor: Study",
+      "description": "Curtains drawn, ledgers locked, and the sense that a statue is always missing.",
+      "exits": {
+        "D": [
+          {
+            "to": 83,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "S": [
+          {
+            "to": 81,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Missing Ledger Slot",
+          "find_difficulty": 8,
+          "notice": "Leafing through a stack of papers in Brassgate Manor: Study, you notice the edge of a Missing logbook Slot that doesn’t quite match the others.",
+          "check": {
+            "skill": "search",
+            "dc": 8,
+            "advantage_if_types": [
+              "paper.index",
+              "paper.catalog",
+              "paper.codebook",
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Sorting papers, checking spines and misfiled edges helps."
+          }
+        },
+        {
+          "name": "Sealed Envelope",
+          "find_difficulty": 3,
+          "notice": "Taking a moment to look around Brassgate Manor: Study, you notice a Sealed Envelope where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 83,
+      "name": "Brassgate Manor: Cellar",
+      "description": "Damp steps, crates, and a draft that smells like the lake that left.",
+      "exits": {
+        "U": [
+          {
+            "to": 82,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": true,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 84,
+      "name": "Rust Public Library",
+      "description": "Stacks tied with string and a circulation desk that survived three collapses.",
+      "exits": {
+        "N": [
+          {
+            "to": 74,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Maintenance Manual",
+          "find_difficulty": 3,
+          "notice": "Leafing through a stack of papers in Rust Public Library, you notice the edge of a Maintenance Manual that doesn’t quite match the others.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "paper.index",
+              "paper.catalog",
+              "paper.codebook",
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Sorting papers, checking spines and misfiled edges helps."
+          }
+        },
+        {
+          "name": "Ciphered Message",
+          "find_difficulty": 7,
+          "notice": "Taking a moment to look around Rust Public Library, you notice a Ciphered Message where the dust doesn’t settle quite right.",
+          "check": {
+            "skill": "search",
+            "dc": 7,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 85,
+      "name": "Industrial Heritage Museum",
+      "description": "Display cases of curiosities culminating in a plinth that remembers the Bombinating Beast.",
+      "exits": {
+        "N": [
+          {
+            "to": 74,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Foundry Plinth",
+          "find_difficulty": 3,
+          "notice": "The emptiness of a display in Industrial Heritage Museum betrays a Foundry Plinth with scratched corners.",
+          "check": {
+            "skill": "search",
+            "dc": 3,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Display Key",
+          "find_difficulty": 8,
+          "notice": "As you test a loose drawer in Industrial Heritage Museum, a glint catches your eye—the Display Key wedged beneath the track.",
+          "check": {
+            "skill": "search",
+            "dc": 8,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Listen and feel for hidden catches and false bottoms."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 86,
+      "name": "Rust Constabulary",
+      "description": "A desk, a whistle, and a handbook of errors.",
+      "exits": {
+        "E": [
+          {
+            "to": 74,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [
+        {
+          "name": "Constable Pair",
+          "accepts": [
+            "Evidence Folder"
+          ],
+          "dialogue": "Paperwork first, justice later. Usually much later.",
+          "gives": [
+            "Arrest Writ"
+          ],
+          "flavor": "They trust paperwork and nothing else—especially not you.",
+          "reacts_to": {
+            "types": [
+              "paper.evidence",
+              "permit.jail_access"
+            ],
+            "items": [
+              "Evidence Folder",
+              "Official Notice"
+            ]
+          }
+        }
+      ],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 87,
+      "name": "Rust Stationers",
+      "description": "A stationery shop selling the tools of truth and excellent lies.",
+      "exits": {
+        "S": [
+          {
+            "to": 74,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 88,
+      "name": "Abandoned Quarry Pit",
+      "description": "The drained lakebed—a cracked plain of salt and ropes, where boats sit like fossils.",
+      "exits": {
+        "S": [
+          {
+            "to": 89,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "N": [
+          {
+            "to": 74,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 89,
+      "name": "Ore Tramline",
+      "description": "A winding footpath of boards and ropes crossing the Maw to the far edges of town.",
+      "exits": {
+        "N": [
+          {
+            "to": 88,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "E": [
+          {
+            "to": 97,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 90,
+      "name": "Unmarked Coach Road",
+      "description": "Rutted earth road used by theatrical troupes and worse, threading between distant towns.",
+      "exits": {
+        "S": [
+          {
+            "to": 9,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "W": [
+          {
+            "to": 24,
+            "requires": [],
+            "blocked_text": ""
+          },
+          {
+            "to": 11,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "N": [
+          {
+            "to": 28,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 91,
+      "name": "Copper Mug Café: Attic",
+      "description": "A low, dust-sweet space of rafters, burlap coffee sacks, and a dormer window overlooking the shale flats. Hidden ledgers are known to slip between floorboards.",
+      "items": [
+        {
+          "name": "Bag of House Roast",
+          "find_difficulty": 2,
+          "notice": "The smell in Copper Mug Café: Attic is unmistakable—you trace it to a Bag of House Roast set just out of sight.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Careful searching might reveal it."
+          }
+        },
+        {
+          "name": "Shift Logbook",
+          "find_difficulty": 6,
+          "notice": "Leafing through a stack of papers in Copper Mug Café: Attic, you notice the edge of a Shift Logbook that doesn’t quite match the others.",
+          "check": {
+            "skill": "search",
+            "dc": 6,
+            "advantage_if_types": [
+              "paper.index",
+              "paper.catalog",
+              "paper.codebook",
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Sorting papers, checking spines and misfiled edges helps."
+          }
+        },
+        {
+          "name": "Dusty Trunk",
+          "find_difficulty": 5,
+          "notice": "Your foot bumps something solid in Copper Mug Café: Attic; dust puffs up around a Dusty Trunk hidden behind crates.",
+          "check": {
+            "skill": "search",
+            "dc": 5,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Look behind crates and under furniture."
+          }
+        },
+        {
+          "name": "Logbook Page",
+          "find_difficulty": 2,
+          "notice": "You notice a Logbook Page tucked where anyone might find it.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        }
+      ],
+      "npcs": [
+        {
+          "name": "Ellington Feint",
+          "accepts": [
+            "Shift Logbook",
+            "Ciphered Message"
+          ],
+          "dialogue": "Secrets stain worse than ink. Do you have what I asked for?",
+          "gives": [
+            "Ciphered Message"
+          ],
+          "flavor": "A raised eyebrow says she already knows your secrets; she just wants proof.",
+          "reacts_to": {
+            "types": [
+              "paper.ledger",
+              "paper.ciphered"
+            ],
+            "items": [
+              "Shift Logbook",
+              "Ciphered Message"
+            ]
+          }
+        }
+      ],
+      "exits": {
+        "D": [
+          {
+            "to": 77,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 92,
+      "name": "The City: Smithson Block",
+      "description": "A quiet block of narrow townhouses, cats on windowsills, and a newspaper stand that never closes.",
+      "exits": {
+        "W": [
+          {
+            "to": 9,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "IN": [
+          {
+            "to": 93,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "S": [
+          {
+            "to": 95,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "N": [
+          {
+            "to": 96,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Newspaper",
+          "find_difficulty": 3,
+          "notice": "You notice a Newspaper nearby."
+        },
+        {
+          "name": "Umbrella",
+          "find_difficulty": 3,
+          "notice": "You notice a Umbrella nearby."
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 93,
+      "name": "Smithson Home: Front Room",
+      "description": "A tidy room with a low sofa and a shelf of mystery novels with penciled annotations.",
+      "exits": {
+        "OUT": [
+          {
+            "to": 92,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "E": [
+          {
+            "to": 94,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "House Key",
+          "find_difficulty": 3,
+          "notice": "You notice a House Key nearby."
+        },
+        {
+          "name": "Penciled Novel",
+          "find_difficulty": 3,
+          "notice": "You notice a Penciled Novel nearby."
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 94,
+      "name": "Smithson Home: Study",
+      "description": "A neat desk, a locked drawer, and a pinboard laced with red thread connecting names.",
+      "exits": {
+        "W": [
+          {
+            "to": 93,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Pinned Clue",
+          "find_difficulty": 3,
+          "notice": "You notice a Pinned Clue nearby."
+        },
+        {
+          "name": "Drawer Key",
+          "find_difficulty": 3,
+          "notice": "You notice a Drawer Key nearby."
+        }
+      ],
+      "npcs": [
+        {
+          "name": "Quiet Neighbor",
+          "accepts": [
+            "Penciled Novel"
+          ],
+          "dialogue": "I’m just returning this… unless you want to trade clues.",
+          "gives": [
+            "Neighborhood Rumor"
+          ],
+          "flavor": "Appears whenever the kettle whistles, disappears when you ask for a name.",
+          "reacts_to": {
+            "types": [
+              "paper.notes"
+            ],
+            "items": [
+              "Pinned Clue"
+            ]
+          }
+        }
+      ],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 95,
+      "name": "Neighborhood Well",
+      "description": "An old stone well with a squeaky pulley and a bucket that’s heavier than it looks.",
+      "exits": {
+        "N": [
+          {
+            "to": 92,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Old Coin",
+          "find_difficulty": 3,
+          "notice": "You notice a Old Coin nearby."
+        },
+        {
+          "name": "Bucket",
+          "find_difficulty": 3,
+          "notice": "You notice a Bucket nearby."
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": true,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 96,
+      "name": "City Museum",
+      "description": "A cross between a curiosity cabinet and public school exhibit—glass cases, dusty plaques, and a helpful docent.",
+      "exits": {
+        "S": [
+          {
+            "to": 92,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Audio Guide",
+          "find_difficulty": 3,
+          "notice": "You notice a Audio Guide nearby."
+        },
+        {
+          "name": "Map Brochure",
+          "find_difficulty": 3,
+          "notice": "You notice a Map Brochure nearby."
+        }
+      ],
+      "npcs": [
+        {
+          "name": "Docent",
+          "accepts": [
+            "Map Brochure"
+          ],
+          "dialogue": "If you’d like a tour, press the green button. If you hear a buzzing, that was the wrong button.",
+          "gives": [
+            "Exhibit Ticket"
+          ],
+          "flavor": "She knows every dusty corner and loves a good question.",
+          "reacts_to": {
+            "types": [
+              "paper.receipts"
+            ],
+            "items": [
+              "Receipt Book"
+            ]
+          }
+        }
+      ],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 97,
+      "name": "Rust: Power Substation (Exterior)",
+      "description": "A squat concrete building marooned on the shale flats. The doorway is ajar and the lintel bears eight faint pictographs: a key, a badge, a headlamp, a coil of rope, face shield, a hardhat, a scroll stamped with a seal, and an open logbook.",
+      "exits": {
+        "W": [
+          {
+            "to": 89,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "IN": [
+          {
+            "to": 98,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Chalk Rubbing of Pictographs",
+          "find_difficulty": 2,
+          "notice": "You notice a Chalk Rubbing of Pictographs nearby.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Large and obvious."
+          }
+        },
+        {
+          "name": "Brass Socket Diagram",
+          "find_difficulty": 2,
+          "notice": "The diagram is bolted beside the door, its symbols rubbed almost smooth by the wind.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious signage."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 98,
+      "name": "Rust: Substation Antechamber",
+      "description": "A circular room hums with dormant power. Around the bulkhead, eight brass sockets match the pictographs outside. Each socket bears a symbol hinting at what appeases it: lock, staff sigil, flame, knot, snowburst, safety bell, warrant seal, logbook mark.",
+      "exits": {
+        "OUT": [
+          {
+            "to": 97,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ],
+        "IN": [
+          {
+            "to": 99,
+            "requires": [
+              "key.lowsec",
+              "credential.staff",
+              "light.source",
+              "climb.aid",
+              "eyepro.cold",
+              "dive.rig",
+              "permit.jail_access",
+              "paper.ledger"
+            ],
+            "blocked_text": "The bulkhead stays dark. Around its rim, the eight sockets remain unlit: a suitable key, staff credentials, a living light, climbing rig, cold-weather face shield, a Respirator Rig, a signed permit, and a logbook entry."
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": true,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 99,
+      "name": "Rust: Parallel Substation Portal",
+      "description": "The air ripples like heat above pavement. A ring of mirrors shows a version of you that is very nearly you. Step through to return where you began—though something important will be different.",
+      "exits": {
+        "OUT": [
+          {
+            "to": 98,
+            "requires": [
+              "key.lowsec",
+              "credential.staff",
+              "light.source",
+              "climb.aid",
+              "eyepro.cold",
+              "dive.rig",
+              "permit.jail_access",
+              "paper.ledger"
+            ],
+            "blocked_text": "The bulkhead stays dark. Around its rim, the eight sockets remain unlit: a suitable key, staff credentials, a living light, climbing rig, cold-weather face shield, a Respirator Rig, a signed permit, and a logbook entry."
+          }
+        ]
+      },
+      "items": [],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    },
+    {
+      "id": 100,
+      "name": "Rust: Lost & Found Kiosk",
+      "description": "A plywood kiosk with a hand-painted sign: LOST (and sometimes FOUND). A slatted counter displays a jumble of civic detritus.",
+      "exits": {
+        "W": [
+          {
+            "to": 74,
+            "requires": [],
+            "blocked_text": ""
+          }
+        ]
+      },
+      "items": [
+        {
+          "name": "Spare Locker Key",
+          "find_difficulty": 2,
+          "notice": "You notice a Spare Locker Key tucked where anyone might find it.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        },
+        {
+          "name": "Maintenance Badge",
+          "find_difficulty": 2,
+          "notice": "You notice a Maintenance Badge tucked where anyone might find it.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        },
+        {
+          "name": "Lantern",
+          "find_difficulty": 2,
+          "notice": "You notice a headlamp tucked where anyone might find it.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        },
+        {
+          "name": "Oil Flask",
+          "find_difficulty": 2,
+          "notice": "You notice a Oil Flask tucked where anyone might find it.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        },
+        {
+          "name": "Rope Coil",
+          "find_difficulty": 2,
+          "notice": "You notice a Rope Coil tucked where anyone might find it.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        },
+        {
+          "name": "Face Shield (Spare)",
+          "find_difficulty": 2,
+          "notice": "You notice a Face Shield (Spare) tucked where anyone might find it.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        },
+        {
+          "name": "Old Safety Hardhat",
+          "find_difficulty": 2,
+          "notice": "You notice a Old Safety Hardhat tucked where anyone might find it.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        },
+        {
+          "name": "Compressed Air Tank",
+          "find_difficulty": 2,
+          "notice": "You notice a Compressed Air Tank tucked where anyone might find it.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        },
+        {
+          "name": "Temporary Work Permit",
+          "find_difficulty": 2,
+          "notice": "You notice a Temporary Work Permit tucked where anyone might find it.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        },
+        {
+          "name": "Logbook Page",
+          "find_difficulty": 2,
+          "notice": "You notice a Logbook Page tucked where anyone might find it.",
+          "check": {
+            "skill": "search",
+            "dc": 2,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Obvious backup drop."
+          }
+        }
+      ],
+      "npcs": [],
+      "darkness": {
+        "is_dark": false,
+        "search_disadvantage_without": [
+          "light.source"
+        ]
+      }
+    }
+  ],
+  "meta": {
+    "series": [
+      "ASOUE",
+      "ATWQ"
+    ],
+    "note": "Graph designed for traversal; exits use direction strings mapping to integer ids.",
+    "starter_inventory": [
+      "Lantern",
+      "Oil Flask",
+      "Map Fragment",
+      "Employee Badge"
+    ],
+    "spawn_points": [
+      75
+    ],
+    "item_discovery": {
+      "find_difficulty_scale": "1 (easy) … 10 (very hard)",
+      "fields": [
+        "name",
+        "find_difficulty",
+        "notice"
+      ]
+    },
+    "search_checks": {
+      "skill_name": "search",
+      "advantage_rule": "If player inventory grants any type listed in advantage_if_types, roll with advantage or reduce DC in your system.",
+      "default_light_advantage": "light.source",
+      "notes": "Item objects include a 'check' field with {skill, dc, advantage_if_types, disadvantage_if_missing_types, notes}."
+    },
+    "exit_blocked_text": "Each exit object includes a 'blocked_text' shown when requirements are not met.",
+    "parallel_portal": {
+      "entrance_room": "Rust: Power Substation (Exterior)",
+      "antechamber_room": "Rust: Substation Antechamber",
+      "portal_room": "Rust: Parallel Substation Portal",
+      "requirements_types": [
+        "key.lowsec",
+        "credential.staff",
+        "light.source",
+        "climb.aid",
+        "eyepro.cold",
+        "dive.rig",
+        "permit.jail_access",
+        "paper.ledger",
+        "artifact.forest_seal"
+      ],
+      "entry_hint_item": "Chalk Rubbing of Pictographs",
+      "on_enter_behavior": "Return player to their ORIGINAL starting room (engine should override the destination id) and assign a new secret objective tracked out-of-band."
+    },
+    "variant": "modern_rust_by_the_lake"
+  }
+}
