@@ -3,34 +3,42 @@
     {
       "id": 1,
       "name": "Sinister Lane",
-      "description": "A narrow, grimy lane of sagging houses and leaning streetlamps. Crows sometimes perch on the wires. It connects Mr. Olivander’s dilapidated home to Judge Strausson’s tidy townhouse.",
+      "description": "A narrow, grimy lane of sagging houses and leaning streetlamps. Crows sometimes perch on the wires. It connects Count Olaf's dilapidated home to Justice Strauss's tidy townhouse.",
       "exits": {
-        "E": [
+        "OLAF": [
           {
             "to": 2,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Count Olaf's Front Steps - cracked concrete with flaking paint and an eye symbol",
+            "traversal": "You walk east down the grimy lane toward the dilapidated house, crows cawing from overhead wires."
           }
         ],
-        "W": [
+        "JUSTICE": [
           {
             "to": 7,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Justice Strauss's Garden - neatly trimmed hedges and a cobblestone path",
+            "traversal": "You head west toward the well-maintained garden, leaving the squalor behind for manicured hedges."
           }
         ],
-        "N": [
+        "CITY": [
           {
             "to": 9,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "City Street - a busier avenue with shops and public transit",
+            "traversal": "You walk north toward the busier city street, the sounds of commerce growing louder."
           }
         ],
-        "IN": [
+        "ENTER": [
           {
             "to": 3,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Count Olaf's Living Room - cluttered, dusty theater production space",
+            "traversal": "You push through the crooked door into the musty interior, dust motes swirling in the dim light."
           }
         ]
       },
@@ -45,21 +53,25 @@
     },
     {
       "id": 2,
-      "name": "Mr. Olivander: Front Steps",
+      "name": "Count Olaf: Front Steps",
       "description": "Cracked concrete steps with flaking paint and an eye symbol chalked on the stoop. The door hangs crooked on its hinges.",
       "exits": {
-        "IN": [
+        "ENTER": [
           {
             "to": 3,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Count Olaf's Living Room - cluttered theater production space with stained curtains",
+            "traversal": "You push through the crooked door into the cluttered living room, cold soup smell hitting your nostrils."
           }
         ],
-        "W": [
+        "LANE": [
           {
             "to": 1,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Sinister Lane - grimy lane connecting the dilapidated houses",
+            "traversal": "You step back onto the grimy lane, crows watching from their perches on sagging wires."
           }
         ]
       },
@@ -74,33 +86,43 @@
     },
     {
       "id": 3,
-      "name": "Mr. Olivander: Living Room",
+      "name": "Count Olaf: Living Room",
       "description": "A cluttered, dusty room used for ill-rehearsed theater productions; mismatched chairs, stained curtains, and the faint smell of cold soup.",
       "exits": {
-        "W": [
+        "KITCHEN": [
           {
             "to": 4,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Count Olaf's Kitchen - greasy counters and a leaning icebox",
+            "traversal": "You move west toward the kitchen, the smell of grease and neglect growing stronger."
           }
         ],
-        "U": [
+        "TOWER": [
           {
             "to": 5,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Count Olaf's Tower - narrow, drafty space with barred windows",
+            "traversal": "You climb the creaking stairs up to the tower, each step groaning under your weight."
           }
         ],
-        "OUT": [
+        "EXIT": [
           {
             "to": 1,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "Sinister Lane - the grimy street outside",
+            "traversal": "You escape through the front door back onto Sinister Lane, grateful for the fresh air."
+          }
+        ],
+        "STEPS": [
           {
             "to": 2,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Count Olaf's Front Steps - cracked concrete with the chalked eye symbol",
+            "traversal": "You step outside to the cracked front steps, the eye symbol staring up at you."
           }
         ]
       },
@@ -115,21 +137,25 @@
     },
     {
       "id": 4,
-      "name": "Mr. Olivander: Kitchen",
+      "name": "Count Olaf: Kitchen",
       "description": "Greasy counters and a leaning icebox. Knives are dull, pots dented; children are expected to cook elaborate meals here.",
       "exits": {
-        "S": [
+        "GARDEN": [
           {
             "to": 6,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Count Olaf's Backyard Garden - scraggly weeds and broken statuary",
+            "traversal": "You step south through the back door into the neglected garden, weeds crunching underfoot."
           }
         ],
-        "E": [
+        "LIVING": [
           {
             "to": 3,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Count Olaf's Living Room - the cluttered theater space",
+            "traversal": "You return east to the living room, leaving the kitchen's greasy chaos behind."
           }
         ]
       },
@@ -137,7 +163,7 @@
         {
           "name": "Dull Knife",
           "find_difficulty": 2,
-          "notice": "Taking a moment to look around Mr. Olivander: Kitchen, you notice a Dull Knife where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Count Olaf: Kitchen, you notice a Dull Knife where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -146,12 +172,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Dented Pot",
           "find_difficulty": 3,
-          "notice": "Taking a moment to look around Mr. Olivander: Kitchen, you notice a Dented Pot where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Count Olaf: Kitchen, you notice a Dented Pot where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -160,12 +187,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Greasy Apron",
           "find_difficulty": 2,
-          "notice": "Taking a moment to look around Mr. Olivander: Kitchen, you notice a Greasy Apron where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Count Olaf: Kitchen, you notice a Greasy Apron where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -174,7 +202,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         }
       ],
       "npcs": [],
@@ -187,14 +216,16 @@
     },
     {
       "id": 5,
-      "name": "Mr. Olivander: Tower",
+      "name": "Count Olaf: Tower",
       "description": "A narrow, drafty tower with barred windows and a rope coil. It is more prison than bedroom.",
       "exits": {
-        "D": [
+        "DOWN": [
           {
             "to": 3,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Count Olaf's Living Room - back to the cluttered theater space below",
+            "traversal": "You descend the creaking stairs back to the living room, leaving the drafty prison behind."
           }
         ]
       },
@@ -202,7 +233,7 @@
         {
           "name": "Coil of Rope",
           "find_difficulty": 3,
-          "notice": "While adjusting to the light in Mr. Olivander: Tower, you spot a Coil of Rope hanging from a hook near the shadows.",
+          "notice": "While adjusting to the light in Count Olaf: Tower, you spot a Coil of Rope hanging from a hook near the shadows.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -211,12 +242,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Lighting conditions improve visibility."
-          }
+          },
+          "type": "climb.aid"
         },
         {
           "name": "Barred Window",
           "find_difficulty": 4,
-          "notice": "Taking a moment to look around Mr. Olivander: Tower, you notice a Barred Window where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Count Olaf: Tower, you notice a Barred Window where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 4,
@@ -225,12 +257,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Old Curtain",
           "find_difficulty": 3,
-          "notice": "Taking a moment to look around Mr. Olivander: Tower, you notice a Old Curtain where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Count Olaf: Tower, you notice a Old Curtain where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -239,7 +272,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         }
       ],
       "npcs": [],
@@ -252,14 +286,16 @@
     },
     {
       "id": 6,
-      "name": "Mr. Olivander: Backyard Garden",
+      "name": "Count Olaf: Backyard Garden",
       "description": "A scraggly patch of weeds, broken statuary, and a rickety fence painted with a staring eye.",
       "exits": {
-        "N": [
+        "KITCHEN": [
           {
             "to": 4,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Count Olaf's Kitchen - greasy counters and dented cookware",
+            "traversal": "You head north back through the kitchen door, leaving the weedy garden behind."
           }
         ]
       },
@@ -274,21 +310,25 @@
     },
     {
       "id": 7,
-      "name": "Judge Strausson: Garden",
+      "name": "Justice Strauss: Garden",
       "description": "Neatly trimmed hedges, a cobblestone path, and a small arbor dripping with vines—an oasis beside the squalor next door.",
       "exits": {
-        "IN": [
+        "LIBRARY": [
           {
             "to": 8,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Justice Strauss's Library - warm light on well-loved books",
+            "traversal": "You follow the cobblestone path to the library door, the smell of tea and old books beckoning."
           }
         ],
-        "E": [
+        "LANE": [
           {
             "to": 1,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Sinister Lane - back to the grimy street between houses",
+            "traversal": "You reluctantly leave the manicured garden for the grimy lane, the contrast jarring."
           }
         ]
       },
@@ -303,14 +343,16 @@
     },
     {
       "id": 8,
-      "name": "Judge Strausson: Library",
+      "name": "Justice Strauss: Library",
       "description": "Warm light on rows of well-loved books, a ladder on rails, and a cushioned reading window that smells faintly of tea.",
       "exits": {
-        "OUT": [
+        "GARDEN": [
           {
             "to": 7,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Justice Strauss's Garden - the peaceful arbor and cobblestone path",
+            "traversal": "You step back into the garden, leaving the warm library for the vine-covered arbor."
           }
         ]
       },
@@ -318,7 +360,7 @@
         {
           "name": "Law Book",
           "find_difficulty": 3,
-          "notice": "Taking a moment to look around Judge Strausson: Library, you notice a Law Book where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Justice Strauss: Library, you notice a Law Book where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -327,12 +369,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Dictionary",
           "find_difficulty": 3,
-          "notice": "Taking a moment to look around Judge Strausson: Library, you notice a Dictionary where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Justice Strauss: Library, you notice a Dictionary where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -341,12 +384,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Rolling Ladder",
           "find_difficulty": 4,
-          "notice": "Taking a moment to look around Judge Strausson: Library, you notice a Rolling Ladder where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Justice Strauss: Library, you notice a Rolling Ladder where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 4,
@@ -355,12 +399,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         }
       ],
       "npcs": [
         {
-          "name": "Judge Strausson",
+          "name": "Justice Strauss",
           "accepts": [
             "Law Book",
             "Case File"
@@ -392,37 +437,51 @@
     {
       "id": 9,
       "name": "City Street",
-      "description": "A busier avenue with shops with ‘IN’ and ‘OUT’ signs switching by the week; leads to apartments and public transit.",
+      "description": "A busier avenue with shops with 'IN' and 'OUT' signs switching by the week; leads to apartments and public transit.",
       "exits": {
-        "N": [
+        "JUNCTION": [
           {
             "to": 10,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "Regional Rail Junction - soot-smudged platform where uncertain journeys begin",
+            "traversal": "You head north toward the rail junction, the sound of distant trains growing louder."
+          }
+        ],
+        "DOWNTOWN": [
           {
             "to": 90,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Unmarked Coach Road - rutted earth used by theatrical troupes",
+            "traversal": "You turn north onto the unmarked coach road, leaving the city bustle behind."
           }
         ],
-        "E": [
+        "AVENUE": [
           {
             "to": 34,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "City Avenue of In/Out - fashionable boulevard where citizens adopt trends",
+            "traversal": "You walk east toward the fashionable avenue, boutique signs glinting in the distance."
+          }
+        ],
+        "SNICKET": [
           {
             "to": 92,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Snicket Block - quiet townhouses with cats on windowsills",
+            "traversal": "You turn east onto the quieter block, cats watching from their windowsill perches."
           }
         ],
-        "S": [
+        "LANE": [
           {
             "to": 1,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Sinister Lane - the grimy street between Count Olaf's and Justice Strauss's homes",
+            "traversal": "You head south down the grimy lane, leaving the busier street behind."
           }
         ]
       },
@@ -438,59 +497,87 @@
     {
       "id": 10,
       "name": "Regional Rail Junction",
-      "description": "A soot-smudged platform web where many uncertain journeys begin; lines stretch toward towns, mountains, and the lake.",
+      "description": "A soot-smudged platform web where many uncertain journeys begin; lines stretch toward towns, mountains, and the sea.",
       "exits": {
-        "S": [
+        "DESERT": [
           {
             "to": 48,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "Desert Road - dusty ribbon leading to carnival and mountains",
+            "traversal": "You board the southbound train toward the desert, dust already visible on the horizon."
+          }
+        ],
+        "SCHOOL": [
           {
             "to": 28,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "School Road - cracked sidewalk with thorny hedges",
+            "traversal": "You take the southern line toward the school district, hedges growing thicker along the tracks."
+          }
+        ],
+        "HOSPITAL": [
           {
             "to": 43,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "Hospital Drive - bleak driveway with dying hedges and optimistic signs",
+            "traversal": "You board the southbound line toward the hospital, medical signs becoming more frequent."
+          }
+        ],
+        "CITY": [
           {
             "to": 9,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "City Street - busier avenue with shops and changing 'IN/OUT' signs",
+            "traversal": "You head south back into the city proper, commerce sounds growing louder."
+          }
+        ],
+        "AVENUE": [
           {
             "to": 34,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "City Avenue of In/Out - fashionable boulevard of adopted trends",
+            "traversal": "You walk south toward the fashionable shopping district, boutique windows gleaming."
           }
         ],
-        "W": [
+        "COAST": [
           {
             "to": 23,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Coastal Road - following the gnashing line of surf",
+            "traversal": "You take the western line toward the coast, salt air already reaching your nostrils."
           }
         ],
-        "E": [
+        "STAINED": [
           {
             "to": 73,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Train Station: Ironhaven - rust-colored platform by the quarry pit",
+            "traversal": "You board the eastbound train toward Ironhaven, the landscape growing more scarred and industrial."
           }
         ],
-        "N": [
+        "CROW": [
           {
             "to": 38,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "Crow Road - white with droppings at dawn, black with birds at dusk",
+            "traversal": "You head north along the crow-haunted road, wings rustling overhead."
+          }
+        ],
+        "HOTEL": [
           {
             "to": 62,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Hotel Drive - sweeping approach reflecting the building in puddles",
+            "traversal": "You take the northern line toward the hotel, its imposing silhouette visible in the distance."
           }
         ]
       },
@@ -508,18 +595,22 @@
       "name": "Country Road",
       "description": "A gravel road bordered by fields and the occasional heron. It connects the city to a warm, herpetological home.",
       "exits": {
-        "S": [
+        "MONTY": [
           {
             "to": 12,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Uncle Monty's Foyer - coat pegs, rubber boots, and scientific kindness",
+            "traversal": "You walk south down the gravel road to Uncle Monty's house, scientific specimens visible through the windows."
           }
         ],
-        "E": [
+        "COACH": [
           {
             "to": 90,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Unmarked Coach Road - rutted earth threading between distant towns",
+            "traversal": "You turn east onto the coach road, theatrical posters fluttering from fence posts."
           }
         ]
       },
@@ -534,28 +625,34 @@
     },
     {
       "id": 12,
-      "name": "Dr. Montrose: Foyer",
+      "name": "Uncle Monty: Foyer",
       "description": "Coat pegs, rubber boots by the door, and the comforting sense that science may yet be kind.",
       "exits": {
-        "E": [
+        "REPTILES": [
           {
             "to": 13,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Uncle Monty's Reptile Room - steam-warm air with rows of terrariums",
+            "traversal": "You head east toward the reptile room, the warm, humid air and soft sounds of life beckoning."
           }
         ],
-        "W": [
+        "KITCHEN": [
           {
             "to": 14,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Uncle Monty's Kitchen - bright space with citrus and a singing kettle",
+            "traversal": "You walk west to the bright kitchen, the scent of citrus and promise of tea drawing you in."
           }
         ],
-        "N": [
+        "ROAD": [
           {
             "to": 11,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Country Road - gravel path bordered by fields and herons",
+            "traversal": "You step north back onto the country road, leaving the welcoming house behind."
           }
         ]
       },
@@ -593,14 +690,16 @@
     },
     {
       "id": 13,
-      "name": "Dr. Montrose: Reptile Room",
+      "name": "Uncle Monty: Reptile Room",
       "description": "Steam-warm air hugs rows of terrariums: snakes slither, frogs blink, and specimen jars glint with labels in tidy handwriting.",
       "exits": {
-        "W": [
+        "FOYER": [
           {
             "to": 12,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Uncle Monty's Foyer - coat pegs and the comfort of scientific kindness",
+            "traversal": "You return west to the foyer, leaving the warm reptile sanctuary behind."
           }
         ]
       },
@@ -608,7 +707,7 @@
         {
           "name": "Specimen Jar",
           "find_difficulty": 4,
-          "notice": "A chemical tang in Dr. Montrose: Reptile Room draws you to a shelf where a Specimen Jar sits half-concealed.",
+          "notice": "A chemical tang in Uncle Monty: Reptile Room draws you to a shelf where a Specimen Jar sits half-concealed.",
           "check": {
             "skill": "search",
             "dc": 4,
@@ -618,12 +717,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Chemical smell or labels can guide you."
-          }
+          },
+          "type": "generic"
         },
         {
-          "name": "Grabber Tool",
+          "name": "Snake Hook",
           "find_difficulty": 2,
-          "notice": "Taking a moment to look around Dr. Montrose: Reptile Room, you notice a Grabber Tool where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Uncle Monty: Reptile Room, you notice a Snake Hook where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -632,12 +732,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Field Notes",
           "find_difficulty": 4,
-          "notice": "Leafing through a stack of papers in Dr. Montrose: Reptile Room, you notice the edge of a Field Notes that doesn’t quite match the others.",
+          "notice": "Leafing through a stack of papers in Uncle Monty: Reptile Room, you notice the edge of a Field Notes that doesn't quite match the others.",
           "check": {
             "skill": "search",
             "dc": 4,
@@ -649,7 +750,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Sorting papers, checking spines and misfiled edges helps."
-          }
+          },
+          "type": "generic"
         }
       ],
       "npcs": [],
@@ -662,21 +764,25 @@
     },
     {
       "id": 14,
-      "name": "Dr. Montrose: Kitchen",
+      "name": "Uncle Monty: Kitchen",
       "description": "A bright kitchen with citrus in a bowl and a kettle that always seems about to sing.",
       "exits": {
-        "S": [
+        "GARDEN": [
           {
             "to": 15,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Uncle Monty's Garden - banana trees and netted lizard pens",
+            "traversal": "You step south into the garden, exotic plants and unusual lizards basking in filtered sunlight."
           }
         ],
-        "E": [
+        "FOYER": [
           {
             "to": 12,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Uncle Monty's Foyer - entrance with scientific promise",
+            "traversal": "You return east to the welcoming foyer, the sound of the kettle following you."
           }
         ]
       },
@@ -691,14 +797,16 @@
     },
     {
       "id": 15,
-      "name": "Dr. Montrose: Garden",
+      "name": "Uncle Monty: Garden",
       "description": "Stamped-earth paths around banana trees and netted pens where unusual lizards sun themselves.",
       "exits": {
-        "N": [
+        "KITCHEN": [
           {
             "to": 14,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Uncle Monty's Kitchen - bright space with citrus and singing kettle",
+            "traversal": "You head north back to the bright kitchen, leaving the exotic garden sanctuary."
           }
         ]
       },
@@ -716,11 +824,13 @@
       "name": "Clifftop Path",
       "description": "Wind-shaved limestone steps with a railing that screams in a storm. The path ends in a house that clings to the cliff.",
       "exits": {
-        "E": [
+        "JOSEPHINE": [
           {
             "to": 17,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Aunt Josephine's Living Room - lace doilies and forbidding hazard notices",
+            "traversal": "You follow the treacherous path east to the cliff house, windows rattling ominously over the grey lake."
           }
         ]
       },
@@ -735,33 +845,43 @@
     },
     {
       "id": 17,
-      "name": "Aunt Josephine (harbor (lakefront)): Living Room",
+      "name": "Aunt Josephine: Living Room",
       "description": "A room of lace doilies and forbidding notices about every imaginable hazard; windows rattle over the grey lake.",
       "exits": {
-        "N": [
+        "STUDY": [
           {
             "to": 19,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Aunt Josephine's Study - towering grammar texts and perfectly sharpened pencils",
+            "traversal": "You head north to the study, the sound of pages and pencils promising grammatical precision."
           }
         ],
-        "W": [
+        "KITCHEN": [
           {
             "to": 18,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "Aunt Josephine's Kitchen - unplugged appliances labeled DANGEROUS",
+            "traversal": "You move west to the kitchen, every appliance ominously unplugged and labeled."
+          }
+        ],
+        "PATH": [
           {
             "to": 16,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Clifftop Path - wind-shaved limestone steps with screaming railing",
+            "traversal": "You step west back onto the clifftop path, leaving the nervous house behind."
           }
         ],
-        "S": [
+        "PORCH": [
           {
             "to": 20,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Aunt Josephine's Porch - precarious platform jutting over whitecaps",
+            "traversal": "You venture south onto the precarious porch, Lake Lachrymose churning far below."
           }
         ]
       },
@@ -776,14 +896,16 @@
     },
     {
       "id": 18,
-      "name": "Aunt Josephine (harbor (lakefront)): Kitchen",
+      "name": "Aunt Josephine: Kitchen",
       "description": "Appliances unplugged and labeled DANGEROUS; the pantry bulges with cold tins of food.",
       "exits": {
-        "E": [
+        "LIVING": [
           {
             "to": 17,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Aunt Josephine's Living Room - lace doilies and hazard warnings",
+            "traversal": "You return east to the living room, past the collection of nervous notices."
           }
         ]
       },
@@ -798,14 +920,16 @@
     },
     {
       "id": 19,
-      "name": "Aunt Josephine (harbor (lakefront)): Study",
+      "name": "Aunt Josephine: Study",
       "description": "Towering grammar texts, a desk with perfectly sharpened pencils, and a dictionary set like an altar.",
       "exits": {
-        "S": [
+        "LIVING": [
           {
             "to": 17,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Aunt Josephine's Living Room - back to the doilies and danger signs",
+            "traversal": "You head south back to the living room, leaving the grammatical sanctuary behind."
           }
         ]
       },
@@ -813,7 +937,7 @@
         {
           "name": "Grammar Text",
           "find_difficulty": 2,
-          "notice": "Taking a moment to look around Aunt Josephine (harbor (lakefront)): Study, you notice a Grammar Text where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Aunt Josephine: Study, you notice a Grammar Text where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -822,12 +946,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Fountain Pen",
           "find_difficulty": 4,
-          "notice": "Taking a moment to look around Aunt Josephine (harbor (lakefront)): Study, you notice a Fountain Pen where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Aunt Josephine: Study, you notice a Fountain Pen where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 4,
@@ -836,12 +961,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Dictionary",
           "find_difficulty": 3,
-          "notice": "Taking a moment to look around Aunt Josephine (harbor (lakefront)): Study, you notice a Dictionary where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Aunt Josephine: Study, you notice a Dictionary where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -850,7 +976,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         }
       ],
       "npcs": [],
@@ -863,21 +990,25 @@
     },
     {
       "id": 20,
-      "name": "Aunt Josephine (harbor (lakefront)): Porch",
+      "name": "Aunt Josephine: Porch",
       "description": "A precarious porch jutting above the whitecaps of Lake Lachrymose.",
       "exits": {
-        "D": [
+        "SHORE": [
           {
             "to": 21,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Lake Lachrymose Shore - pebbly, windblown with ominous leech warnings",
+            "traversal": "You carefully climb down to the shore, 'NO SWIMMING (LEECHES)' signs growing more prominent."
           }
         ],
-        "N": [
+        "LIVING": [
           {
             "to": 17,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Aunt Josephine's Living Room - safety of doilies and warnings",
+            "traversal": "You retreat north back into the relative safety of the living room."
           }
         ]
       },
@@ -892,28 +1023,34 @@
     },
     {
       "id": 21,
-      "name": "Lake Lachrymose: lakeshore",
-      "description": "Pebbly, windblown lakeshore with bleached driftwood and ominous ‘NO SWIMMING (LEECHES)’ signs.",
+      "name": "Lake Lachrymose: Shore",
+      "description": "Pebbly, windblown shore with bleached driftwood and ominous 'NO SWIMMING (LEECHES)' signs.",
       "exits": {
-        "E": [
+        "CAVES": [
           {
             "to": 22,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Lake Lachrymose Caves - damp limestone hollows smelling of secrets",
+            "traversal": "You venture east into the limestone caves, echoes bouncing strangely off the walls."
           }
         ],
-        "U": [
+        "PORCH": [
           {
             "to": 20,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Aunt Josephine's Porch - precarious platform above the whitecaps",
+            "traversal": "You climb back up to the precarious porch, leaving the leech-infested waters behind."
           }
         ],
-        "W": [
+        "COAST": [
           {
             "to": 23,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Coastal Road - following the gnashing line of surf",
+            "traversal": "You head west along the coastal road, tire ruts and crow prints marking the way."
           }
         ]
       },
@@ -921,7 +1058,7 @@
         {
           "name": "Fishing Line",
           "find_difficulty": 3,
-          "notice": "Taking a moment to look around Lake Lachrymose: lakeshore, you notice a Fishing Line where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Lake Lachrymose: Shore, you notice a Fishing Line where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -930,12 +1067,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Life Preserver",
           "find_difficulty": 3,
-          "notice": "Taking a moment to look around Lake Lachrymose: lakeshore, you notice a Life Preserver where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Lake Lachrymose: Shore, you notice a Life Preserver where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -944,7 +1082,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         }
       ],
       "npcs": [],
@@ -960,11 +1099,13 @@
       "name": "Lake Lachrymose: Caves",
       "description": "Damp limestone hollows smelling of salt and secrets. Echoes do not always return the truth.",
       "exits": {
-        "W": [
+        "SHORE": [
           {
             "to": 21,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Lake Lachrymose Shore - back to the windblown shore and leech warnings",
+            "traversal": "You emerge west from the caves back to the pebbly shore, grateful for the open air."
           }
         ]
       },
@@ -982,30 +1123,40 @@
       "name": "Coastal Road",
       "description": "A road that follows the gnashing line of surf; it bears tire ruts, crow prints, and uneasy memories.",
       "exits": {
-        "S": [
+        "SEA": [
           {
             "to": 68,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Sea Route - treacherous span plied by dinghies and dubious lessons",
+            "traversal": "You head south toward open water, dubious moral lessons echoing across the waves."
           }
         ],
-        "E": [
+        "LAKE": [
           {
             "to": 21,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "Lake Lachrymose Shore - pebbly shore with leech warnings",
+            "traversal": "You turn east toward the lake shore, warning signs becoming more prominent."
+          }
+        ],
+        "JUNCTION": [
           {
             "to": 10,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Regional Rail Junction - soot-smudged platform web of uncertain journeys",
+            "traversal": "You head east back toward the rail junction, the sound of trains growing louder."
           }
         ],
-        "N": [
+        "STREAM": [
           {
             "to": 57,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Stricken Stream Dock - wavering pier over waters that aren't clean",
+            "traversal": "You turn north toward the stream dock, the water looking deceptively clean."
           }
         ]
       },
@@ -1023,18 +1174,22 @@
       "name": "Paltryville Road",
       "description": "A long, splintered road lined with billboards for gum and eyewear, all slightly crooked.",
       "exits": {
-        "S": [
+        "MILL": [
           {
             "to": 25,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Lucky Smells Mill Floor - sawdust fog and shrieking blades",
+            "traversal": "You head south toward the mill, the sound of sawing and the scent of wood shavings growing stronger."
           }
         ],
-        "E": [
+        "COACH": [
           {
             "to": 90,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Unmarked Coach Road - rutted earth threading between towns",
+            "traversal": "You turn east onto the coach road, billboard advertisements giving way to empty fields."
           }
         ]
       },
@@ -1052,23 +1207,31 @@
       "name": "Lucky Smells: Mill Floor",
       "description": "Sawdust fog, shrieking blades, and the whisper of stamped coupons instead of wages.",
       "exits": {
-        "E": [
+        "OFFICE": [
           {
             "to": 27,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Lucky Smells Foreman Office - metal desk and clipboard of punishments",
+            "traversal": "You head east to the foreman's office, the clipboard of violations visible through the window."
           }
         ],
-        "N": [
+        "BUNKS": [
           {
             "to": 26,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "Lucky Smells Bunks - sagging beds with wood glue smell",
+            "traversal": "You walk north to the workers' bunks, the smell of wood glue and exhaustion heavy in the air."
+          }
+        ],
+        "ROAD": [
           {
             "to": 24,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Paltryville Road - splintered road with crooked billboards",
+            "traversal": "You head north back to the billboard-lined road, leaving the industrial chaos behind."
           }
         ]
       },
@@ -1076,7 +1239,7 @@
         {
           "name": "Wood Shavings",
           "find_difficulty": 3,
-          "notice": "Taking a moment to look around Lucky Smells: Mill Floor, you notice a Wood Shavings where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Lucky Smells: Mill Floor, you notice a Wood Shavings where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -1085,12 +1248,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Coupon Book",
           "find_difficulty": 4,
-          "notice": "Taking a moment to look around Lucky Smells: Mill Floor, you notice a Coupon Book where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Lucky Smells: Mill Floor, you notice a Coupon Book where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 4,
@@ -1099,7 +1263,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         }
       ],
       "npcs": [],
@@ -1115,11 +1280,13 @@
       "name": "Lucky Smells: Bunks",
       "description": "Rows of sagging beds with a single dangling bulb and the smell of wood glue.",
       "exits": {
-        "S": [
+        "MILL": [
           {
             "to": 25,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Lucky Smells Mill Floor - back to the sawdust fog and shrieking blades",
+            "traversal": "You head south back to the mill floor, the sound of machinery growing louder again."
           }
         ]
       },
@@ -1137,11 +1304,13 @@
       "name": "Lucky Smells: Foreman Office",
       "description": "Metal desk, clipboard of punishments, and a window no one can see out of.",
       "exits": {
-        "W": [
+        "MILL": [
           {
             "to": 25,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Lucky Smells Mill Floor - back to the workers and sawdust chaos",
+            "traversal": "You return west to the mill floor, the foreman's punishments echoing behind you."
           }
         ]
       },
@@ -1170,23 +1339,31 @@
       "name": "School Road",
       "description": "A cracked sidewalk bordered by thorny hedges and a sign that says Beatrice was here, which is not strictly helpful.",
       "exits": {
-        "S": [
+        "PRUFROCK": [
           {
             "to": 29,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "Prufrock Entrance - stone archway with mismatched glasses and frown crest",
+            "traversal": "You walk south toward the prep school, its unwelcoming crest visible above the stone archway."
+          }
+        ],
+        "COACH": [
           {
             "to": 90,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Unmarked Coach Road - rutted earth for theatrical troupes",
+            "traversal": "You turn south onto the coach road, leaving the school district behind."
           }
         ],
-        "N": [
+        "JUNCTION": [
           {
             "to": 10,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Regional Rail Junction - back to the soot-smudged platform web",
+            "traversal": "You head north back to the rail junction, the school's rigid atmosphere lifting behind you."
           }
         ]
       },
@@ -1204,32 +1381,40 @@
       "name": "Prufrock: Entrance",
       "description": "Stone archway with the school crest: a mismatched pair of glasses and a frown.",
       "exits": {
-        "W": [
+        "SHACK": [
           {
             "to": 30,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Prufrock Orphans' Shack - leaning hut with fungus and crabs",
+            "traversal": "You reluctantly head west to the orphans' shack, fungus visible growing in the corners."
           }
         ],
-        "E": [
+        "LIBRARY": [
           {
             "to": 31,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Prufrock Library - almost empty stacks with shrieking librarian",
+            "traversal": "You walk east to the library, hoping to find the three books actually worth reading."
           }
         ],
-        "S": [
+        "CAFETERIA": [
           {
             "to": 32,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Prufrock Cafeteria - grey porridge in grey bowls on grey trays",
+            "traversal": "You head south to the cafeteria, the clatter of cruel cutlery already audible."
           }
         ],
-        "N": [
+        "ROAD": [
           {
             "to": 28,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "School Road - back to the cracked sidewalk and thorny hedges",
+            "traversal": "You walk north back to the school road, leaving Prufrock's unwelcoming archway behind."
           }
         ]
       },
@@ -1244,14 +1429,16 @@
     },
     {
       "id": 30,
-      "name": "Prufrock: Orphans’ Shack",
+      "name": "Prufrock: Orphans' Shack",
       "description": "A leaning hut with fungus in the corners and crabs under the bed. It does not pass any inspection worth having.",
       "exits": {
-        "E": [
+        "ENTRANCE": [
           {
             "to": 29,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Prufrock Entrance - back to the stone archway and school crest",
+            "traversal": "You escape east back to the entrance, grateful to leave the fungus-ridden hut."
           }
         ]
       },
@@ -1259,7 +1446,7 @@
         {
           "name": "Fungus Sample",
           "find_difficulty": 3,
-          "notice": "Taking a moment to look around Prufrock: Orphans’ Shack, you notice a Fungus Sample where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Prufrock: Orphans' Shack, you notice a Fungus Sample where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -1268,12 +1455,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Broken Broom",
           "find_difficulty": 3,
-          "notice": "Taking a moment to look around Prufrock: Orphans’ Shack, you notice a Broken Broom where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Prufrock: Orphans' Shack, you notice a Broken Broom where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -1282,7 +1470,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         }
       ],
       "npcs": [],
@@ -1298,18 +1487,22 @@
       "name": "Prufrock: Library",
       "description": "Almost empty stacks, a shrieking librarian, and three books actually worth reading if you can find them.",
       "exits": {
-        "S": [
+        "OFFICE": [
           {
             "to": 33,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Prufrock Vice Principal Office - Nero's violins and detention programs",
+            "traversal": "You head south to the vice principal's office, violin music screeching from within."
           }
         ],
-        "W": [
+        "ENTRANCE": [
           {
             "to": 29,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Prufrock Entrance - back to the frowning school crest",
+            "traversal": "You walk west back to the entrance, empty book stacks behind you."
           }
         ]
       },
@@ -1327,11 +1520,13 @@
       "name": "Prufrock: Cafeteria",
       "description": "Grey porridge in grey bowls on grey trays. The cutlery is loud enough to be cruel.",
       "exits": {
-        "N": [
+        "ENTRANCE": [
           {
             "to": 29,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Prufrock Entrance - back to the stone archway",
+            "traversal": "You head north back to the entrance, leaving the grey meals behind."
           }
         ]
       },
@@ -1347,13 +1542,15 @@
     {
       "id": 33,
       "name": "Prufrock: Vice Principal Office",
-      "description": "Nero’s violins are everywhere; detentions are posted like recital programs.",
+      "description": "Nero's violins are everywhere; detentions are posted like recital programs.",
       "exits": {
-        "N": [
+        "LIBRARY": [
           {
             "to": 31,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Prufrock Library - back to the almost empty stacks",
+            "traversal": "You head north back to the library, violin music thankfully fading behind you."
           }
         ]
       },
@@ -1378,25 +1575,31 @@
       "name": "City Avenue of In/Out",
       "description": "A fashionable boulevard where citizens adopt trends before understanding them.",
       "exits": {
-        "S": [
+        "SQUALOR": [
           {
             "to": 35,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Squalor Lobby - cavernous space with 'IN' art installations",
+            "traversal": "You head south toward the Squalor building, 'IN' art installations becoming more prominent."
           }
         ],
-        "N": [
+        "JUNCTION": [
           {
             "to": 10,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Regional Rail Junction - back to the soot-smudged platform web",
+            "traversal": "You walk north back to the rail junction, leaving the fashionable trends behind."
           }
         ],
-        "W": [
+        "CITY": [
           {
             "to": 9,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "City Street - back to the busier avenue with changing signs",
+            "traversal": "You head west back to the main city street, boutique windows fading behind you."
           }
         ]
       },
@@ -1412,37 +1615,43 @@
     {
       "id": 35,
       "name": "Squalor: Lobby",
-      "description": "A cavernous lobby with ‘IN’ art installations and a concierge who takes messages but never delivers them.",
+      "description": "A cavernous lobby with 'IN' art installations and a concierge who takes messages but never delivers them.",
       "exits": {
-        "U": [
+        "APARTMENT": [
           {
             "to": 37,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Squalor Apartment - Jerome & Esmé's sprawling rooms of 'in' items",
+            "traversal": "You take the elevator up to the apartment, 'IN' items visible through the brass doors."
           }
         ],
-        "D": [
+        "SHAFT": [
           {
             "to": 36,
             "requires": [
-              "climbing-gear"
+              "climb.aid"
             ],
-            "blocked_text": "Something unseen prevents passage."
+            "blocked_text": "The shaft descends into darkness - you'd need climbing equipment to safely navigate it.",
+            "short_desc": "Squalor Elevator Shaft - dark void where elevators used to be",
+            "traversal": "You carefully descend into the elevator shaft using your climbing gear, cables hanging like spider silk."
           }
         ],
-        "N": [
+        "AVENUE": [
           {
             "to": 34,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "City Avenue of In/Out - back to the fashionable boulevard",
+            "traversal": "You head north back to the fashionable avenue, leaving the 'IN' installations behind."
           }
         ]
       },
       "items": [
         {
-          "name": "Face Shield (Spare)",
+          "name": "Goggles (Spare)",
           "find_difficulty": 2,
-          "notice": "You notice a Face Shield (Spare) tucked where anyone might find it.",
+          "notice": "You notice a Goggles (Spare) tucked where anyone might find it.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -1451,12 +1660,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "eyepro.cold"
         },
         {
-          "name": "Spare Rope",
+          "name": "Backup Rope",
           "find_difficulty": 2,
-          "notice": "A bellhop’s cart carries a neatly coiled rope.",
+          "notice": "A bellhop's cart carries a neatly coiled rope.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -1465,7 +1675,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "climb.aid"
         }
       ],
       "npcs": [],
@@ -1481,13 +1692,15 @@
       "name": "Squalor: Elevator Shaft",
       "description": "A dark, empty void where elevators used to be. Cables hang like spider silk.",
       "exits": {
-        "U": [
+        "LOBBY": [
           {
             "to": 35,
             "requires": [
-              "climbing-gear"
+              "climb.aid"
             ],
-            "blocked_text": "Something unseen prevents passage."
+            "blocked_text": "You'd need climbing equipment to safely ascend back to the lobby.",
+            "short_desc": "Squalor Lobby - back up to the cavernous space with 'IN' art",
+            "traversal": "You carefully climb back up to the lobby, your gear scraping against the shaft walls."
           }
         ]
       },
@@ -1503,13 +1716,15 @@
     {
       "id": 37,
       "name": "Squalor: Jerome & Esmé Apartment",
-      "description": "Sprawling rooms full of ‘in’ items arranged impractically; windows look out onto rumors.",
+      "description": "Sprawling rooms full of 'in' items arranged impractically; windows look out onto rumors.",
       "exits": {
-        "D": [
+        "LOBBY": [
           {
             "to": 35,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Squalor Lobby - back down to the cavernous space below",
+            "traversal": "You take the elevator down to the lobby, leaving the impractical 'IN' arrangements behind."
           }
         ]
       },
@@ -1517,7 +1732,7 @@
         {
           "name": "In-Style Magazine",
           "find_difficulty": 3,
-          "notice": "Taking a moment to look around Squalor: Jerome & Esmé Apartment, you notice a In-Style Magazine where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Squalor: Jerome & Esmé Apartment, you notice a In-Style Magazine where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -1526,12 +1741,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Needlessly Long Cigarette Holder",
           "find_difficulty": 2,
-          "notice": "Taking a moment to look around Squalor: Jerome & Esmé Apartment, you notice a Needlessly Long Cigarette Holder where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Squalor: Jerome & Esmé Apartment, you notice a Needlessly Long Cigarette Holder where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -1540,7 +1756,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         }
       ],
       "npcs": [
@@ -1571,18 +1788,22 @@
       "name": "Crow Road",
       "description": "A road white with droppings at dawn when the crows lift, and black with birds at dusk when they return.",
       "exits": {
-        "W": [
+        "VILLAGE": [
           {
             "to": 39,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "VFD Village Town Square - rule plaques and cawing fountain spectators",
+            "traversal": "You head west toward the village, crows lifting from the road to announce your arrival."
           }
         ],
-        "S": [
+        "JUNCTION": [
           {
             "to": 10,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Regional Rail Junction - back to the soot-smudged platform web",
+            "traversal": "You walk south back to the rail junction, crow droppings crunching under your feet."
           }
         ]
       },
@@ -1600,42 +1821,50 @@
       "name": "VFD Village: Town Square",
       "description": "Rule plaques on every post; a fountain surrounded by cawing spectators.",
       "exits": {
-        "N": [
+        "HALL": [
           {
             "to": 40,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "VFD Village Council Hall - long benches and stern portraits",
+            "traversal": "You walk north to the council hall, rule plaques giving way to stern portraits of officials."
           }
         ],
-        "S": [
+        "JAIL": [
           {
             "to": 41,
             "requires": [
-              "warrant"
+              "permit.jail_access"
             ],
-            "blocked_text": "Something unseen prevents passage."
+            "blocked_text": "The jail entrance is locked - you'd need proper authorization to enter.",
+            "short_desc": "VFD Village Jailhouse - iron bars and a missing key",
+            "traversal": "You present your credentials and enter the jailhouse, iron bars clanging shut behind you."
           }
         ],
-        "E": [
+        "CROW": [
           {
             "to": 38,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Crow Road - back to the white-stained road",
+            "traversal": "You head east back to Crow Road, crows following your departure with keen interest."
           }
         ],
-        "W": [
+        "HECTOR": [
           {
             "to": 42,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "VFD Village Hector's House - tinkerer's paradise of balloons and blueprints",
+            "traversal": "You walk west to Hector's house, balloon contraptions visible through the windows."
           }
         ]
       },
       "items": [
         {
-          "name": "Temporary Work Permit",
+          "name": "Writ (Stamped Copy)",
           "find_difficulty": 2,
-          "notice": "You notice a Temporary Work Permit tucked where anyone might find it.",
+          "notice": "You notice a Writ (Stamped Copy) tucked where anyone might find it.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -1644,12 +1873,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "permit.jail_access"
         },
         {
-          "name": "Temporary Work Permit",
+          "name": "Stamped Writ",
           "find_difficulty": 2,
-          "notice": "A notice board has a Temporary Work Permit tucked under a thumbtack.",
+          "notice": "A notice board has a stamped writ tucked under a thumbtack.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -1658,7 +1888,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "permit.jail_access"
         }
       ],
       "npcs": [
@@ -1695,11 +1926,13 @@
       "name": "VFD Village: Council Hall",
       "description": "Long benches, stern portraits, and a bell that rings more often than it is needed.",
       "exits": {
-        "S": [
+        "SQUARE": [
           {
             "to": 39,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "VFD Village Town Square - back to the rule plaques and cawing fountain",
+            "traversal": "You head south back to the town square, leaving the stern portraits behind."
           }
         ]
       },
@@ -1716,7 +1949,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Rulebook",
@@ -1730,7 +1964,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         }
       ],
       "npcs": [],
@@ -1746,13 +1981,15 @@
       "name": "VFD Village: Jailhouse",
       "description": "Iron bars and a key that is always missing when justice is required.",
       "exits": {
-        "N": [
+        "SQUARE": [
           {
             "to": 39,
             "requires": [
-              "warrant"
+              "permit.jail_access"
             ],
-            "blocked_text": "Something unseen prevents passage."
+            "blocked_text": "You need proper authorization to leave through the main entrance.",
+            "short_desc": "VFD Village Town Square - back to the fountain and rule plaques",
+            "traversal": "You present your credentials again and exit the jailhouse, returning to the town square."
           }
         ]
       },
@@ -1760,7 +1997,7 @@
         {
           "name": "Rusty Bars",
           "find_difficulty": 3,
-          "notice": "Taking a moment to look around VFD Village: Jailhouse, you notice a Rusty Bars where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around VFD Village: Jailhouse, you notice a Rusty Bars where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -1769,12 +2006,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Cotteny Blanket",
           "find_difficulty": 3,
-          "notice": "Taking a moment to look around VFD Village: Jailhouse, you notice a Cotteny Blanket where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around VFD Village: Jailhouse, you notice a Cotteny Blanket where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -1783,7 +2021,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         }
       ],
       "npcs": [],
@@ -1796,14 +2035,16 @@
     },
     {
       "id": 42,
-      "name": "VFD Village: Hector’s House",
-      "description": "A tinkerer’s paradise of balloons, contraptions, and blueprints for impossible freedom.",
+      "name": "VFD Village: Hector's House",
+      "description": "A tinkerer's paradise of balloons, contraptions, and blueprints for impossible freedom.",
       "exits": {
-        "E": [
+        "SQUARE": [
           {
             "to": 39,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "VFD Village Town Square - back to the fountain and rule plaques",
+            "traversal": "You step east back to the town square, balloon contraptions and blueprints behind you."
           }
         ]
       },
@@ -1821,18 +2062,22 @@
       "name": "Hospital Drive",
       "description": "A bleak driveway edged with dying hedges and optimistic signage.",
       "exits": {
-        "E": [
+        "HEIMLICH": [
           {
             "to": 44,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Heimlich Lobby - flickering fluorescents and pamphlets that cure nothing",
+            "traversal": "You walk east up the hospital driveway, optimistic signage giving way to flickering fluorescents."
           }
         ],
-        "N": [
+        "JUNCTION": [
           {
             "to": 10,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Regional Rail Junction - back to the soot-smudged platform web",
+            "traversal": "You head north back to the rail junction, leaving the dying hedges behind."
           }
         ]
       },
@@ -1850,34 +2095,42 @@
       "name": "Heimlich: Lobby",
       "description": "Flickering fluorescents and pamphlets that cure nothing.",
       "exits": {
-        "N": [
+        "RECORDS": [
           {
             "to": 45,
             "requires": [
-              "access-pass"
+              "credential.staff"
             ],
-            "blocked_text": "Something unseen prevents passage."
+            "blocked_text": "The records library is restricted - you'd need staff credentials to enter.",
+            "short_desc": "Heimlich Records Library - dust, index cards, and misfiled truth",
+            "traversal": "You show your staff credentials and enter the records library, dust motes swirling in the dim light."
           }
         ],
-        "S": [
+        "THEATER": [
           {
             "to": 46,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Heimlich Operating Theater - sharp lights, sharper tools",
+            "traversal": "You push south through the swinging doors into the operating theater, sharp lights reflecting off instruments."
           }
         ],
-        "U": [
+        "ROOFTOP": [
           {
             "to": 47,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Heimlich Rooftop - gravel, exhaust vents, and a long way down",
+            "traversal": "You climb up to the rooftop, fluorescent light giving way to open sky and exhaust vents."
           }
         ],
-        "W": [
+        "DRIVE": [
           {
             "to": 43,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Hospital Drive - back to the bleak driveway and dying hedges",
+            "traversal": "You walk west back down the hospital driveway, flickering lights fading behind you."
           }
         ]
       },
@@ -1885,7 +2138,7 @@
         {
           "name": "Visitor Badge",
           "find_difficulty": 2,
-          "notice": "A plastic Visitor Badge sits in a tray near the desk.",
+          "notice": "A plastic visitor badge sits in a tray near the desk.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -1894,7 +2147,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "credential.staff"
         }
       ],
       "npcs": [
@@ -1903,7 +2157,7 @@
           "accepts": [
             "Patient File"
           ],
-          "flavor": "One stamp in the wrong place and it’s the end of the world.",
+          "flavor": "One stamp in the wrong place and it's the end of the world.",
           "reacts_to": {
             "types": [
               "paper.patient"
@@ -1926,13 +2180,15 @@
       "name": "Heimlich: Records Library",
       "description": "Dust and index cards; the truth is filed under letters no one checks.",
       "exits": {
-        "S": [
+        "LOBBY": [
           {
             "to": 44,
             "requires": [
-              "access-pass"
+              "credential.staff"
             ],
-            "blocked_text": "Something unseen prevents passage."
+            "blocked_text": "You need staff credentials to exit back to the lobby.",
+            "short_desc": "Heimlich Lobby - back to the flickering fluorescents",
+            "traversal": "You show your credentials and exit the records library, dust settling behind you."
           }
         ]
       },
@@ -1940,7 +2196,7 @@
         {
           "name": "Index Card",
           "find_difficulty": 7,
-          "notice": "Leafing through a stack of papers in Heimlich: Records Library, you notice the edge of a Index Card that doesn’t quite match the others.",
+          "notice": "Leafing through a stack of papers in Heimlich: Records Library, you notice the edge of a Index Card that doesn't quite match the others.",
           "check": {
             "skill": "search",
             "dc": 7,
@@ -1952,12 +2208,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Sorting papers, checking spines and misfiled edges helps."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Patient File",
           "find_difficulty": 4,
-          "notice": "Leafing through a stack of papers in Heimlich: Records Library, you notice the edge of a Patient File that doesn’t quite match the others.",
+          "notice": "Leafing through a stack of papers in Heimlich: Records Library, you notice the edge of a Patient File that doesn't quite match the others.",
           "check": {
             "skill": "search",
             "dc": 4,
@@ -1969,12 +2226,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Sorting papers, checking spines and misfiled edges helps."
-          }
+          },
+          "type": "generic"
         },
         {
-          "name": "Employee Badge",
+          "name": "Staff Pass",
           "find_difficulty": 2,
-          "notice": "Taking a moment to look around Heimlich: Records Library, you notice a Employee Badge where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Heimlich: Records Library, you notice a Staff Pass where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -1983,7 +2241,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "credential.staff"
         },
         {
           "name": "Maintenance Badge",
@@ -1997,7 +2256,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "credential.staff"
         }
       ],
       "npcs": [],
@@ -2013,11 +2273,13 @@
       "name": "Heimlich: Operating Theater",
       "description": "Sharp lights, sharper tools, and a curtain people hide behind when they ought to leave.",
       "exits": {
-        "N": [
+        "LOBBY": [
           {
             "to": 44,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Heimlich Lobby - back to the fluorescent-lit waiting area",
+            "traversal": "You push north back through the swinging doors to the lobby, leaving the sharp instruments behind."
           }
         ]
       },
@@ -2035,11 +2297,13 @@
       "name": "Heimlich: Rooftop",
       "description": "Gravel, exhaust vents, and a long way down.",
       "exits": {
-        "D": [
+        "LOBBY": [
           {
             "to": 44,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Heimlich Lobby - back down to the fluorescent-lit interior",
+            "traversal": "You climb back down from the rooftop, exhaust vents and open sky giving way to flickering lights."
           }
         ]
       },
@@ -2057,23 +2321,31 @@
       "name": "Desert Road",
       "description": "A ribbon of dust leading to a carnival that pretends to be cheerful and mountains that do not pretend at all.",
       "exits": {
-        "W": [
+        "CARNIVAL": [
           {
             "to": 49,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Caligari Big Top - faded stripes and forced applause",
+            "traversal": "You head west toward the carnival, faded tent stripes and the sound of forced applause growing louder."
           }
         ],
-        "N": [
+        "MOUNTAIN": [
           {
             "to": 52,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "Mountain Road - switchback track with snowshoe prints",
+            "traversal": "You turn north toward the mountains, the air growing thinner and colder with each step."
+          }
+        ],
+        "JUNCTION": [
           {
             "to": 10,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Regional Rail Junction - back to the soot-smudged platform web",
+            "traversal": "You head north back to the rail junction, leaving the desert dust behind."
           }
         ]
       },
@@ -2091,23 +2363,31 @@
       "name": "Caligari: Big Top",
       "description": "A tent of faded stripes and forced applause.",
       "exits": {
-        "N": [
+        "FREAKS": [
           {
             "to": 50,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Caligari House of Freaks - drafty side tent where kindness is an act",
+            "traversal": "You walk north to the side tent, the sounds of genuine kindness and performed cruelty mingling."
           }
         ],
-        "E": [
+        "FORTUNE": [
           {
             "to": 51,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "Caligari Fortune Teller Tent - Madame Lulu's perfumed drapery",
+            "traversal": "You step east into the fortune teller's tent, perfumed air and crystal ball gleaming in candlelight."
+          }
+        ],
+        "DESERT": [
           {
             "to": 48,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Desert Road - back to the dusty ribbon toward mountains",
+            "traversal": "You exit east back to the desert road, leaving the faded carnival behind."
           }
         ]
       },
@@ -2125,11 +2405,13 @@
       "name": "Caligari: House of Freaks",
       "description": "A drafty side tent where kindness is an act and cruelty is the audience.",
       "exits": {
-        "S": [
+        "BIGTOP": [
           {
             "to": 49,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Caligari Big Top - back to the faded stripes and forced applause",
+            "traversal": "You return south to the main tent, leaving the complex moral theater behind."
           }
         ]
       },
@@ -2145,13 +2427,15 @@
     {
       "id": 51,
       "name": "Caligari: Fortune Teller Tent",
-      "description": "Madame Lulu’s perfumed drapery and a crystal ball that knows only what it is told.",
+      "description": "Madame Lulu's perfumed drapery and a crystal ball that knows only what it is told.",
       "exits": {
-        "W": [
+        "BIGTOP": [
           {
             "to": 49,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Caligari Big Top - back to the main carnival tent",
+            "traversal": "You push west through the perfumed curtains back to the main tent, crystal ball gleaming behind you."
           }
         ]
       },
@@ -2159,7 +2443,7 @@
         {
           "name": "Tarot Card",
           "find_difficulty": 3,
-          "notice": "Taking a moment to look around Caligari: Fortune Teller Tent, you notice a Tarot Card where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Caligari: Fortune Teller Tent, you notice a Tarot Card where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -2168,12 +2452,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Ticket Stub",
           "find_difficulty": 2,
-          "notice": "Taking a moment to look around Caligari: Fortune Teller Tent, you notice a Ticket Stub where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Caligari: Fortune Teller Tent, you notice a Ticket Stub where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -2182,7 +2467,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Donation Box",
@@ -2196,7 +2482,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Look behind crates and under furniture."
-          }
+          },
+          "type": "generic"
         }
       ],
       "npcs": [
@@ -2231,18 +2518,22 @@
       "name": "Mountain Road",
       "description": "A switchback track littered with snowshoe prints and splinters of sleds.",
       "exits": {
-        "N": [
+        "MORTMAIN": [
           {
             "to": 53,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Mortmain Mountain Path - ice-glazed ledges and rope bridges",
+            "traversal": "You climb north up the switchback track to the mountain path, ice glazing the rocky ledges."
           }
         ],
-        "S": [
+        "DESERT": [
           {
             "to": 48,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Desert Road - back down to the dusty ribbon and carnival",
+            "traversal": "You head south back down to the desert road, leaving the cold mountain air behind."
           }
         ]
       },
@@ -2260,30 +2551,36 @@
       "name": "Mortmain: Mountain Path",
       "description": "Ice-glazed ledges, rope bridges, and signs eaten by goats.",
       "exits": {
-        "E": [
+        "FOREST": [
           {
             "to": 54,
             "requires": [
               "light.source"
             ],
-            "blocked_text": "Beyond this point is pitch-dark; without a reliable light source, moving forward would be reckless."
+            "blocked_text": "Beyond this point is pitch-dark; without a reliable light source, moving forward would be reckless.",
+            "short_desc": "Clusterous Forest - trees clustered tight with gossiping scrapes",
+            "traversal": "With your light source ready, you venture east into the clusterous forest, trees so tight your lantern barely fits between trunks."
           }
         ],
-        "U": [
+        "VANTAGE": [
           {
             "to": 56,
             "requires": [
-              "climbing-gear",
-              "cold-gear"
+              "climb.aid",
+              "eyepro.cold"
             ],
-            "blocked_text": "Something unseen prevents passage."
+            "blocked_text": "The climb to the vantage point requires both climbing gear and eye protection for the cold winds.",
+            "short_desc": "Mount Fraught Vantage - ledge that sees valleys of smoke and misfortune",
+            "traversal": "Using your climbing gear and goggles, you scale the treacherous path up to the vantage point, cold winds whipping your face."
           }
         ],
-        "S": [
+        "MOUNTAIN": [
           {
             "to": 52,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Mountain Road - back down the switchback track",
+            "traversal": "You carefully descend south back to the mountain road, ice-glazed ledges behind you."
           }
         ]
       },
@@ -2300,12 +2597,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "climb.aid"
         },
         {
           "name": "Snow Goggles",
           "find_difficulty": 1,
-          "notice": "A scuff mark on the floor of Mortmain: Mountain Path leads your eyes to the Snow face shield propped against the wall.",
+          "notice": "A scuff mark on the floor of Mortmain: Mountain Path leads your eyes to the Snow Goggles propped against the wall.",
           "check": {
             "skill": "search",
             "dc": 1,
@@ -2314,7 +2612,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "eyepro.cold"
         },
         {
           "name": "Rope Coil",
@@ -2328,12 +2627,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "climb.aid"
         },
         {
           "name": "Headlamp",
           "find_difficulty": 2,
-          "notice": "A battered Headlamp hangs from a trail marker.",
+          "notice": "A battered headlamp hangs from a trail marker.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -2342,7 +2642,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "light.source"
         }
       ],
       "npcs": [],
@@ -2355,23 +2656,27 @@
     },
     {
       "id": 54,
-      "name": "Clustered Pines",
-      "description": "Trees clustered so tight they gossip in scrapes; headlamp light barely fits between trunks.",
+      "name": "Clusterous Forest",
+      "description": "Trees clustered so tight they gossip in scrapes; lantern light barely fits between trunks.",
       "exits": {
-        "N": [
+        "SCOUTS": [
           {
             "to": 55,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Snow Scouts Camp - neat rows of tents with badges for everything but bravery",
+            "traversal": "You push north through the clustered trees to the scout camp, neat tent rows visible through the forest gaps."
           }
         ],
-        "W": [
+        "PATH": [
           {
             "to": 53,
             "requires": [
-              "light-source"
+              "light.source"
             ],
-            "blocked_text": "Something unseen prevents passage."
+            "blocked_text": "You need a light source to safely navigate back through the dark forest path.",
+            "short_desc": "Mortmain Mountain Path - back to the ice-glazed ledges",
+            "traversal": "With your light leading the way, you navigate west back through the clusterous forest to the mountain path."
           }
         ]
       },
@@ -2379,7 +2684,7 @@
         {
           "name": "Lantern",
           "find_difficulty": 3,
-          "notice": "While adjusting to the light in Clustered Pines, you spot a headlamp hanging from a hook near the shadows.",
+          "notice": "While adjusting to the light in Clusterous Forest, you spot a Lantern hanging from a hook near the shadows.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -2388,12 +2693,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Lighting conditions improve visibility."
-          }
+          },
+          "type": "light.unlit"
         },
         {
           "name": "Oil Flask",
           "find_difficulty": 3,
-          "notice": "While adjusting to the light in Clustered Pines, you spot a Oil Flask hanging from a hook near the shadows.",
+          "notice": "While adjusting to the light in Clusterous Forest, you spot a Oil Flask hanging from a hook near the shadows.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -2402,10 +2708,11 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Lighting conditions improve visibility."
-          }
+          },
+          "type": "fuel.oil"
         },
         {
-          "name": "Rust Seal",
+          "name": "Forest Seal",
           "find_difficulty": 6,
           "notice": "Hidden in a hollow trunk, a carved seal pulses faintly with old V.F.D. marks.",
           "check": {
@@ -2416,7 +2723,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Well-concealed; thorough search required."
-          }
+          },
+          "type": "artifact.forest_seal"
         }
       ],
       "npcs": [],
@@ -2432,13 +2740,15 @@
       "name": "Snow Scouts: Camp",
       "description": "Neat rows of tents with badges for nearly everything but bravery.",
       "exits": {
-        "S": [
+        "FOREST": [
           {
             "to": 54,
             "requires": [
               "light.source"
             ],
-            "blocked_text": "Beyond this point is pitch-dark; without a reliable light source, moving forward would be reckless."
+            "blocked_text": "Beyond this point is pitch-dark; without a reliable light source, moving forward would be reckless.",
+            "short_desc": "Clusterous Forest - back to the gossiping trees",
+            "traversal": "With your light source ready, you head south back into the pitch-dark clusterous forest."
           }
         ]
       },
@@ -2446,7 +2756,7 @@
         {
           "name": "Headlamp",
           "find_difficulty": 2,
-          "notice": "A battered Headlamp hangs from a trail marker, just before the dark stretch ahead.",
+          "notice": "A battered headlamp hangs from a trail marker, just before the dark stretch ahead.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -2455,7 +2765,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "light.source"
         }
       ],
       "npcs": [
@@ -2479,14 +2790,16 @@
       "name": "Mount Fraught: Vantage",
       "description": "A ledge that sees too much: valleys of smoke, eagles, and misfortune.",
       "exits": {
-        "D": [
+        "PATH": [
           {
             "to": 53,
             "requires": [
-              "climbing-gear",
-              "cold-gear"
+              "climb.aid",
+              "eyepro.cold"
             ],
-            "blocked_text": "Something unseen prevents passage."
+            "blocked_text": "You need both climbing gear and cold-weather protection to safely descend.",
+            "short_desc": "Mortmain Mountain Path - back down to the ice-glazed ledges",
+            "traversal": "Using your climbing gear carefully, you descend back to the mountain path, goggles protecting your eyes from the wind."
           }
         ]
       },
@@ -2502,20 +2815,24 @@
     {
       "id": 57,
       "name": "Stricken Stream: Dock",
-      "description": "A wavering pier over waters that look clean and aren’t.",
+      "description": "A wavering pier over waters that look clean and aren't.",
       "exits": {
-        "D": [
+        "SUBMARINE": [
           {
             "to": 58,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Queequeg Control Room - periscopes, valves, and disaster logbook",
+            "traversal": "You climb down into the submarine through the conning tower hatch, valves hissing around you."
           }
         ],
-        "S": [
+        "COAST": [
           {
             "to": 23,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Coastal Road - back to the road following the gnashing surf",
+            "traversal": "You head south back to the coastal road, leaving the deceptively clean waters behind."
           }
         ]
       },
@@ -2533,42 +2850,50 @@
       "name": "Queequeg: Control Room",
       "description": "Periscopes, valves, and a logbook of disasters narrowly avoided.",
       "exits": {
-        "S": [
+        "GALLEY": [
           {
             "to": 59,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Queequeg Galley - tiny kitchen where soup sloshes with each turn",
+            "traversal": "You duck south through the narrow submarine corridor to the galley, soup sloshing in its pot."
           }
         ],
-        "W": [
+        "BUNKS": [
           {
             "to": 60,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Queequeg Bunks - narrow beds insisting on dreams of drowning",
+            "traversal": "You head west to the submarine bunks, the narrow space filled with the sound of lapping water."
           }
         ],
-        "E": [
+        "GROTTO": [
           {
             "to": 61,
             "requires": [
-              "underwater-gear"
+              "dive.rig"
             ],
-            "blocked_text": "Something unseen prevents passage."
+            "blocked_text": "You need a diving rig to safely enter the underwater grotto.",
+            "short_desc": "Gorgonian Grotto - underwater cave whose spores don't accept apologies",
+            "traversal": "Suited in your diving rig, you swim east through the airlock into the underwater grotto."
           }
         ],
-        "U": [
+        "DOCK": [
           {
             "to": 57,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Stricken Stream Dock - back up to the wavering pier",
+            "traversal": "You climb up through the conning tower hatch back to the dock, submarine controls behind you."
           }
         ]
       },
       "items": [
         {
-          "name": "Safety Hardhat",
+          "name": "Diving Helmet",
           "find_difficulty": 2,
-          "notice": "A scuff mark on the floor of Queequeg: Control Room leads your eyes to the Safety Hardhat propped against the wall.",
+          "notice": "A scuff mark on the floor of Queequeg: Control Room leads your eyes to the Diving Helmet propped against the wall.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -2577,12 +2902,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "dive.helmet"
         },
         {
-          "name": "Compressed Air Tank",
+          "name": "Oxygen Tank",
           "find_difficulty": 1,
-          "notice": "A scuff mark on the floor of Queequeg: Control Room leads your eyes to the Compressed Air Tank propped against the wall.",
+          "notice": "A scuff mark on the floor of Queequeg: Control Room leads your eyes to the Oxygen Tank propped against the wall.",
           "check": {
             "skill": "search",
             "dc": 1,
@@ -2591,12 +2917,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "dive.oxygen"
         },
         {
           "name": "Logbook",
           "find_difficulty": 4,
-          "notice": "Taking a moment to look around Queequeg: Control Room, you notice a Logbook where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Queequeg: Control Room, you notice a Logbook where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 4,
@@ -2605,12 +2932,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         },
         {
-          "name": "Old Safety Hardhat",
+          "name": "Old Diving Helmet",
           "find_difficulty": 2,
-          "notice": "You notice a Old Safety Hardhat tucked where anyone might find it.",
+          "notice": "You notice a Old Diving Helmet tucked where anyone might find it.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -2619,7 +2947,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "dive.helmet"
         },
         {
           "name": "Compressed Air Tank",
@@ -2633,7 +2962,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "dive.oxygen"
         }
       ],
       "npcs": [],
@@ -2649,11 +2979,13 @@
       "name": "Queequeg: Galley",
       "description": "A tiny kitchen where soup sloshes with each turn of the propeller.",
       "exits": {
-        "N": [
+        "CONTROL": [
           {
             "to": 58,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Queequeg Control Room - back to periscopes and disaster logbook",
+            "traversal": "You duck north back to the control room, leaving the sloshing soup behind."
           }
         ]
       },
@@ -2671,11 +3003,13 @@
       "name": "Queequeg: Bunks",
       "description": "Narrow bunks that insist on dreams about drowning.",
       "exits": {
-        "E": [
+        "CONTROL": [
           {
             "to": 58,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Queequeg Control Room - back to the submarine's nerve center",
+            "traversal": "You head east back to the control room, narrow bunks and dreams of drowning behind you."
           }
         ]
       },
@@ -2690,16 +3024,18 @@
     },
     {
       "id": 61,
-      "name": "Gorgonian sump",
+      "name": "Gorgonian Grotto",
       "description": "An underwater cave whose spores do not accept apologies.",
       "exits": {
-        "W": [
+        "SUBMARINE": [
           {
             "to": 58,
             "requires": [
-              "underwater-gear"
+              "dive.rig"
             ],
-            "blocked_text": "Something unseen prevents passage."
+            "blocked_text": "You need a diving rig to safely return to the submarine.",
+            "short_desc": "Queequeg Control Room - back to the submarine's safety",
+            "traversal": "In your diving rig, you swim west back through the airlock to the submarine's control room."
           }
         ]
       },
@@ -2707,7 +3043,7 @@
         {
           "name": "Medusoid Mycelium",
           "find_difficulty": 3,
-          "notice": "Taking a moment to look around Gorgonian sump, you notice a Medusoid Mycelium where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Gorgonian Grotto, you notice a Medusoid Mycelium where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -2716,7 +3052,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         }
       ],
       "npcs": [],
@@ -2732,18 +3069,22 @@
       "name": "Hotel: Drive",
       "description": "A sweeping drive that reflects the building twice—once in the puddles and once in your doubts.",
       "exits": {
-        "E": [
+        "HOTEL": [
           {
             "to": 63,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Hotel Lobby - mirrored walls, mirrored guests, mirrored intentions",
+            "traversal": "You walk east up the sweeping drive to the hotel entrance, reflections multiplying around you."
           }
         ],
-        "S": [
+        "JUNCTION": [
           {
             "to": 10,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Regional Rail Junction - back to the soot-smudged platform web",
+            "traversal": "You head south back to the rail junction, the hotel's imposing silhouette fading behind you."
           }
         ]
       },
@@ -2761,39 +3102,51 @@
       "name": "Hotel: Lobby",
       "description": "Mirrored walls, mirrored guests, and mirrored intentions.",
       "exits": {
-        "D": [
+        "LAUNDRY": [
           {
             "to": 64,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "Hotel Laundry - hot, damp air and sheets that hide messages",
+            "traversal": "You descend to the laundry, hot damp air and the sound of hidden messages rustling in sheets."
+          }
+        ],
+        "BASEMENT": [
           {
             "to": 67,
             "requires": [
-              "key-lowsec"
+              "key.lowsec"
             ],
-            "blocked_text": "Something unseen prevents passage."
+            "blocked_text": "The basement library is locked - you need a proper key to access it.",
+            "short_desc": "Hotel Basement Library - index by water and catalog by courage",
+            "traversal": "Using your key, you unlock the basement door and descend to the library, water damage visible on ancient catalogs."
           }
         ],
-        "E": [
+        "SAUNA": [
           {
             "to": 65,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Hotel Sauna - steam thick enough to swallow secrets whole",
+            "traversal": "You walk east into the sauna, steam immediately enveloping you like a secret-swallowing fog."
           }
         ],
-        "U": [
+        "ROOFTOP": [
           {
             "to": 66,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Hotel Rooftop - sun loungers, signaling flags, and view of future fires",
+            "traversal": "You climb up to the rooftop, mirrored lobby giving way to open sky and ominous views."
           }
         ],
-        "W": [
+        "DRIVE": [
           {
             "to": 62,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Hotel Drive - back to the sweeping approach with doubled reflections",
+            "traversal": "You walk west back down the hotel drive, reflections multiplying as you leave."
           }
         ]
       },
@@ -2801,7 +3154,7 @@
         {
           "name": "Lantern",
           "find_difficulty": 2,
-          "notice": "You notice a headlamp tucked where anyone might find it.",
+          "notice": "You notice a Lantern tucked where anyone might find it.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -2810,10 +3163,11 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "light.unlit"
         },
         {
-          "name": "Master Key (Spare)",
+          "name": "Spare Master Key",
           "find_difficulty": 2,
           "notice": "A brass key on a worn tag reads MASTER.",
           "check": {
@@ -2824,7 +3178,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "key.lowsec"
         }
       ],
       "npcs": [],
@@ -2840,11 +3195,13 @@
       "name": "Hotel: Laundry",
       "description": "Hot, damp air and sheets that try to hide messages.",
       "exits": {
-        "U": [
+        "LOBBY": [
           {
             "to": 63,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Hotel Lobby - back up to the mirrored intentions",
+            "traversal": "You climb back up to the lobby, leaving the hot damp air and hidden messages behind."
           }
         ]
       },
@@ -2862,11 +3219,13 @@
       "name": "Hotel: Sauna",
       "description": "Steam thick enough to swallow secrets whole.",
       "exits": {
-        "W": [
+        "LOBBY": [
           {
             "to": 63,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Hotel Lobby - back to the mirrored walls and guests",
+            "traversal": "You emerge west from the sauna back to the lobby, steam and swallowed secrets behind you."
           }
         ]
       },
@@ -2884,11 +3243,13 @@
       "name": "Hotel: Rooftop",
       "description": "Sun loungers, signaling flags, and a view of fires yet to start.",
       "exits": {
-        "D": [
+        "LOBBY": [
           {
             "to": 63,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Hotel Lobby - back down to the mirrored interior",
+            "traversal": "You descend back to the lobby, leaving the ominous view of future fires behind."
           }
         ]
       },
@@ -2906,13 +3267,15 @@
       "name": "Hotel: Basement Library",
       "description": "An index by water and a catalog by courage.",
       "exits": {
-        "U": [
+        "LOBBY": [
           {
             "to": 63,
             "requires": [
-              "key-lowsec"
+              "key.lowsec"
             ],
-            "blocked_text": "Something unseen prevents passage."
+            "blocked_text": "You need a proper key to unlock the basement door.",
+            "short_desc": "Hotel Lobby - back up to the mirrored world above",
+            "traversal": "You use your key to unlock the basement door and climb back to the lobby, water-damaged catalogs behind you."
           }
         ]
       },
@@ -2932,12 +3295,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Listen and feel for hidden catches and false bottoms."
-          }
+          },
+          "type": "key.lowsec"
         },
         {
           "name": "Catalog Map",
           "find_difficulty": 4,
-          "notice": "Leafing through a stack of papers in Hotel: Basement Library, you notice the edge of a Catalog Map that doesn’t quite match the others.",
+          "notice": "Leafing through a stack of papers in Hotel: Basement Library, you notice the edge of a Catalog Map that doesn't quite match the others.",
           "check": {
             "skill": "search",
             "dc": 4,
@@ -2949,7 +3313,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Sorting papers, checking spines and misfiled edges helps."
-          }
+          },
+          "type": "generic"
         }
       ],
       "npcs": [
@@ -2985,21 +3350,25 @@
     },
     {
       "id": 68,
-      "name": "lake Route",
+      "name": "Sea Route",
       "description": "A treacherous span of open water plied by dinghies and dubious moral lessons.",
       "exits": {
-        "S": [
+        "ISLAND": [
           {
             "to": 69,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Island Shore - white sand, pale sun, and squeaking sandals",
+            "traversal": "You navigate south across the treacherous waters to the island, dubious moral lessons echoing across the waves."
           }
         ],
-        "N": [
+        "COAST": [
           {
             "to": 23,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Coastal Road - back to the road following gnashing surf",
+            "traversal": "You head north back to the coastal road, leaving the open water and moral lessons behind."
           }
         ]
       },
@@ -3014,28 +3383,34 @@
     },
     {
       "id": 69,
-      "name": "Island: lakeshore",
+      "name": "Island: Shore",
       "description": "White sand, pale sun, and the squeak of sandals avoiding responsibility.",
       "exits": {
-        "W": [
+        "COLONY": [
           {
             "to": 70,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Island Colony Tent - communal decisions made by the loudest cough",
+            "traversal": "You walk west across the sand to the colony tent, sandals squeaking with each step."
           }
         ],
-        "E": [
+        "ORCHARD": [
           {
             "to": 72,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Island Orchard - twisted trees with apples that cure and cause",
+            "traversal": "You head east toward the orchard, twisted tree shapes visible against the pale sun."
           }
         ],
-        "N": [
+        "SEA": [
           {
             "to": 68,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Sea Route - back to the treacherous waters and dubious lessons",
+            "traversal": "You wade north back into the treacherous waters, island shore shrinking behind you."
           }
         ]
       },
@@ -3053,18 +3428,22 @@
       "name": "Island: Colony Tent",
       "description": "A communal tent where decisions are made by the loudest cough.",
       "exits": {
-        "S": [
+        "HUT": [
           {
             "to": 71,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Island Ishmael's Hut - clay chair, robe, and soft authority",
+            "traversal": "You walk south to Ishmael's hut, the sounds of communal decision-making fading behind you."
           }
         ],
-        "E": [
+        "SHORE": [
           {
             "to": 69,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Island Shore - back to the white sand and squeaking sandals",
+            "traversal": "You head east back to the shore, leaving the tent of loud coughs behind."
           }
         ]
       },
@@ -3079,14 +3458,16 @@
     },
     {
       "id": 71,
-      "name": "Island: Ishmael’s Hut",
-      "description": "A clay chair, a robe, and the soft authority of someone who says ‘we don’t do that here’.",
+      "name": "Island: Ishmael's Hut",
+      "description": "A clay chair, a robe, and the soft authority of someone who says 'we don't do that here'.",
       "exits": {
-        "N": [
+        "COLONY": [
           {
             "to": 70,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Island Colony Tent - back to communal decisions and loud coughs",
+            "traversal": "You walk north back to the colony tent, soft authority giving way to loud communal decisions."
           }
         ]
       },
@@ -3104,11 +3485,13 @@
       "name": "Island: Orchard",
       "description": "Twisted trees heavy with apples that cure and cause in equal measure.",
       "exits": {
-        "W": [
+        "SHORE": [
           {
             "to": 69,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Island Shore - back to the white sand and responsibility-avoiding sandals",
+            "traversal": "You walk west back to the shore, leaving the twisted trees and their ambiguous fruit behind."
           }
         ]
       },
@@ -3123,25 +3506,43 @@
     },
     {
       "id": 73,
-      "name": "Rust Junction Station",
-      "description": "A forlorn platform where trains pause out of habit more than schedule.",
+      "name": "Train Station: Ironhaven Terminus",
+      "description": "A rust-colored platform where ore trains pause out of habit more than schedule.",
       "exits": {
-        "S": [
+        "STAINED": [
           {
             "to": 74,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Main Street Ironhaven - shuttered storefronts and the smell of slag",
+            "traversal": "You walk south from the rust-colored platform into the town, shuttered storefronts lining the soot-stained street."
           }
         ],
-        "W": [
+        "JUNCTION": [
           {
             "to": 10,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Regional Rail Junction - back to the soot-smudged platform web",
+            "traversal": "You board the westbound train back to the rail junction, Ironhaven's industrial gloom fading behind you."
           }
         ]
       },
-      "items": [],
+      "items": [
+        {
+          "name": "Pressurized Rig",
+          "find_difficulty": 6,
+          "notice": "An unclaimed crate bears a faded V.F.D. stencil; inside, a rig sleeps beneath packing straw.",
+          "check": {
+            "skill": "search",
+            "dc": 6,
+            "advantage_if_types": [],
+            "disadvantage_if_missing_types": [],
+            "notes": "Hidden early-game placement (post-starter-inventory removal)."
+          },
+          "type": "dive.rig"
+        }
+      ],
       "npcs": [],
       "darkness": {
         "is_dark": false,
@@ -3152,80 +3553,124 @@
     },
     {
       "id": 74,
-      "name": "Foundry Row (Rust)",
-      "description": "Shuttered storefronts, creaking signs, and the smell of ink even where ink should not be.",
+      "name": "Main Street (Ironhaven)",
+      "description": "Shuttered storefronts, creaking signs, and the smell of coal smoke and hot iron even where it should not be.",
       "exits": {
-        "E": [
+        "ARMS": [
           {
             "to": 75,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "The Foreman's Rest - crumbling hotel with a register full of aliases",
+            "traversal": "You walk east down the cobbled street to the sagging front steps of The Foreman's Rest, its rusted sign groaning in the breeze."
+          }
+        ],
+        "CLINIC": [
           {
             "to": 79,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "Company Clinic - sterile halls where injury reports are written in code",
+            "traversal": "You head toward the clinic's grime-streaked white entrance, the antiseptic smell already sharp in your nostrils."
+          }
+        ],
+        "FACTORY": [
           {
             "to": 78,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "Ironhaven Foundry - industrial vats and catwalks churning with molten secrets",
+            "traversal": "You approach the foundry's imposing brick facade, machinery humming and glowing ominously behind its tall windows."
+          }
+        ],
+        "KIOSK": [
           {
             "to": 100,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Shift Change Kiosk - plywood stand displaying workers' forgotten effects",
+            "traversal": "You amble over to the hand-painted kiosk, its slatted counter cluttered with forgotten tools and lunch pails."
           }
         ],
-        "S": [
+        "COFFEE": [
           {
             "to": 77,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "The Iron Mug Diner - clinking cups and conversations dodging the foreman",
+            "traversal": "You push through the diner's jingling door, warm air heavy with fried food and whispered grievances."
+          }
+        ],
+        "LIBRARY": [
           {
             "to": 84,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "Technical Library - stacks tied with string, survived three furnace explosions",
+            "traversal": "You climb the cracked steps to the library's heavy oak doors, soot motes dancing in the filtered light."
+          }
+        ],
+        "MUSEUM": [
           {
             "to": 85,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "Museum of Industry - curiosities culminating in an empty drill bit plinth",
+            "traversal": "You enter the museum's marble foyer, display cases gleaming under buzzing fluorescent lights."
+          }
+        ],
+        "SEABED": [
           {
             "to": 88,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "The Great Quarry Pit - rust-colored plains where mining machines sit like skeletons",
+            "traversal": "You step off the street onto the brittle, ore-dusted ground where the earth was torn open."
           }
         ],
-        "W": [
+        "POLICE": [
           {
             "to": 86,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Company Security Office - steel desk, whistle, and a handbook of violations",
+            "traversal": "You reluctantly approach the security office's austere entrance, official notices papering every surface."
           }
         ],
-        "N": [
+        "STATIONERS": [
           {
             "to": 87,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "Drafting & Supply - selling tools for blueprints and forged permits",
+            "traversal": "You duck into the narrow shop, shelves packed with drafting tools, blueprints, and possibilities."
+          }
+        ],
+        "ORPHANAGE": [
           {
             "to": 80,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "The Company Orphanage - preferring regulations to children",
+            "traversal": "You walk up to the imposing institutional building, its windows reflecting nothing but rules."
+          }
+        ],
+        "MANSION": [
           {
             "to": 81,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "Iron Baron's Manor - threadbare grandeur with missing fixtures",
+            "traversal": "You approach the once-grand estate, weeds pushing through cracks in its marble steps."
+          }
+        ],
+        "STATION": [
           {
             "to": 73,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Train Station - rust-colored platform where ore trains pause out of habit",
+            "traversal": "You head north toward the weathered platform, railway tracks stretching into uncertain distances."
           }
         ]
       },
@@ -3240,21 +3685,25 @@
     },
     {
       "id": 75,
-      "name": "The Iron Arms: Lobby",
-      "description": "A crumbling foyer with a guestbook that contains more rumors than names.",
+      "name": "The Foreman's Rest: Lobby",
+      "description": "A crumbling foyer with a guest register that contains more aliases than names.",
       "exits": {
-        "U": [
+        "ROOM": [
           {
             "to": 76,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "The Foreman's Rest Room - peeling wallpaper, groaning bed, hope on the floor",
+            "traversal": "You climb the groaning stairs to the hotel room, each step protesting ominously."
           }
         ],
-        "W": [
+        "STREET": [
           {
             "to": 74,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Main Street (Ironhaven) - back to the shuttered storefronts and smell of slag",
+            "traversal": "You walk west back to Main Street, leaving the crumbling hotel behind."
           }
         ]
       },
@@ -3262,7 +3711,7 @@
         {
           "name": "Attic Key",
           "find_difficulty": 6,
-          "notice": "As you test a loose drawer in The Iron Arms: Lobby, a glint catches your eye—the Attic Key wedged beneath the track.",
+          "notice": "As you test a loose drawer in The Foreman's Rest: Lobby, a glint catches your eye—the Attic Key wedged beneath the track.",
           "check": {
             "skill": "search",
             "dc": 6,
@@ -3271,7 +3720,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Listen and feel for hidden catches and false bottoms."
-          }
+          },
+          "type": "key.lowsec"
         },
         {
           "name": "Spare Locker Key",
@@ -3285,7 +3735,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "key.lowsec"
         },
         {
           "name": "Oil Flask",
@@ -3299,7 +3750,21 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "fuel.oil"
+        },
+        {
+          "name": "Lantern",
+          "find_difficulty": 4,
+          "notice": "Behind the front desk, a cold glass lens catches your eye when you duck to peek under the counter.",
+          "check": {
+            "skill": "search",
+            "dc": 4,
+            "advantage_if_types": [],
+            "disadvantage_if_missing_types": [],
+            "notes": "Hidden early-game placement (post-starter-inventory removal)."
+          },
+          "type": "light.unlit"
         }
       ],
       "npcs": [],
@@ -3312,14 +3777,16 @@
     },
     {
       "id": 76,
-      "name": "The Iron Arms: Room",
-      "description": "Peeling wallpaper, creaky bed, suitcase on a chair, hope on the floor.",
+      "name": "The Foreman's Rest: Room",
+      "description": "Peeling, rust-stained wallpaper, a groaning bed, a beat-up suitcase on a chair, and hope on the floor.",
       "exits": {
-        "D": [
+        "LOBBY": [
           {
             "to": 75,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "The Foreman's Rest Lobby - back down to the alias-filled guest register",
+            "traversal": "You descend the creaking stairs back to the lobby, hope left scattered on the floor behind you."
           }
         ]
       },
@@ -3334,38 +3801,46 @@
     },
     {
       "id": 77,
-      "name": "Copper Mug Café",
-      "description": "Clinking cups, a scratched counter, and conversations that dodge the truth.",
+      "name": "The Iron Mug Diner",
+      "description": "Clinking cups, a scratched formica counter, and conversations that dodge the foreman.",
       "exits": {
-        "U": [
+        "ATTIC": [
           {
             "to": 91,
             "requires": [
-              "key-lowsec"
+              "key.lowsec"
             ],
-            "blocked_text": "Something unseen prevents passage."
-          },
+            "blocked_text": "The attic access is locked - you need a proper key to get up there.",
+            "short_desc": "The Iron Mug Attic - low space with supply sacks and hidden ledgers",
+            "traversal": "Using your key, you unlock the attic access and climb up to the low, dust-filled space above."
+          }
+        ],
+        "SECRET": [
           {
             "to": 91,
             "requires": [
               "mechanism.button"
             ],
-            "blocked_text": "A small panel awaits a Silver Access Button press—it clicks invitingly."
+            "blocked_text": "A small panel awaits a silver button press—it clicks invitingly.",
+            "short_desc": "The Iron Mug Attic - secret access via silver button",
+            "traversal": "You press the silver button and a hidden panel slides open, revealing stairs to the greasy-smelling attic."
           }
         ],
-        "N": [
+        "STREET": [
           {
             "to": 74,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Main Street (Ironhaven) - back to the shuttered storefronts and creaking signs",
+            "traversal": "You step north out of the diner, the jingling door closing behind you."
           }
         ]
       },
       "items": [
         {
-          "name": "To-Go Mug",
+          "name": "Coffee Cup",
           "find_difficulty": 3,
-          "notice": "The smell in Copper Mug Café is unmistakable—you trace it to a To-Go Mug set just out of sight.",
+          "notice": "The smell in The Iron Mug Diner is unmistakeable—you trace it to a Coffee Cup set just out of sight.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -3374,12 +3849,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Receipt Book",
           "find_difficulty": 3,
-          "notice": "Leafing through a stack of papers in Copper Mug Café, you notice the edge of a Receipt Book that doesn’t quite match the others.",
+          "notice": "Leafing through a stack of papers in The Iron Mug Diner, you notice the edge of a Receipt Book that doesn't quite match the others.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -3391,12 +3867,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Sorting papers, checking spines and misfiled edges helps."
-          }
+          },
+          "type": "generic"
         },
         {
-          "name": "Silver Access Button",
+          "name": "Silver Button",
           "find_difficulty": 2,
-          "notice": "A nickel-sized Silver Access Button is tucked beneath the counter lip.",
+          "notice": "A nickel-sized silver button is tucked beneath the counter lip.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -3405,7 +3882,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "mechanism.button"
         }
       ],
       "npcs": [
@@ -3429,22 +3907,24 @@
     },
     {
       "id": 78,
-      "name": "Rust Refinery: Factory Floor",
-      "description": "Vats the size of secrets and catwalks that never quite meet in the middle.",
+      "name": "Ironhaven Foundry: Smelting Floor",
+      "description": "Crucibles the size of secrets and catwalks that never quite meet in the middle.",
       "exits": {
-        "W": [
+        "STREET": [
           {
             "to": 74,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Main Street (Ironhaven) - back to the shuttered storefronts",
+            "traversal": "You exit west back to Main Street, leaving the industrial chaos and glowing crucibles behind."
           }
         ]
       },
       "items": [
         {
-          "name": "Grease Canister",
+          "name": "Ink Vial",
           "find_difficulty": 3,
-          "notice": "A chemical tang in Rust Refinery: Factory Floor draws you to a shelf where a Grease Canister sits half-concealed.",
+          "notice": "A chemical tang in Ironhaven Foundry: Smelting Floor draws you to a shelf where a Ink Vial sits half-concealed.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -3454,12 +3934,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Chemical smell or labels can guide you."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Safety Goggles",
           "find_difficulty": 2,
-          "notice": "A scuff mark on the floor of Rust Refinery: Factory Floor leads your eyes to the Safety face shield propped against the wall.",
+          "notice": "A scuff mark on the floor of Ironhaven Foundry: Smelting Floor leads your eyes to the Safety Goggles propped against the wall.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -3468,7 +3949,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         }
       ],
       "npcs": [],
@@ -3482,13 +3964,15 @@
     {
       "id": 79,
       "name": "Company Clinic: Ward",
-      "description": "Quiet halls where prescriptions are written in code.",
+      "description": "Quiet halls where injury reports are written in code.",
       "exits": {
-        "W": [
+        "STREET": [
           {
             "to": 74,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Main Street (Ironhaven) - back to the creaking signs and coal smoke",
+            "traversal": "You walk west back to Main Street, leaving the coded reports and quiet halls behind."
           }
         ]
       },
@@ -3503,14 +3987,16 @@
     },
     {
       "id": 80,
-      "name": "Copperview Children’s Home",
+      "name": "The Company Orphanage",
       "description": "An orphanage that prefers order to children.",
       "exits": {
-        "S": [
+        "STREET": [
           {
             "to": 74,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Main Street (Ironhaven) - back to the shuttered storefronts",
+            "traversal": "You walk south back to Main Street, leaving the order-obsessed institution behind."
           }
         ]
       },
@@ -3525,21 +4011,25 @@
     },
     {
       "id": 81,
-      "name": "Brassgate Manor: Ballroom",
-      "description": "A grand room gone threadbare, chandelier crystals missing like extracted teeth.",
+      "name": "Iron Baron's Manor: Ballroom",
+      "description": "A grand room gone threadbare, brass fixtures missing like extracted teeth.",
       "exits": {
-        "N": [
+        "STUDY": [
           {
             "to": 82,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Iron Baron's Manor Study - curtains drawn, ledgers locked, missing bust",
+            "traversal": "You walk north through the threadbare ballroom to the study, dust from fallen plaster crunching underfoot."
           }
         ],
-        "S": [
+        "STREET": [
           {
             "to": 74,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Main Street (Ironhaven) - back to the shuttered storefronts and smell of slag",
+            "traversal": "You walk south back to Main Street, leaving the looted fixtures behind."
           }
         ]
       },
@@ -3554,21 +4044,25 @@
     },
     {
       "id": 82,
-      "name": "Brassgate Manor: Study",
-      "description": "Curtains drawn, ledgers locked, and the sense that a statue is always missing.",
+      "name": "Iron Baron's Manor: Study",
+      "description": "Curtains drawn, ledgers locked, and the sense that a bust of the founder is always missing.",
       "exits": {
-        "D": [
+        "CELLAR": [
           {
             "to": 83,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Iron Baron's Manor Cellar - damp steps, crates, and ore-scented drafts",
+            "traversal": "You descend the damp steps to the cellar, a draft that smells like the deep earth following you down."
           }
         ],
-        "S": [
+        "BALLROOM": [
           {
             "to": 81,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Iron Baron's Manor Ballroom - back to the threadbare grandeur",
+            "traversal": "You walk south back to the ballroom, leaving the locked ledgers and missing bust behind."
           }
         ]
       },
@@ -3576,7 +4070,7 @@
         {
           "name": "Missing Ledger Slot",
           "find_difficulty": 8,
-          "notice": "Leafing through a stack of papers in Brassgate Manor: Study, you notice the edge of a Missing logbook Slot that doesn’t quite match the others.",
+          "notice": "Leafing through a stack of papers in Iron Baron's Manor: Study, you notice the edge of a Missing Ledger Slot that doesn't quite match the others.",
           "check": {
             "skill": "search",
             "dc": 8,
@@ -3588,12 +4082,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Sorting papers, checking spines and misfiled edges helps."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Sealed Envelope",
           "find_difficulty": 3,
-          "notice": "Taking a moment to look around Brassgate Manor: Study, you notice a Sealed Envelope where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Iron Baron's Manor: Study, you notice a Sealed Envelope where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -3602,7 +4097,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         }
       ],
       "npcs": [],
@@ -3615,14 +4111,16 @@
     },
     {
       "id": 83,
-      "name": "Brassgate Manor: Cellar",
-      "description": "Damp steps, crates, and a draft that smells like the lake that left.",
+      "name": "Iron Baron's Manor: Cellar",
+      "description": "Damp steps, crates, and a draft that smells of iron ore and damp earth.",
       "exits": {
-        "U": [
+        "STUDY": [
           {
             "to": 82,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Iron Baron's Manor Study - back up to the locked ledgers and drawn curtains",
+            "traversal": "You climb back up the damp steps to the study, leaving the ore-scented draft behind."
           }
         ]
       },
@@ -3637,22 +4135,24 @@
     },
     {
       "id": 84,
-      "name": "Rust Public Library",
-      "description": "Stacks tied with string and a circulation desk that survived three collapses.",
+      "name": "Technical Library (Ironhaven)",
+      "description": "Stacks tied with string and a circulation desk that survived three furnace explosions.",
       "exits": {
-        "N": [
+        "STREET": [
           {
             "to": 74,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Main Street (Ironhaven) - back to the shuttered storefronts",
+            "traversal": "You walk north back to Main Street, leaving the string-tied stacks behind."
           }
         ]
       },
       "items": [
         {
-          "name": "Maintenance Manual",
+          "name": "VFD Codebook",
           "find_difficulty": 3,
-          "notice": "Leafing through a stack of papers in Rust Public Library, you notice the edge of a Maintenance Manual that doesn’t quite match the others.",
+          "notice": "Leafing through a stack of papers in Technical Library (Ironhaven), you notice the edge of a VFD Codebook that doesn't quite match the others.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -3664,12 +4164,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Sorting papers, checking spines and misfiled edges helps."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Ciphered Message",
           "find_difficulty": 7,
-          "notice": "Taking a moment to look around Rust Public Library, you notice a Ciphered Message where the dust doesn’t settle quite right.",
+          "notice": "Taking a moment to look around Technical Library (Ironhaven), you notice a Ciphered Message where the dust doesn't settle quite right.",
           "check": {
             "skill": "search",
             "dc": 7,
@@ -3678,7 +4179,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         }
       ],
       "npcs": [],
@@ -3691,22 +4193,24 @@
     },
     {
       "id": 85,
-      "name": "Industrial Heritage Museum",
-      "description": "Display cases of curiosities culminating in a plinth that remembers the Bombinating Beast.",
+      "name": "Museum of Industry",
+      "description": "Display cases of industrial curiosities culminating in a plinth that remembers the colossal drill bit of the 'Bore-Worm'.",
       "exits": {
-        "N": [
+        "STREET": [
           {
             "to": 74,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Main Street (Ironhaven) - back to the shuttered storefronts and smell of slag",
+            "traversal": "You walk north back to Main Street, leaving the empty drill bit plinth behind."
           }
         ]
       },
       "items": [
         {
-          "name": "Foundry Plinth",
+          "name": "Colossal Drill Bit Plinth",
           "find_difficulty": 3,
-          "notice": "The emptiness of a display in Industrial Heritage Museum betrays a Foundry Plinth with scratched corners.",
+          "notice": "The emptiness of a display in Museum of Industry betrays a Colossal Drill Bit Plinth with scratched corners.",
           "check": {
             "skill": "search",
             "dc": 3,
@@ -3715,12 +4219,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Display Key",
           "find_difficulty": 8,
-          "notice": "As you test a loose drawer in Industrial Heritage Museum, a glint catches your eye—the Display Key wedged beneath the track.",
+          "notice": "As you test a loose drawer in Museum of Industry, a glint catches your eye—the Display Key wedged beneath the track.",
           "check": {
             "skill": "search",
             "dc": 8,
@@ -3729,7 +4234,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Listen and feel for hidden catches and false bottoms."
-          }
+          },
+          "type": "key.lowsec"
         }
       ],
       "npcs": [],
@@ -3742,21 +4248,23 @@
     },
     {
       "id": 86,
-      "name": "Rust Constabulary",
-      "description": "A desk, a whistle, and a handbook of errors.",
+      "name": "Company Security Office",
+      "description": "A steel desk, a whistle, and a handbook of company violations.",
       "exits": {
-        "E": [
+        "STREET": [
           {
             "to": 74,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Main Street (Ironhaven) - back to the shuttered storefronts",
+            "traversal": "You walk east back to Main Street, leaving the handbook of violations behind."
           }
         ]
       },
       "items": [],
       "npcs": [
         {
-          "name": "Constable Pair",
+          "name": "The Mitchums",
           "accepts": [
             "Evidence Folder"
           ],
@@ -3772,7 +4280,7 @@
             ],
             "items": [
               "Evidence Folder",
-              "Official Notice"
+              "Arrest Writ"
             ]
           }
         }
@@ -3786,14 +4294,16 @@
     },
     {
       "id": 87,
-      "name": "Rust Stationers",
-      "description": "A stationery shop selling the tools of truth and excellent lies.",
+      "name": "Drafting & Supply",
+      "description": "A shop selling the tools for meticulous blueprints and excellent forgeries.",
       "exits": {
-        "S": [
+        "STREET": [
           {
             "to": 74,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Main Street (Ironhaven) - back to the shuttered storefronts and creaking signs",
+            "traversal": "You walk south back to Main Street, tools for truth and lies tucked safely away."
           }
         ]
       },
@@ -3808,21 +4318,25 @@
     },
     {
       "id": 88,
-      "name": "Abandoned Quarry Pit",
-      "description": "The drained lakebed—a cracked plain of salt and ropes, where boats sit like fossils.",
+      "name": "The Great Quarry Pit",
+      "description": "The excavated earth—a cracked plain of rust-colored dirt and slag, where derelict mining equipment sits like skeletons.",
       "exits": {
-        "S": [
+        "PATH": [
           {
             "to": 89,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Quarry Catwalk - winding footpath of steel mesh and cables",
+            "traversal": "You follow the winding catwalk south across the quarry, steel mesh groaning under derelict machinery."
           }
         ],
-        "N": [
+        "STREET": [
           {
             "to": 74,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Main Street (Ironhaven) - back to the shuttered storefronts",
+            "traversal": "You step north back onto Main Street, leaving the skeletal machines and rust-colored plains behind."
           }
         ]
       },
@@ -3837,21 +4351,25 @@
     },
     {
       "id": 89,
-      "name": "Ore Tramline",
-      "description": "A winding footpath of boards and ropes crossing the Maw to the far edges of town.",
+      "name": "Quarry Catwalk",
+      "description": "A winding footpath of steel mesh and cables crossing the Great Pit to the far edges of town.",
       "exits": {
-        "N": [
+        "MAW": [
           {
             "to": 88,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "The Great Quarry Pit - back to the rust-colored plains and skeletal machines",
+            "traversal": "You follow the catwalk north back across the Pit, steel mesh and cables guiding your way."
           }
         ],
-        "E": [
+        "GENERATOR": [
           {
             "to": 97,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Geothermal Relay Station - squat concrete building with eight pictographs",
+            "traversal": "You walk east across the quarry floor to the concrete building, eight pictographs visible above the ajar doorway."
           }
         ]
       },
@@ -3869,30 +4387,40 @@
       "name": "Unmarked Coach Road",
       "description": "Rutted earth road used by theatrical troupes and worse, threading between distant towns.",
       "exits": {
-        "S": [
+        "CITY": [
           {
             "to": 9,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "City Street - back to the busier avenue with 'IN/OUT' signs",
+            "traversal": "You head south back to the city street, leaving the theatrical posters fluttering behind you."
           }
         ],
-        "W": [
+        "PALTRYVILLE": [
           {
             "to": 24,
             "requires": [],
-            "blocked_text": ""
-          },
+            "blocked_text": "",
+            "short_desc": "Paltryville Road - splintered road with crooked billboards",
+            "traversal": "You turn west onto Paltryville Road, billboards advertising gum and eyewear sprouting from the roadside."
+          }
+        ],
+        "COUNTRY": [
           {
             "to": 11,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Country Road - gravel path to herpetological home",
+            "traversal": "You head west onto the gravel country road, herons visible in the distant fields."
           }
         ],
-        "N": [
+        "SCHOOL": [
           {
             "to": 28,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "School Road - cracked sidewalk with thorny hedges",
+            "traversal": "You turn north toward the school road, thorny hedges gradually replacing theatrical posters."
           }
         ]
       },
@@ -3907,13 +4435,24 @@
     },
     {
       "id": 91,
-      "name": "Copper Mug Café: Attic",
-      "description": "A low, dust-sweet space of rafters, burlap coffee sacks, and a dormer window overlooking the shale flats. Hidden ledgers are known to slip between floorboards.",
+      "name": "The Iron Mug Diner: Attic",
+      "description": "A low, dust-choked space of rafters, burlap supply sacks, and a dormer window overlooking the quarry pit. Hidden ledgers are known to slip between floorboards.",
+      "exits": {
+        "COFFEE": [
+          {
+            "to": 77,
+            "requires": [],
+            "blocked_text": "",
+            "short_desc": "The Iron Mug Diner - back down to the clinking cups and scratched counter",
+            "traversal": "You climb back down from the attic to the diner, dust-choked air giving way to the smell of fried food."
+          }
+        ]
+      },
       "items": [
         {
-          "name": "Bag of House Roast",
+          "name": "Bag of Coffee Beans",
           "find_difficulty": 2,
-          "notice": "The smell in Copper Mug Café: Attic is unmistakable—you trace it to a Bag of House Roast set just out of sight.",
+          "notice": "The smell in The Iron Mug Diner: Attic is unmistakeable—you trace it to a Bag of Coffee Beans set just out of sight.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -3922,12 +4461,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Careful searching might reveal it."
-          }
+          },
+          "type": "generic"
         },
         {
-          "name": "Shift Logbook",
+          "name": "Hidden Ledger",
           "find_difficulty": 6,
-          "notice": "Leafing through a stack of papers in Copper Mug Café: Attic, you notice the edge of a Shift Logbook that doesn’t quite match the others.",
+          "notice": "Leafing through a stack of papers in The Iron Mug Diner: Attic, you notice the edge of a Hidden Ledger that doesn't quite match the others.",
           "check": {
             "skill": "search",
             "dc": 6,
@@ -3939,12 +4479,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Sorting papers, checking spines and misfiled edges helps."
-          }
+          },
+          "type": "paper.ledger"
         },
         {
           "name": "Dusty Trunk",
           "find_difficulty": 5,
-          "notice": "Your foot bumps something solid in Copper Mug Café: Attic; dust puffs up around a Dusty Trunk hidden behind crates.",
+          "notice": "Your foot bumps something solid in The Iron Mug Diner: Attic; dust puffs up around a Dusty Trunk hidden behind crates.",
           "check": {
             "skill": "search",
             "dc": 5,
@@ -3953,12 +4494,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Look behind crates and under furniture."
-          }
+          },
+          "type": "generic"
         },
         {
-          "name": "Logbook Page",
+          "name": "Ledger Fragment",
           "find_difficulty": 2,
-          "notice": "You notice a Logbook Page tucked where anyone might find it.",
+          "notice": "You notice a Ledger Fragment tucked where anyone might find it.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -3967,17 +4509,18 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "paper.ledger"
         }
       ],
       "npcs": [
         {
           "name": "Ellington Feint",
           "accepts": [
-            "Shift Logbook",
+            "Hidden Ledger",
             "Ciphered Message"
           ],
-          "dialogue": "Secrets stain worse than ink. Do you have what I asked for?",
+          "dialogue": "Secrets rust worse than iron. Do you have what I asked for?",
           "gives": [
             "Ciphered Message"
           ],
@@ -3988,21 +4531,12 @@
               "paper.ciphered"
             ],
             "items": [
-              "Shift Logbook",
+              "Hidden Ledger",
               "Ciphered Message"
             ]
           }
         }
       ],
-      "exits": {
-        "D": [
-          {
-            "to": 77,
-            "requires": [],
-            "blocked_text": ""
-          }
-        ]
-      },
       "darkness": {
         "is_dark": false,
         "search_disadvantage_without": [
@@ -4012,35 +4546,43 @@
     },
     {
       "id": 92,
-      "name": "The City: Smithson Block",
+      "name": "The City: Snicket Block",
       "description": "A quiet block of narrow townhouses, cats on windowsills, and a newspaper stand that never closes.",
       "exits": {
-        "W": [
+        "CITY": [
           {
             "to": 9,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "City Street - back to the busier avenue with changing signs",
+            "traversal": "You walk west back to the main city street, cats watching your departure from their windowsill perches."
           }
         ],
-        "IN": [
+        "HOME": [
           {
             "to": 93,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Snicket Home Front Room - tidy space with mystery novels and annotations",
+            "traversal": "You walk up to one of the narrow townhouses and step inside, cats observing from nearby windows."
           }
         ],
-        "S": [
+        "WELL": [
           {
             "to": 95,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Neighborhood Well - old stone well with squeaky pulley and heavy bucket",
+            "traversal": "You walk south toward the old stone well, cats scattering as your footsteps echo off the cobblestones."
           }
         ],
-        "N": [
+        "MUSEUM": [
           {
             "to": 96,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "City Museum - curiosity cabinet meets public school exhibit",
+            "traversal": "You head north to the city museum, glass cases already visible through the dusty windows."
           }
         ]
       },
@@ -4048,12 +4590,14 @@
         {
           "name": "Newspaper",
           "find_difficulty": 3,
-          "notice": "You notice a Newspaper nearby."
+          "notice": "You notice a Newspaper nearby.",
+          "type": "generic"
         },
         {
           "name": "Umbrella",
           "find_difficulty": 3,
-          "notice": "You notice a Umbrella nearby."
+          "notice": "You notice a Umbrella nearby.",
+          "type": "generic"
         }
       ],
       "npcs": [],
@@ -4066,21 +4610,25 @@
     },
     {
       "id": 93,
-      "name": "Smithson Home: Front Room",
+      "name": "Snicket Home: Front Room",
       "description": "A tidy room with a low sofa and a shelf of mystery novels with penciled annotations.",
       "exits": {
-        "OUT": [
+        "BLOCK": [
           {
             "to": 92,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Snicket Block - back to the quiet street with cats and newspaper stand",
+            "traversal": "You step back out onto the quiet block, tidy mystery novels left behind."
           }
         ],
-        "E": [
+        "STUDY": [
           {
             "to": 94,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Snicket Home Study - neat desk, locked drawer, and red thread pinboard",
+            "traversal": "You walk east to the study, mystery novels giving way to more serious investigative work."
           }
         ]
       },
@@ -4088,12 +4636,14 @@
         {
           "name": "House Key",
           "find_difficulty": 3,
-          "notice": "You notice a House Key nearby."
+          "notice": "You notice a House Key nearby.",
+          "type": "generic"
         },
         {
           "name": "Penciled Novel",
           "find_difficulty": 3,
-          "notice": "You notice a Penciled Novel nearby."
+          "notice": "You notice a Penciled Novel nearby.",
+          "type": "generic"
         }
       ],
       "npcs": [],
@@ -4106,14 +4656,16 @@
     },
     {
       "id": 94,
-      "name": "Smithson Home: Study",
+      "name": "Snicket Home: Study",
       "description": "A neat desk, a locked drawer, and a pinboard laced with red thread connecting names.",
       "exits": {
-        "W": [
+        "FRONT": [
           {
             "to": 93,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Snicket Home Front Room - back to the tidy sofa and penciled annotations",
+            "traversal": "You walk west back to the front room, leaving the red thread connections behind."
           }
         ]
       },
@@ -4121,12 +4673,14 @@
         {
           "name": "Pinned Clue",
           "find_difficulty": 3,
-          "notice": "You notice a Pinned Clue nearby."
+          "notice": "You notice a Pinned Clue nearby.",
+          "type": "generic"
         },
         {
           "name": "Drawer Key",
           "find_difficulty": 3,
-          "notice": "You notice a Drawer Key nearby."
+          "notice": "You notice a Drawer Key nearby.",
+          "type": "generic"
         }
       ],
       "npcs": [
@@ -4135,7 +4689,7 @@
           "accepts": [
             "Penciled Novel"
           ],
-          "dialogue": "I’m just returning this… unless you want to trade clues.",
+          "dialogue": "I'm just returning this… unless you want to trade clues.",
           "gives": [
             "Neighborhood Rumor"
           ],
@@ -4160,13 +4714,15 @@
     {
       "id": 95,
       "name": "Neighborhood Well",
-      "description": "An old stone well with a squeaky pulley and a bucket that’s heavier than it looks.",
+      "description": "An old stone well with a squeaky pulley and a bucket that's heavier than it looks.",
       "exits": {
-        "N": [
+        "BLOCK": [
           {
             "to": 92,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Snicket Block - back to the quiet townhouses and watchful cats",
+            "traversal": "You walk north back to the block, squeaky pulley sounds fading behind you."
           }
         ]
       },
@@ -4174,12 +4730,14 @@
         {
           "name": "Old Coin",
           "find_difficulty": 3,
-          "notice": "You notice a Old Coin nearby."
+          "notice": "You notice a Old Coin nearby.",
+          "type": "generic"
         },
         {
           "name": "Bucket",
           "find_difficulty": 3,
-          "notice": "You notice a Bucket nearby."
+          "notice": "You notice a Bucket nearby.",
+          "type": "generic"
         }
       ],
       "npcs": [],
@@ -4195,11 +4753,13 @@
       "name": "City Museum",
       "description": "A cross between a curiosity cabinet and public school exhibit—glass cases, dusty plaques, and a helpful docent.",
       "exits": {
-        "S": [
+        "BLOCK": [
           {
             "to": 92,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Snicket Block - back to the quiet street with newspaper stand",
+            "traversal": "You walk south back to the block, glass cases and dusty plaques behind you."
           }
         ]
       },
@@ -4207,12 +4767,14 @@
         {
           "name": "Audio Guide",
           "find_difficulty": 3,
-          "notice": "You notice a Audio Guide nearby."
+          "notice": "You notice a Audio Guide nearby.",
+          "type": "generic"
         },
         {
           "name": "Map Brochure",
           "find_difficulty": 3,
-          "notice": "You notice a Map Brochure nearby."
+          "notice": "You notice a Map Brochure nearby.",
+          "type": "generic"
         }
       ],
       "npcs": [
@@ -4221,7 +4783,7 @@
           "accepts": [
             "Map Brochure"
           ],
-          "dialogue": "If you’d like a tour, press the green button. If you hear a buzzing, that was the wrong button.",
+          "dialogue": "If you'd like a tour, press the green button. If you hear a buzzing, that was the wrong button.",
           "gives": [
             "Exhibit Ticket"
           ],
@@ -4245,21 +4807,25 @@
     },
     {
       "id": 97,
-      "name": "Rust: Power Substation (Exterior)",
-      "description": "A squat concrete building marooned on the shale flats. The doorway is ajar and the lintel bears eight faint pictographs: a key, a badge, a headlamp, a coil of rope, face shield, a hardhat, a scroll stamped with a seal, and an open logbook.",
+      "name": "Ironhaven: Geothermal Relay Station (Exterior)",
+      "description": "A squat concrete building marooned in the quarry pit. The doorway is ajar and the lintel bears eight faint pictographs: a key, a badge, a lantern, a coil of rope, goggles, a helmet, a scroll stamped with a seal, and an open ledger.",
       "exits": {
-        "W": [
+        "PATH": [
           {
             "to": 89,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Quarry Catwalk - back to the winding footpath of steel and cables",
+            "traversal": "You walk west back across the quarry floor to the catwalk, eight pictographs watching your departure."
           }
         ],
-        "IN": [
+        "GENERATOR": [
           {
             "to": 98,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Relay Station Antechamber - circular room with eight brass sockets",
+            "traversal": "You step through the ajar doorway into the concrete building, eight pictographs echoing in brass sockets inside."
           }
         ]
       },
@@ -4276,7 +4842,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Large and obvious."
-          }
+          },
+          "type": "generic"
         },
         {
           "name": "Brass Socket Diagram",
@@ -4290,7 +4857,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious signage."
-          }
+          },
+          "type": "generic"
         }
       ],
       "npcs": [],
@@ -4303,17 +4871,19 @@
     },
     {
       "id": 98,
-      "name": "Rust: Substation Antechamber",
-      "description": "A circular room hums with dormant power. Around the bulkhead, eight brass sockets match the pictographs outside. Each socket bears a symbol hinting at what appeases it: lock, staff sigil, flame, knot, snowburst, safety bell, warrant seal, logbook mark.",
+      "name": "Ironhaven: Relay Station Antechamber",
+      "description": "A circular room hums with dormant power. Around the bulkhead, eight brass sockets match the pictographs outside. Each socket bears a symbol hinting at what appeases it: lock, staff sigil, flame, knot, snowburst, diving bell, warrant seal, ledger mark.",
       "exits": {
-        "OUT": [
+        "EXTERIOR": [
           {
             "to": 97,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Geothermal Relay Station Exterior - back to the squat concrete building",
+            "traversal": "You step back through the doorway to the exterior, brass sockets humming behind you."
           }
         ],
-        "IN": [
+        "PORTAL": [
           {
             "to": 99,
             "requires": [
@@ -4326,7 +4896,9 @@
               "permit.jail_access",
               "paper.ledger"
             ],
-            "blocked_text": "The bulkhead stays dark. Around its rim, the eight sockets remain unlit: a suitable key, staff credentials, a living light, climbing rig, cold-weather face shield, a Respirator Rig, a signed permit, and a logbook entry."
+            "blocked_text": "The bulkhead stays dark. Around its rim, the eight sockets remain unlit: a suitable key, staff credentials, a living light, climbing rig, cold-weather goggles, a pressurized rig, a signed writ, and a ledger entry.",
+            "short_desc": "Parallel Relay Portal - mirrors showing a version of you that is nearly you",
+            "traversal": "The eight sockets glow as your items satisfy their requirements, and the bulkhead iris opens to reveal a shimmering portal where mirrors show an almost-you."
           }
         ]
       },
@@ -4341,10 +4913,10 @@
     },
     {
       "id": 99,
-      "name": "Rust: Parallel Substation Portal",
+      "name": "Ironhaven: Parallel Relay Portal",
       "description": "The air ripples like heat above pavement. A ring of mirrors shows a version of you that is very nearly you. Step through to return where you began—though something important will be different.",
       "exits": {
-        "OUT": [
+        "ANTECHAMBER": [
           {
             "to": 98,
             "requires": [
@@ -4357,7 +4929,9 @@
               "permit.jail_access",
               "paper.ledger"
             ],
-            "blocked_text": "The bulkhead stays dark. Around its rim, the eight sockets remain unlit: a suitable key, staff credentials, a living light, climbing rig, cold-weather face shield, a Respirator Rig, a signed permit, and a logbook entry."
+            "blocked_text": "The bulkhead stays dark. Around its rim, the eight sockets remain unlit: a suitable key, staff credentials, a living light, climbing rig, cold-weather goggles, a pressurized rig, a signed writ, and a ledger entry.",
+            "short_desc": "Relay Station Antechamber - back to the circular room with eight brass sockets",
+            "traversal": "You step back through the shimmering portal to the antechamber, mirrors of almost-you rippling behind you."
           }
         ]
       },
@@ -4372,14 +4946,16 @@
     },
     {
       "id": 100,
-      "name": "Rust: Lost & Found Kiosk",
-      "description": "A plywood kiosk with a hand-painted sign: LOST (and sometimes FOUND). A slatted counter displays a jumble of civic detritus.",
+      "name": "Ironhaven: Shift Change Kiosk",
+      "description": "A plywood kiosk with a hand-painted sign: LOST (and sometimes FOUND). A slatted counter displays a jumble of workers' forgotten effects.",
       "exits": {
-        "W": [
+        "STREET": [
           {
             "to": 74,
             "requires": [],
-            "blocked_text": ""
+            "blocked_text": "",
+            "short_desc": "Main Street (Ironhaven) - back to the shuttered storefronts and creaking signs",
+            "traversal": "You walk west back to Main Street, leaving the jumble of industrial detritus behind."
           }
         ]
       },
@@ -4396,7 +4972,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "key.lowsec"
         },
         {
           "name": "Maintenance Badge",
@@ -4410,12 +4987,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "credential.staff"
         },
         {
           "name": "Lantern",
           "find_difficulty": 2,
-          "notice": "You notice a headlamp tucked where anyone might find it.",
+          "notice": "You notice a Lantern tucked where anyone might find it.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -4424,7 +5002,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "light.unlit"
         },
         {
           "name": "Oil Flask",
@@ -4438,7 +5017,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "fuel.oil"
         },
         {
           "name": "Rope Coil",
@@ -4452,12 +5032,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "climb.aid"
         },
         {
-          "name": "Face Shield (Spare)",
+          "name": "Goggles (Spare)",
           "find_difficulty": 2,
-          "notice": "You notice a Face Shield (Spare) tucked where anyone might find it.",
+          "notice": "You notice a Goggles (Spare) tucked where anyone might find it.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -4466,12 +5047,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "eyepro.cold"
         },
         {
-          "name": "Old Safety Hardhat",
+          "name": "Old Diving Helmet",
           "find_difficulty": 2,
-          "notice": "You notice a Old Safety Hardhat tucked where anyone might find it.",
+          "notice": "You notice a Old Diving Helmet tucked where anyone might find it.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -4480,7 +5062,8 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "dive.helmet"
         },
         {
           "name": "Compressed Air Tank",
@@ -4494,12 +5077,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "dive.oxygen"
         },
         {
-          "name": "Temporary Work Permit",
+          "name": "Writ (Stamped Copy)",
           "find_difficulty": 2,
-          "notice": "You notice a Temporary Work Permit tucked where anyone might find it.",
+          "notice": "You notice a Writ (Stamped Copy) tucked where anyone might find it.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -4508,12 +5092,13 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "permit.jail_access"
         },
         {
-          "name": "Logbook Page",
+          "name": "Ledger Fragment",
           "find_difficulty": 2,
-          "notice": "You notice a Logbook Page tucked where anyone might find it.",
+          "notice": "You notice a Ledger Fragment tucked where anyone might find it.",
           "check": {
             "skill": "search",
             "dc": 2,
@@ -4522,7 +5107,21 @@
             ],
             "disadvantage_if_missing_types": [],
             "notes": "Obvious backup drop."
-          }
+          },
+          "type": "paper.ledger"
+        },
+        {
+          "name": "Staff Pass",
+          "find_difficulty": 5,
+          "notice": "Wedged at the back of a dusty drawer, a clipped card winks with a faint hologram.",
+          "check": {
+            "skill": "search",
+            "dc": 5,
+            "advantage_if_types": [],
+            "disadvantage_if_missing_types": [],
+            "notes": "Hidden early-game placement (post-starter-inventory removal)."
+          },
+          "type": "credential.staff"
         }
       ],
       "npcs": [],
@@ -4536,17 +5135,11 @@
   ],
   "meta": {
     "series": [
-      "ASOUE",
-      "ATWQ"
+      "RUSTBELT_GOTHIC"
     ],
-    "note": "Graph designed for traversal; exits use direction strings mapping to integer ids.",
-    "starter_inventory": [
-      "Lantern",
-      "Oil Flask",
-      "Map Fragment",
-      "Employee Badge"
-    ],
-    "spawn_points": [
+    "note": "Graph designed for traversal; exits use single-word mnemonics with short descriptions and atmospheric traversal text.",
+    "starter_inventory": [],
+    "spawn_points": [ 
       75
     ],
     "item_discovery": {
@@ -4565,9 +5158,9 @@
     },
     "exit_blocked_text": "Each exit object includes a 'blocked_text' shown when requirements are not met.",
     "parallel_portal": {
-      "entrance_room": "Rust: Power Substation (Exterior)",
-      "antechamber_room": "Rust: Substation Antechamber",
-      "portal_room": "Rust: Parallel Substation Portal",
+      "entrance_room": "Ironhaven: Geothermal Relay Station (Exterior)",
+      "antechamber_room": "Ironhaven: Relay Station Antechamber",
+      "portal_room": "Ironhaven: Parallel Relay Portal",
       "requirements_types": [
         "key.lowsec",
         "credential.staff",
@@ -4582,6 +5175,205 @@
       "entry_hint_item": "Chalk Rubbing of Pictographs",
       "on_enter_behavior": "Return player to their ORIGINAL starting room (engine should override the destination id) and assign a new secret objective tracked out-of-band."
     },
-    "variant": "modern_rust_by_the_lake"
+    "crafting": {
+      "interactions": [
+        {
+          "input": [
+            "Lantern",
+            "Oil Flask"
+          ],
+          "output": "Lit Lantern"
+        },
+        {
+          "input": [
+            "Rope",
+            "Grappling Hook"
+          ],
+          "output": "Grappling Line"
+        },
+        {
+          "input": [
+            "Diving Helmet",
+            "Oxygen Tank"
+          ],
+          "output": "Pressurized Rig"
+        },
+        {
+          "input": [
+            "VFD Codebook",
+            "Ciphered Message"
+          ],
+          "output": "Decoded Message"
+        },
+        {
+          "input": [
+            "Medusoid Antidote",
+            "Medusoid Mycelium"
+          ],
+          "effect": "Neutralize Spores"
+        },
+        {
+          "input": [
+            "Hidden Ledger",
+            "Missing Ledger Slot"
+          ],
+          "effect": "Reveals Secret Compartment"
+        },
+        {
+          "input": [
+            "Index Card",
+            "Catalog Map"
+          ],
+          "effect": "Locate File"
+        },
+        {
+          "input": [
+            "Coffee Cup",
+            "Bag of Coffee Beans"
+          ],
+          "output": "Fresh Brew"
+        },
+        {
+          "input": [
+            "Lantern",
+            "Oil Flask"
+          ],
+          "output": "Lit Lantern"
+        },
+        {
+          "input": [
+            "Rope",
+            "Grappling Hook"
+          ],
+          "output": "Grappling Line"
+        },
+        {
+          "input": [
+            "Safety Hardhat",
+            "Compressed Air Tank"
+          ],
+          "output": "Respirator Rig"
+        },
+        {
+          "input": [
+            "Maintenance Manual",
+            "Ciphered Message"
+          ],
+          "output": "Decoded Message"
+        },
+        {
+          "input": [
+            "Medusoid Antidote",
+            "Medusoid Mycelium"
+          ],
+          "effect": "Neutralize Spores"
+        },
+        {
+          "input": [
+            "Shift Logbook",
+            "Missing Ledger Slot"
+          ],
+          "effect": "Reveals Secret Compartment"
+        },
+        {
+          "input": [
+            "Index Card",
+            "Catalog Map"
+          ],
+          "effect": "Locate File"
+        },
+        {
+          "input": [
+            "To-Go Mug",
+            "Bag of House Roast"
+          ],
+          "output": "Fresh Brew"
+        },
+        {
+          "input": [
+            "EVA Helmet",
+            "EVA Tank"
+          ],
+          "output": "EVA Suit"
+        },
+        {
+          "input": [
+            "Colony Ops Manual",
+            "Ciphered Message"
+          ],
+          "output": "Decoded Message"
+        },
+        {
+          "input": [
+            "Hydroponics Log",
+            "Missing Ledger Slot"
+          ],
+          "effect": "Reveals Secret Compartment"
+        },
+        {
+          "input": [
+            "Thermal Mug",
+            "Bag of Roasted Beans"
+          ],
+          "output": "Fresh Brew"
+        },
+        {
+          "input": [
+            "Diver’s Helmet",
+            "Air Tank"
+          ],
+          "output": "Diving Rig"
+        },
+        {
+          "input": [
+            "Casebook",
+            "Ciphered Message"
+          ],
+          "output": "Decoded Message"
+        },
+        {
+          "input": [
+            "Ledger",
+            "Missing Ledger Slot"
+          ],
+          "effect": "Reveals Secret Compartment"
+        },
+        {
+          "input": [
+            "Paper Cup",
+            "Bag of Espresso Roast"
+          ],
+          "output": "Fresh Brew"
+        },
+        {
+          "input": [
+            "Depth Helmet",
+            "Air Can"
+          ],
+          "output": "Pressure Suit"
+        },
+        {
+          "input": [
+            "Exploit Manual",
+            "Ciphered Message"
+          ],
+          "output": "Decoded Message"
+        },
+        {
+          "input": [
+            "Shard Ledger",
+            "Missing Ledger Slot"
+          ],
+          "effect": "Reveals Secret Compartment"
+        },
+        {
+          "input": [
+            "Noodle Cup",
+            "Soykaf Bag"
+          ],
+          "output": "Fresh Brew"
+        }
+      ]
+    }
   }
 }
