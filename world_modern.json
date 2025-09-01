@@ -3691,10 +3691,10 @@
         "ROOM": [
           {
             "to": 76,
-            "requires": [],
-            "blocked_text": "",
+            "requires": ["Room Key"],
+            "blocked_text": "The you try to move the handle but the door is locked is locked.",
             "short_desc": "The Foreman's Rest Room - peeling wallpaper, groaning bed, hope on the floor",
-            "traversal": "You climb the groaning stairs to the hotel room, each step protesting ominously."
+            "traversal": "You climb the groaning stairs to the hotel room, after you slide the key into the lock you open the door."
           }
         ],
         "STREET": [
@@ -3708,6 +3708,21 @@
         ]
       },
       "items": [
+        {
+          "name": "Room Key",
+          "find_difficulty": 9,
+          "notice": "As you test some papers in The Foreman's Rest: Lobby, the room key slides out of a book",
+          "check": {
+            "skill": "search",
+            "dc": 9,
+            "advantage_if_types": [
+              "light.source"
+            ],
+            "disadvantage_if_missing_types": [],
+            "notes": "Listen and feel for hidden catches and false bottoms."
+          },
+          "type": "key.lowsec"
+        },
         {
           "name": "Attic Key",
           "find_difficulty": 6,

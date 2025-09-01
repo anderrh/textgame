@@ -49,23 +49,63 @@ def describe_room(world,current_room):
 
   return returns
 
+def d20():
+  return random.randrange(1,21)
+
+def has_requires(inventory,requires):
+  for i in range (len(requires)):
+    found = False
+    for j in range (len(inventory)):
+      
+      if requires[i] == inventory[j]['name'] or requires[i] == inventory[j]['type']:
+        found = True
+        break
+    if not found:
+      return False
+  return True
+      
+      
+
 
 def go(world,inventory,room,direction):
+  fail_text = "you can't go that way"
   if direction not in room["exits"]:
-    return room["id"] , "you can't go that way"
+    return room["id"] , fail_text
+    
   else:
     for path in reversed(room["exits"][direction]):
-      # look at requires later
-      return path["to"], ("\n"*5) + path['traversal']
-  return room["id"] , "you can't go that way"
+      if has_requires(inventory,path['requires']):
+        return path["to"], ("\n"*5) + path['traversal']
+      else:
+        fail_text = path['blocked_text']
+  return room["id"] , fail_text
   
 
+def difficulty_check(diff:float,advantage:bool,disadvantage:bool):
+  first_roll = d20()
+  second_roll = d20()
+  goal = diff + 10
 
+  if advantage == disadvantage:
+    return first_roll >= goal
+  if advantage:
+    return max(first_roll,second_roll) >= goal
+  if disadvantage:
+    return min(first_roll,second_roll) >= goal
+
+def find_types(inventory):
+  found_types = set()
+  for i in range(len(inventory)):
+    item = inventory [i]
+    type = item['type']
+    found_types.add(type)
+  return found_types
 
 def game(world):
   current_room = random.choice(world["meta"]["spawn_points"])
   do_exit = False
   inventory = []
+
   while (not do_exit):
     print(describe_room(world,current_room))
     text = input(">>> ")
@@ -73,14 +113,21 @@ def game(world):
     if not text:
       continue
     command = text.split()[0].upper()
+
     if command == "EXIT":
       do_exit = True
+    
     if command == "RESTART":
       os.execv(sys.executable, ['python'] + sys.argv)
       return
+    
     if command == "GO":
-      current_room,text = go(world,inventory,get_room_by_id(world,current_room),text.split()[1].upper())
-      print(text + "\n")
+      if not len (text.split()) == 1:
+        current_room,text = go(world,inventory,get_room_by_id(world,current_room),text.split()[1].upper())
+        print(text + "\n")
+      else:
+        print("you can't go that way\n")
+
     if command == "GET":
       room = get_room_by_id(world, current_room)
       item_to_get = " ".join(text.split()[1:])
@@ -94,6 +141,40 @@ def game(world):
           print(f"You take the {item['name']}\n")
       if not has_found:
         print (f"You search and you cannot find the {item_to_get}\n") 
+
+    if command == "LOOK":
+      my_types = find_types(inventory)
+      room = get_room_by_id(world, current_room)
+      found_items = []
+      inventory_desc = ""
+      for i in reversed (range (len(room['items']))):
+        item = room['items'][i]
+        adv:bool = False
+        dis:bool = False
+        advantage_if_types = set(item.get('check', {}).get('advantage_if_types' ,[]))
+        disadvantage_if_missing_types = set(item.get('check', {}).get('disadvantage_if_missing_types' ,[]))
+        if my_types & advantage_if_types == advantage_if_types:
+          adv = True
+        if disadvantage_if_missing_types and not (my_types & disadvantage_if_missing_types):
+          dis = True
+
+        found_item:bool = difficulty_check(item.get('find_difficulty' , 0),adv,dis)
+        if item.get('found',False):
+          found_item:bool = True
+        if found_item or item.get("found"):
+          inventory_desc += item["name"]
+          inventory_desc += (" - ")
+          inventory_desc += item["notice"]
+          inventory_desc += ("\n")
+          item["found"] = True
+      print(inventory_desc)
+      
+
+      
+                                           
+
+
+
     
 
       
@@ -107,7 +188,7 @@ def game(world):
         
         inventory_desc += inventory_item["name"]
         inventory_desc += (" - ")
-        inventory_desc += inventory_item['check']["notes"]
+        inventory_desc += inventory_item.get('check', {}).get("notes", "Normal item")
         inventory_desc += ("\n")
 
 
