@@ -34,18 +34,35 @@ def find_exits(room):
       exits += " - " + short_desc
   return exits
 
+def find_npcs(room):
+  npcs = ""
+  for npc in room['npcs']:
+    npcs += "\n"
+    npcs += npc['name']
+    npcs += ' - '
+    npcs += npc.get('short_desc', "Person")
+    npcs += "\n"
+  return npcs
 
 
 def describe_room(world,current_room):
   room = get_room_by_id(world,current_room)
 
-  returns = (room['name'] + "\n-----------------\n" +room['description'])
+  returns = (room['name'] + "\n-----------------\n" +room['description']+"\n")
+  npc_desc = find_npcs(room)
+  if npc_desc:
+    if len(room['npcs']) == 1:
+      returns += "There is 1 person in the room"
+    else:
+      returns += f"There are {len (room['npcs'])} people in the room:"
+    returns += npc_desc
+    returns += "\n"
   if ((len (room['exits'])) == 1):
     returns += " There is 1 destination:"
   else:
     returns += (" There are " + str(len (room['exits'])) + " destinations:")
-  
   returns += find_exits(room)
+
 
   return returns
 
@@ -147,15 +164,34 @@ def use_items_for_crafting(world, inventory, item_name):
   return inventory
 
 
+def win(world, current_room):
+  if get_room_by_id(world,current_room)['name'] == world["meta"]["parallel_portal"]['portal_room']:
+    return True
 
 
 
 def game(world):
   current_room = random.choice(world["meta"]["spawn_points"])
+  current_room = 8
   do_exit = False
   inventory = []
 
   while (not do_exit):
+    if win(world, current_room):
+      print("""
+  ____                            _         _       _   _                   
+ / ___|___  _ __   __ _ _ __ __ _| |_ _   _| | __ _| |_(_) ___  _ __  ___   
+| |   / _ \| '_ \ / _` | '__/ _` | __| | | | |/ _` | __| |/ _ \| '_ \/ __|  
+| |__| (_) | | | | (_| | | | (_| | |_| |_| | | (_| | |_| | (_) | | | \__ \_ 
+ \____\___/|_| |_|\__, |_|  \__,_|\__|\__,_|_|\__,_|\__|_|\___/|_| |_|___( )
+                  |___/                                                  |/ 
+__   __           __        ___         _   _   _ 
+\ \ / /__  _   _  \ \      / (_)_ __   | | | | | |
+ \ V / _ \| | | |  \ \ /\ / /| | '_ \  | | | | | |
+  | | (_) | |_| |   \ V  V / | | | | | |_| |_| |_|
+  |_|\___/ \__,_|    \_/\_/  |_|_| |_| (_) (_) (_)
+            """)
+      return
     print(describe_room(world,current_room))
     text = input(">>> ")
     print("\n"* 5)
@@ -263,7 +299,12 @@ def game(world):
 
 
 
-
+    if command == "TALK":
+      person_to_talk = " ".join(text.split()[1:]) if len(text.split()) > 1 else ""
+      room = get_room_by_id(world,current_room)
+      for npc in room['npcs']:
+        if npc['name'].upper() == person_to_talk.upper():
+          print(npc['name'] + " says: " + npc['dialogue'])
 
 
     if command == 'CRAFT':
