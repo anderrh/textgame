@@ -172,7 +172,6 @@ def win(world, current_room):
 
 def game(world):
   current_room = random.choice(world["meta"]["spawn_points"])
-  current_room = 8
   do_exit = False
   inventory = []
 

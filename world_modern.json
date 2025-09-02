@@ -5140,9 +5140,7 @@
     "note": "Graph designed for traversal; exits use single-word mnemonics with short descriptions and atmospheric traversal text.",
     "starter_inventory": [],
     "spawn_points": [
-      
       75
-      
     ],
     "item_discovery": {
       "find_difficulty_scale": "1 (easy) … 10 (very hard)",
@@ -5404,7 +5402,7 @@
             "Paper Cup",
             "Bag of Espresso Roast"
           ],
-          "output": "coffee",
+          "output": "Fresh Brew",
           "type": "consumable.beverage",
           "notice": "You prepare a strong shot of espresso, the dark, rich liquid filling the paper cup.",
           "notes": "A potent brew to sharpen the senses."
