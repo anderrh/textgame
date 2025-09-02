@@ -304,7 +304,11 @@ __   __           __        ___         _   _   _
       room = get_room_by_id(world,current_room)
       for npc in room['npcs']:
         if npc['name'].upper() == person_to_talk.upper():
-          print(npc['name'] + " says: " + npc['dialogue'])
+
+          print(npc['name'] + " says: " + (npc['dialogue']
+                                           if isinstance(npc['dialogue'], str)
+                                           else random.choice(npc['dialogue'])))
+          print()
 
 
     if command == 'CRAFT':
