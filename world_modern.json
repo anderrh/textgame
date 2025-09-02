@@ -3691,10 +3691,10 @@
         "ROOM": [
           {
             "to": 76,
-            "requires": ["Room Key"],
-            "blocked_text": "The you try to move the handle but the door is locked is locked.",
+            "requires": [],
+            "blocked_text": "",
             "short_desc": "The Foreman's Rest Room - peeling wallpaper, groaning bed, hope on the floor",
-            "traversal": "You climb the groaning stairs to the hotel room, after you slide the key into the lock you open the door."
+            "traversal": "You climb the groaning stairs to the hotel room, each step protesting ominously."
           }
         ],
         "STREET": [
@@ -3708,21 +3708,6 @@
         ]
       },
       "items": [
-        {
-          "name": "Room Key",
-          "find_difficulty": 9,
-          "notice": "As you test some papers in The Foreman's Rest: Lobby, the room key slides out of a book",
-          "check": {
-            "skill": "search",
-            "dc": 9,
-            "advantage_if_types": [
-              "light.source"
-            ],
-            "disadvantage_if_missing_types": [],
-            "notes": "Listen and feel for hidden catches and false bottoms."
-          },
-          "type": "key.lowsec"
-        },
         {
           "name": "Attic Key",
           "find_difficulty": 6,
@@ -5154,8 +5139,10 @@
     ],
     "note": "Graph designed for traversal; exits use single-word mnemonics with short descriptions and atmospheric traversal text.",
     "starter_inventory": [],
-    "spawn_points": [ 
+    "spawn_points": [
+      
       75
+      
     ],
     "item_discovery": {
       "find_difficulty_scale": "1 (easy) … 10 (very hard)",
@@ -5197,196 +5184,270 @@
             "Lantern",
             "Oil Flask"
           ],
-          "output": "Lit Lantern"
+          "output": "Lit Lantern",
+          "type": "light.source",
+          "notice": "The light flickers, dies, but then starts up again.",
+          "notes": "A battered lantern shines brightly."
         },
         {
           "input": [
             "Rope",
             "Grappling Hook"
           ],
-          "output": "Grappling Line"
+          "output": "Grappling Line",
+          "type": "climb.aid",
+          "notice": "With a satisfying click, the grappling hook is securely fastened to the rope.",
+          "notes": "A sturdy grappling line, ready for climbing or descending."
         },
         {
           "input": [
             "Diving Helmet",
             "Oxygen Tank"
           ],
-          "output": "Pressurized Rig"
+          "output": "Pressurized Rig",
+          "type": "dive.rig",
+          "notice": "You hear a hiss of compressed air as the oxygen tank connects to the diving helmet.",
+          "notes": "A complete pressurized rig, suitable for underwater exploration."
         },
         {
           "input": [
             "VFD Codebook",
             "Ciphered Message"
           ],
-          "output": "Decoded Message"
+          "output": "Decoded Message",
+          "type": "paper.decoded",
+          "notice": "As you cross-reference the symbols, the ciphered message begins to reveal its secrets.",
+          "notes": "The once-incomprehensible message is now clear."
         },
         {
           "input": [
             "Medusoid Antidote",
             "Medusoid Mycelium"
           ],
-          "effect": "Neutralize Spores"
+          "effect": "Neutralize Spores",
+          "type": "effect.neutralize",
+          "notice": "The antidote sizzles as it makes contact with the mycelium, rendering it inert.",
+          "notes": "The dangerous spores have been neutralized."
         },
         {
           "input": [
             "Hidden Ledger",
             "Missing Ledger Slot"
           ],
-          "effect": "Reveals Secret Compartment"
+          "effect": "Reveals Secret Compartment",
+          "type": "effect.reveal",
+          "notice": "Placing the ledger in the slot, you hear a faint click as a hidden compartment opens.",
+          "notes": "A secret has been revealed."
         },
         {
           "input": [
             "Index Card",
             "Catalog Map"
           ],
-          "effect": "Locate File"
+          "effect": "Locate File",
+          "type": "effect.locate",
+          "notice": "Using the index card and map, you quickly pinpoint the location of the needed file.",
+          "notes": "The file's location is now known."
         },
         {
           "input": [
             "Coffee Cup",
             "Bag of Coffee Beans"
           ],
-          "output": "Fresh Brew"
-        },
-        {
-          "input": [
-            "Lantern",
-            "Oil Flask"
-          ],
-          "output": "Lit Lantern"
+          "output": "Fresh Brew",
+          "type": "consumable.beverage",
+          "notice": "The rich aroma of coffee fills the air as you prepare a fresh brew.",
+          "notes": "A steaming, freshly brewed cup of coffee."
         },
         {
           "input": [
             "Rope",
             "Grappling Hook"
           ],
-          "output": "Grappling Line"
+          "output": "Grappling Line",
+          "type": "climb.aid",
+          "notice": "With a satisfying click, the grappling hook is securely fastened to the rope.",
+          "notes": "A sturdy grappling line, ready for climbing or descending."
         },
         {
           "input": [
             "Safety Hardhat",
             "Compressed Air Tank"
           ],
-          "output": "Respirator Rig"
+          "output": "Respirator Rig",
+          "type": "gear.respirator",
+          "notice": "The compressed air tank attaches firmly to the hardhat, creating a makeshift respirator.",
+          "notes": "Provides a supply of clean air in hazardous environments."
         },
         {
           "input": [
             "Maintenance Manual",
             "Ciphered Message"
           ],
-          "output": "Decoded Message"
+          "output": "Decoded Message",
+          "type": "paper.decoded",
+          "notice": "Flipping through the maintenance manual, you find the key to decipher the message's code.",
+          "notes": "The hidden meaning is now understood."
         },
         {
           "input": [
             "Medusoid Antidote",
             "Medusoid Mycelium"
           ],
-          "effect": "Neutralize Spores"
+          "effect": "Neutralize Spores",
+          "type": "effect.neutralize",
+          "notice": "The antidote sizzles as it makes contact with the mycelium, rendering it inert.",
+          "notes": "The dangerous spores have been neutralized."
         },
         {
           "input": [
             "Shift Logbook",
             "Missing Ledger Slot"
           ],
-          "effect": "Reveals Secret Compartment"
+          "effect": "Reveals Secret Compartment",
+          "type": "effect.reveal",
+          "notice": "The shift logbook fits perfectly into the slot, triggering a hidden mechanism.",
+          "notes": "A secret compartment is now accessible."
         },
         {
           "input": [
             "Index Card",
             "Catalog Map"
           ],
-          "effect": "Locate File"
+          "effect": "Locate File",
+          "type": "effect.locate",
+          "notice": "Using the index card and map, you quickly pinpoint the location of the needed file.",
+          "notes": "The file's location is now known."
         },
         {
           "input": [
             "To-Go Mug",
             "Bag of House Roast"
           ],
-          "output": "Fresh Brew"
+          "output": "Fresh Brew",
+          "type": "consumable.beverage",
+          "notice": "You pour the steaming house roast into the mug, its comforting scent promising a moment of clarity.",
+          "notes": "A hot cup of coffee, ready to go."
         },
         {
           "input": [
             "EVA Helmet",
             "EVA Tank"
           ],
-          "output": "EVA Suit"
+          "output": "EVA Suit",
+          "type": "gear.eva",
+          "notice": "The helmet seals onto the suit with a pressurized hiss, and life support indicators glow green.",
+          "notes": "A suit ready for extra-vehicular activity."
         },
         {
           "input": [
             "Colony Ops Manual",
             "Ciphered Message"
           ],
-          "output": "Decoded Message"
+          "output": "Decoded Message",
+          "type": "paper.decoded",
+          "notice": "The obscure codes in the message match a section in the colony operations manual, revealing their true meaning.",
+          "notes": "The operational directive is now clear."
         },
         {
           "input": [
             "Hydroponics Log",
             "Missing Ledger Slot"
           ],
-          "effect": "Reveals Secret Compartment"
+          "effect": "Reveals Secret Compartment",
+          "type": "effect.reveal",
+          "notice": "As you slide the hydroponics log into the empty slot, a section of the wall recedes.",
+          "notes": "A hidden space has been uncovered."
         },
         {
           "input": [
             "Thermal Mug",
             "Bag of Roasted Beans"
           ],
-          "output": "Fresh Brew"
+          "output": "Fresh Brew",
+          "type": "consumable.beverage",
+          "notice": "The aroma of freshly roasted beans is potent as you prepare the brew in your thermal mug.",
+          "notes": "A well-insulated mug of hot coffee."
         },
         {
           "input": [
             "Diver’s Helmet",
             "Air Tank"
           ],
-          "output": "Diving Rig"
+          "output": "Diving Rig",
+          "type": "dive.rig",
+          "notice": "The air tank connects to the diver's helmet with a reassuring clank, ready for the depths.",
+          "notes": "A complete diving rig for underwater ventures."
         },
         {
           "input": [
             "Casebook",
             "Ciphered Message"
           ],
-          "output": "Decoded Message"
+          "output": "Decoded Message",
+          "type": "paper.decoded",
+          "notice": "You find a similar cipher in the old casebook, allowing you to quickly decode the message.",
+          "notes": "The clue within the message is now readable."
         },
         {
           "input": [
             "Ledger",
             "Missing Ledger Slot"
           ],
-          "effect": "Reveals Secret Compartment"
+          "effect": "Reveals Secret Compartment",
+          "type": "effect.reveal",
+          "notice": "The ledger slides into place, and a section of the floor pops open with a dull thud.",
+          "notes": "A secret compartment has been found."
         },
         {
           "input": [
             "Paper Cup",
             "Bag of Espresso Roast"
           ],
-          "output": "Fresh Brew"
+          "output": "coffee",
+          "type": "consumable.beverage",
+          "notice": "You prepare a strong shot of espresso, the dark, rich liquid filling the paper cup.",
+          "notes": "A potent brew to sharpen the senses."
         },
         {
           "input": [
             "Depth Helmet",
             "Air Can"
           ],
-          "output": "Pressure Suit"
+          "output": "Pressure Suit",
+          "type": "gear.pressure_suit",
+          "notice": "The air can locks into the helmet, pressurizing the suit for extreme environments.",
+          "notes": "A suit designed to withstand immense pressure."
         },
         {
           "input": [
             "Exploit Manual",
             "Ciphered Message"
           ],
-          "output": "Decoded Message"
+          "output": "Decoded Message",
+          "type": "paper.decoded",
+          "notice": "Cross-referencing the message with the exploit manual, the encoded instructions become clear.",
+          "notes": "The message's technical secret is revealed."
         },
         {
           "input": [
             "Shard Ledger",
             "Missing Ledger Slot"
           ],
-          "effect": "Reveals Secret Compartment"
+          "effect": "Reveals Secret Compartment",
+          "type": "effect.reveal",
+          "notice": "The shard ledger fits the slot, and a hidden drawer springs open.",
+          "notes": "A secret compartment is now open."
         },
         {
           "input": [
             "Noodle Cup",
             "Soykaf Bag"
           ],
-          "output": "Fresh Brew"
+          "output": "Fresh Brew",
+          "type": "consumable.beverage",
+          "notice": "You brew the soykaf in the noodle cup, creating a surprisingly palatable, hot beverage.",
+          "notes": "A makeshift cup of hot soykaf."
         }
       ]
     }

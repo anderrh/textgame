@@ -101,6 +101,55 @@ def find_types(inventory):
     found_types.add(type)
   return found_types
 
+def craft_inputs(world,item_name):
+  recipies = world['meta']['crafting']['interactions']
+  for i in range(len(recipies)):
+    if recipies[i].get('output', "").upper() == item_name.upper():
+      return recipies[i]["input"]
+  return []
+
+def inside(inventory, required_item):
+  for item in inventory:
+    if required_item == item['name']:
+      return True
+  return False
+
+def remove_from_inventory(inventory, item):
+  for i in reversed (range(len(inventory))):
+    if inventory[i]['name'] == item:
+      inventory=inventory[:i]+inventory[i+1:]
+      return inventory
+  return inventory
+
+def craftible(world, inventory, item_name):
+  inputs = craft_inputs(world, item_name)
+  if not inputs:
+    return False
+  for input in inputs:
+    if not inside(inventory, input):
+      return False
+  return True
+
+def use_items_for_crafting(world, inventory, item_name):
+  inputs = craft_inputs(world, item_name)
+  for item in inputs:
+    inventory = remove_from_inventory(inventory, item)
+  for recipe in world['meta']['crafting']['interactions']:
+    if recipe["output"].upper() == item_name.upper():
+      inventory.append(
+        {
+          "name":recipe['output'],
+          "type": recipe["type"],
+          "notice":recipe['notice'],
+          "notes":recipe['notes'],
+        })
+      break
+  return inventory
+
+
+
+
+
 def game(world):
   current_room = random.choice(world["meta"]["spawn_points"])
   do_exit = False
@@ -141,6 +190,15 @@ def game(world):
           print(f"You take the {item['name']}\n")
       if not has_found:
         print (f"You search and you cannot find the {item_to_get}\n") 
+
+
+
+
+
+
+
+
+
 
     if command == "LOOK":
       my_types = find_types(inventory)
@@ -188,13 +246,46 @@ def game(world):
         
         inventory_desc += inventory_item["name"]
         inventory_desc += (" - ")
-        inventory_desc += inventory_item.get('check', {}).get("notes", "Normal item")
+        inventory_desc += inventory_item.get('check', inventory_item).get("notes", "Normal item")
         inventory_desc += ("\n")
 
 
         
       print (inventory_desc)
       print('')
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    if command == 'CRAFT':
+      item_to_get = " ".join(text.split()[1:]) if len(text.split()) > 1 else ""
+      if craftible(world,inventory,item_to_get):
+        inventory = use_items_for_crafting(world,inventory,item_to_get)
+        print (f"you craft the {item_to_get}")
+        for item in inventory:
+          if item['name'].upper() == item_to_get.upper():
+
+            print (item['notice']+'\n')
+      else:
+        print("You can't quite piece it together\n")
+        found_any = False
+        for recipe in world["meta"]["crafting"]["interactions"]:
+          if craftible(world, inventory, recipe.get("output",'')):
+              if not found_any:
+                print ("You could craft")
+                found_any = True
+              print (recipe["output"])
+        print()
+
 
 
 
