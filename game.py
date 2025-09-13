@@ -2,10 +2,16 @@ import os
 import sys
 import json
 import random
+import signal
+
+def handler(signum, frame):
+    pass
+
+signal.signal(signal.SIGINT, handler)
 
 def main():
   print("\n"*50)
-  with open("world_modern.json", "r") as world_file:
+  with open("world_norm.json" if len(sys.argv) < 2 else sys.argv[1], "r") as world_file:
     world = json.loads(world_file.read())
   
   game(world)
@@ -173,7 +179,7 @@ def win(world, current_room):
 def game(world):
   current_room = random.choice(world["meta"]["spawn_points"])
   do_exit = False
-  inventory = []
+  inventory = world['meta']['starter_inventory']
 
   while (not do_exit):
     if win(world, current_room):
@@ -195,6 +201,8 @@ __   __           __        ___         _   _   _
     text = input(">>> ")
     print("\n"* 5)
     if not text:
+      continue
+    if not text.split():
       continue
     command = text.split()[0].upper()
 
@@ -293,7 +301,12 @@ __   __           __        ___         _   _   _
 
 
 
-
+    if command == 'SAVE':
+      world["meta"]["spawn_points"] = [current_room]
+      world['meta']['starter_inventory'] = inventory
+      file_to_save = " ".join(text.split()[1:]) if len(text.split()) > 1 else "save.json"
+      with open (file_to_save, "w") as save_file:
+        save_file.write(json.dumps(world))
 
 
 
