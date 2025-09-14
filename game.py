@@ -11,7 +11,7 @@ signal.signal(signal.SIGINT, handler)
 
 def main():
   print("\n"*50)
-  with open("world_norm.json" if len(sys.argv) < 2 else sys.argv[1], "r") as world_file:
+  with open("world_small.json" if len(sys.argv) < 2 else sys.argv[1], "r") as world_file:
     world = json.loads(world_file.read())
   
   game(world)
@@ -153,6 +153,51 @@ def craftible(world, inventory, item_name):
       return False
   return True
 
+def split_item(room, text):
+  for trade in room.get('trades', []):
+    if text.upper().startswith(trade['name'].upper()):
+      return text[len(trade['name']):].strip(),trade['name'] 
+  return text,''
+
+
+def tradeable_list(room,inventory,item_to_trade, person_name):
+  recipies = room.get('trades', [])
+  for i in range(len(recipies)):
+     if recipies[i].get('name', "").upper() != person_name.upper():
+       continue
+     inputs = recipies[i].get('input', [])
+     for input in inputs:       
+      found_all = True
+      if input.upper() == item_to_trade.upper():
+        for item in inputs:
+          if not inside(inventory, item):
+            found_all = False
+      if found_all:
+        return inputs, recipies[i]
+  return [], None
+
+def tradeable(room,inventory,item_to_trade, person_name):
+  inputs, recipe = tradeable_list(room, inventory, item_to_trade, person_name)
+  if inputs:
+    return True
+  return False
+
+def exchange(room,inventory,item_to_trade, person_name):
+  inputs, recipe = tradeable_list(room,inventory,item_to_trade, person_name)
+  for item in inputs:
+    inventory = remove_from_inventory(inventory, item)
+  for output in recipe['output']:
+     print (output['notice'])
+     inventory.append(
+    {
+      "name":output['name'],
+      "type": output["type"],
+      "notice":output['notice'],
+      "notes":output['notes'],
+  })
+  return inventory
+
+
 def use_items_for_crafting(world, inventory, item_name):
   inputs = craft_inputs(world, item_name)
   for item in inputs:
@@ -173,8 +218,6 @@ def use_items_for_crafting(world, inventory, item_name):
 def win(world, current_room):
   if get_room_by_id(world,current_room)['name'] == world["meta"]["parallel_portal"]['portal_room']:
     return True
-
-
 
 def game(world):
   current_room = random.choice(world["meta"]["spawn_points"])
@@ -321,6 +364,21 @@ __   __           __        ___         _   _   _
                                            if isinstance(npc['dialogue'], str)
                                            else random.choice(npc['dialogue'])))
           print()
+
+
+    if command == 'GIVE':
+      item_to_give_and_name = " ".join(text.split()[1:]) if len(text.split()) > 1 else ""
+      room = get_room_by_id(world,current_room)
+      item_to_give, person_name = split_item(room, item_to_give_and_name)
+      success = False
+      if tradeable(room, inventory, item_to_give, person_name): #sees if you can trade the materials you have to anyone in the room
+        inventory = exchange(room, inventory, item_to_give, person_name)
+      else:
+        for trade in room.get('trades',[]):
+          if trade['name'] == person_name or not person_name:
+            print(trade['failure'])
+
+
 
 
     if command == 'CRAFT':
