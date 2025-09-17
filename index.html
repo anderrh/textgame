@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Adventure Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #e0e0e0;
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #gameContainer {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100%;
+            max-width: 600px;
+            max-height: 800px;
+            margin: 0 auto;
+            position: relative;
+            background: #1a1a1a;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+        }
+
+        #imageContainer {
+            width: 100%;
+            aspect-ratio: 1;
+            max-height: 40vh;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #roomImage {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #textArea {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background: #0a0a0a;
+            border-top: 2px solid #333;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        #chipsContainer {
+            padding: 10px;
+            background: #1a1a1a;
+            border-top: 2px solid #333;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            max-height: 30vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .chip {
+            padding: 10px 16px;
+            background: #2a2a2a;
+            border: 2px solid #444;
+            border-radius: 20px;
+            color: #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .chip:hover, .chip:active {
+            background: #3a3a3a;
+            border-color: #666;
+            transform: scale(0.98);
+        }
+
+        .chip.hard-to-find {
+            opacity: 0.5;
+            border-style: dashed;
+        }
+
+        .chip.inventory-btn {
+            background: #1a4a5a;
+            border-color: #4a9eff;
+            font-weight: bold;
+        }
+
+        .chip.inventory-btn:hover {
+            background: #2a5a6a;
+        }
+
+        #inventoryPanel {
+            position: absolute;
+            bottom: 100%;
+            left: 10px;
+            right: 10px;
+            max-height: 300px;
+            background: rgba(30, 30, 30, 0.98);
+            border: 2px solid #666;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            z-index: 99;
+            overflow-y: auto;
+            display: none;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        #inventoryPanel.open {
+            display: block;
+        }
+
+        #inventoryPanel::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #inventoryPanel::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-radius: 4px;
+        }
+
+        #inventoryPanel::-webkit-scrollbar-thumb {
+            background: #666;
+            border-radius: 4px;
+        }
+
+        #inventoryPanel::-webkit-scrollbar-thumb:hover {
+            background: #888;
+        }
+
+        .inventory-item {
+            padding: 8px;
+            margin: 5px 0;
+            background: rgba(50, 50, 50, 0.8);
+            border-radius: 5px;
+            font-size: 12px;
+        }
+
+        .room-title {
+            font-weight: bold;
+            font-size: 18px;
+            color: #4a9eff;
+            margin-bottom: 10px;
+            text-decoration: underline;
+        }
+
+        .npc-count {
+            color: #ffaa00;
+            margin: 10px 0;
+        }
+
+        .destination-count {
+            color: #00ff88;
+            margin: 10px 0;
+        }
+
+        #winMessage {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #000;
+            color: #0f0;
+            padding: 40px;
+            border: 3px solid #0f0;
+            font-family: monospace;
+            font-size: 14px;
+            text-align: center;
+            display: none;
+            z-index: 200;
+            white-space: pre;
+        }
+
+        /* Mobile responsiveness - fill screen on mobile */
+        @media (max-width: 768px) {
+            #gameContainer {
+                max-width: 100%;
+                max-height: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="imageContainer">
+            <img id="roomImage" alt="Room">
+        </div>
+        <div id="textArea"></div>
+        <div id="chipsContainer">
+            <div id="inventoryPanel"></div>
+        </div>
+    </div>
+    <div id="winMessage"></div>
+    <audio id="bgMusic" loop></audio>
+
+    <script>
+        class Game {
+            constructor() {
+                this.world = null;
+                this.currentRoom = 0;
+                this.inventory = [];
+                this.textQueue = [];
+                this.isTyping = false;
+                this.currentAudio = null;
+                this.fadeInterval = null;
+                this.init();
+            }
+
+            async init() {
+                // Load world data - try the provided filename first
+                try {
+                    const response = await fetch('world_hando_expanded.json');
+                    this.world = await response.json();
+                    this.currentRoom = this.world.meta.spawn_points[Math.floor(Math.random() * this.world.meta.spawn_points.length)];
+                    this.inventory = [...this.world.meta.starter_inventory];
+                    
+                    this.setupEventListeners();
+                    this.describeRoom();
+                } catch (error) {
+                    // If that fails, try the original filename
+                    try {
+                        const response = await fetch('world_small.json');
+                        this.world = await response.json();
+                        this.currentRoom = this.world.meta.spawn_points[Math.floor(Math.random() * this.world.meta.spawn_points.length)];
+                        this.inventory = [...this.world.meta.starter_inventory];
+                        
+                        this.setupEventListeners();
+                        this.describeRoom();
+                    } catch (error2) {
+                        this.addText("Error loading world data. Please ensure world_hando_expanded.json or world_small.json is available.");
+                        console.error(error2);
+                    }
+                }
+            }
+
+            setupEventListeners() {
+                // Inventory panel is now toggled by chip, no separate button needed
+            }
+
+            d20() {
+                return Math.floor(Math.random() * 20) + 1;
+            }
+
+            difficultyCheck(diff, advantage, disadvantage) {
+                const firstRoll = this.d20();
+                const secondRoll = this.d20();
+                const goal = diff + 10;
+
+                if (advantage === disadvantage) {
+                    return firstRoll >= goal;
+                }
+                if (advantage) {
+                    return Math.max(firstRoll, secondRoll) >= goal;
+                }
+                if (disadvantage) {
+                    return Math.min(firstRoll, secondRoll) >= goal;
+                }
+                return false;
+            }
+
+            getRoomById(roomId) {
+                if (!this.world) return null;
+                return this.world.world.find(r => r.id === roomId) || null;
+            }
+
+            hasRequires(requires) {
+                for (const req of requires) {
+                    const found = this.inventory.some(item => 
+                        item.name === req || item.type === req
+                    );
+                    if (!found) return false;
+                }
+                return true;
+            }
+
+            findTypes() {
+                return new Set(this.inventory.map(item => item.type));
+            }
+
+            async playMusic(filename) {
+                const audio = document.getElementById('bgMusic');
+                
+                // Clear any existing fade intervals
+                if (this.fadeInterval) {
+                    clearInterval(this.fadeInterval);
+                    this.fadeInterval = null;
+                }
+                
+                // Fade out current music if playing
+                if (audio && audio.volume > 0 && !audio.paused) {
+                    let fadeVolume = audio.volume;
+                    const fadeOut = setInterval(() => {
+                        fadeVolume -= 0.1;
+                        if (fadeVolume <= 0) {
+                            audio.volume = 0;
+                            audio.pause();
+                            clearInterval(fadeOut);
+                            // Now start new music
+                            this.startNewMusic(filename);
+                        } else {
+                            audio.volume = fadeVolume;
+                        }
+                    }, 50);
+                } else {
+                    // No music playing, start immediately
+                    this.startNewMusic(filename);
+                }
+            }
+
+            startNewMusic(filename) {
+                const audio = document.getElementById('bgMusic');
+                audio.src = filename;
+                audio.volume = 0;
+                
+                // Try to play, and if successful, fade in
+                audio.play().then(() => {
+                    let fadeVolume = 0;
+                    this.fadeInterval = setInterval(() => {
+                        fadeVolume += 0.1;
+                        if (fadeVolume >= 1) {
+                            audio.volume = 1;
+                            clearInterval(this.fadeInterval);
+                            this.fadeInterval = null;
+                        } else {
+                            audio.volume = fadeVolume;
+                        }
+                    }, 50);
+                }).catch(() => {
+                    // Audio couldn't play (likely autoplay policy)
+                });
+                
+                this.currentAudio = audio;
+            }
+
+            async loadImage(filename) {
+                const img = document.getElementById('roomImage');
+                img.src = filename;
+                img.onerror = () => {
+                    img.src = ''; // Clear if image not found
+                };
+            }
+
+            describeRoom() {
+                const room = this.getRoomById(this.currentRoom);
+                if (!room) return;
+
+                // Load image and music
+                const imageName = `images/${this.currentRoom}a.png`;
+                const musicName = `audio/${this.currentRoom}a.m4a`;
+                
+                this.loadImage(imageName);
+                this.playMusic(musicName);
+
+                // Build description
+                let text = `<span class="room-title">${room.name}</span>\n-----------------\n${room.description}\n`;
+
+                // NPCs
+                if (room.npcs && room.npcs.length > 0) {
+                    text += `<span class="npc-count">There ${room.npcs.length === 1 ? 'is 1 person' : `are ${room.npcs.length} people`} in the room:</span>\n`;
+                    for (const npc of room.npcs) {
+                        text += `${npc.name} - ${npc.short_desc || npc.description || 'Person'}\n`;
+                    }
+                    text += '\n';
+                }
+
+                // Exits
+                const exitCount = Object.keys(room.exits).length;
+                text += `<span class="destination-count">There ${exitCount === 1 ? 'is 1 destination' : `are ${exitCount} destinations`}:</span>\n`;
+                for (const [direction, exits] of Object.entries(room.exits)) {
+                    text += ` ${direction}`;
+                    for (const exit of exits) {
+                        text += ` - ${exit.short_desc}`;
+                    }
+                    text += '\n';
+                }
+
+                this.addText(text);
+                this.updateChips();
+            }
+
+            addText(text) {
+                this.textQueue.push(text);
+                if (!this.isTyping) {
+                    this.typeText();
+                }
+            }
+
+            async typeText() {
+                if (this.textQueue.length === 0) {
+                    this.isTyping = false;
+                    return;
+                }
+
+                this.isTyping = true;
+                const text = this.textQueue.shift();
+                const textArea = document.getElementById('textArea');
+                
+                // For instant display (like after GO command), show immediately
+                if (text.includes('\n\n\n\n\n')) {
+                    textArea.innerHTML = text;
+                    textArea.scrollTop = textArea.scrollHeight;
+                    this.isTyping = false;
+                    this.typeText();
+                    return;
+                }
+
+                // Type out character by character
+                let index = 0;
+                const typingSpeed = 10; // Delay between character chunks
+                const charsPerChunk = 4; // Drop 4 characters at once for faster reading
+                
+                const typeChar = () => {
+                    if (index < text.length) {
+                        let chunkSize = 0;
+                        let chunkText = '';
+                        
+                        // Process up to charsPerChunk characters
+                        while (chunkSize < charsPerChunk && index < text.length) {
+                            // Handle HTML tags
+                            if (text[index] === '<') {
+                                const closeTag = text.indexOf('>', index);
+                                if (closeTag !== -1) {
+                                    chunkText += text.substring(index, closeTag + 1);
+                                    index = closeTag + 1;
+                                    // Don't count HTML tags in chunk size
+                                } else {
+                                    chunkText += text[index];
+                                    index++;
+                                    chunkSize++;
+                                }
+                            } else {
+                                chunkText += text[index];
+                                index++;
+                                chunkSize++;
+                            }
+                        }
+                        
+                        textArea.innerHTML += chunkText;
+                        textArea.scrollTop = textArea.scrollHeight;
+                        setTimeout(typeChar, typingSpeed);
+                    } else {
+                        this.isTyping = false;
+                        this.typeText();
+                    }
+                };
+                
+                typeChar();
+            }
+
+            go(direction) {
+                const room = this.getRoomById(this.currentRoom);
+                if (!room) return;
+
+                if (!(direction in room.exits)) {
+                    this.addText("You can't go that way\n");
+                    return;
+                }
+
+                const exits = room.exits[direction];
+                for (let i = exits.length - 1; i >= 0; i--) {
+                    const exit = exits[i];
+                    if (this.hasRequires(exit.requires)) {
+                        this.currentRoom = exit.to;
+                        this.addText('\n\n\n\n\n' + exit.traversal);
+                        this.describeRoom();
+                        return;
+                    }
+                }
+
+                // If we get here, we're blocked
+                this.addText(exits[exits.length - 1].blocked_text + '\n');
+            }
+
+            getItem(itemName) {
+                const room = this.getRoomById(this.currentRoom);
+                if (!room) return;
+
+                const itemIndex = room.items.findIndex(item => 
+                    item.name.toUpperCase() === itemName.toUpperCase()
+                );
+
+                if (itemIndex !== -1) {
+                    const item = room.items[itemIndex];
+                    this.inventory.push(item);
+                    room.items.splice(itemIndex, 1);
+                    this.addText(`You take the ${item.name}\n`);
+                    this.updateChips();
+                } else {
+                    this.addText(`You search and you cannot find the ${itemName}\n`);
+                }
+            }
+
+            look() {
+                const room = this.getRoomById(this.currentRoom);
+                if (!room) return;
+
+                const myTypes = this.findTypes();
+                let foundItems = '';
+
+                for (const item of room.items) {
+                    let adv = false;
+                    let dis = false;
+
+                    if (item.check) {
+                        const advTypes = new Set(item.check.advantage_if_types || []);
+                        const disTypes = new Set(item.check.disadvantage_if_missing_types || []);
+                        
+                        // Check advantage
+                        if (advTypes.size > 0) {
+                            adv = [...advTypes].every(t => myTypes.has(t));
+                        }
+                        
+                        // Check disadvantage
+                        if (disTypes.size > 0 && ![...disTypes].some(t => myTypes.has(t))) {
+                            dis = true;
+                        }
+                    }
+
+                    const foundItem = this.difficultyCheck(item.find_difficulty || 0, adv, dis);
+                    if (foundItem || item.found) {
+                        foundItems += `${item.name} - ${item.notice}\n`;
+                        item.found = true;
+                    }
+                }
+
+                if (foundItems) {
+                    this.addText(foundItems);
+                } else {
+                    this.addText("You don't find anything special.\n");
+                }
+                this.updateChips();
+            }
+
+            talk(npcName) {
+                const room = this.getRoomById(this.currentRoom);
+                if (!room || !room.npcs) return;
+
+                const npc = room.npcs.find(n => n.name.toUpperCase() === npcName.toUpperCase());
+                if (npc) {
+                    const dialogue = Array.isArray(npc.dialogue) 
+                        ? npc.dialogue[Math.floor(Math.random() * npc.dialogue.length)]
+                        : npc.dialogue;
+                    this.addText(`${npc.name} says: ${dialogue}\n`);
+                }
+            }
+
+            craftInputs(itemName) {
+                if (!this.world || !this.world.meta.crafting) return [];
+                const recipe = this.world.meta.crafting.interactions.find(r => 
+                    r.output.toUpperCase() === itemName.toUpperCase()
+                );
+                return recipe ? recipe.input : [];
+            }
+
+            craftable(itemName) {
+                const inputs = this.craftInputs(itemName);
+                if (inputs.length === 0) return false;
+                
+                return inputs.every(input => 
+                    this.inventory.some(item => item.name === input)
+                );
+            }
+
+            craft(itemName) {
+                if (!this.world || !this.world.meta.crafting) return;
+                
+                if (this.craftable(itemName)) {
+                    // Remove ingredients
+                    const inputs = this.craftInputs(itemName);
+                    for (const input of inputs) {
+                        const index = this.inventory.findIndex(item => item.name === input);
+                        if (index !== -1) {
+                            this.inventory.splice(index, 1);
+                        }
+                    }
+
+                    // Add crafted item
+                    const recipe = this.world.meta.crafting.interactions.find(r => 
+                        r.output.toUpperCase() === itemName.toUpperCase()
+                    );
+                    if (recipe) {
+                        this.inventory.push({
+                            name: recipe.output,
+                            type: recipe.type,
+                            notice: recipe.notice,
+                            notes: recipe.notes
+                        });
+                        this.addText(`You craft the ${itemName}\n${recipe.notice}\n`);
+                    }
+                } else {
+                    this.addText("You can't quite piece it together\n");
+                    
+                    // Show what can be crafted
+                    if (this.world) {
+                        let foundAny = false;
+                        let craftableItems = "You could craft:\n";
+                        for (const recipe of this.world.meta.crafting.interactions) {
+                            if (this.craftable(recipe.output)) {
+                                if (!foundAny) {
+                                    this.addText(craftableItems);
+                                    foundAny = true;
+                                }
+                                this.addText(recipe.output + '\n');
+                            }
+                        }
+                    }
+                }
+                
+                this.updateChips();
+                this.updateInventoryDisplay();
+            }
+
+            give(itemName, personName) {
+                const room = this.getRoomById(this.currentRoom);
+                if (!room || !room.trades) return;
+
+                // Find matching trade
+                for (const trade of room.trades) {
+                    if (trade.name.toUpperCase() === personName.toUpperCase()) {
+                        // Check if we have all required items
+                        if (trade.input.includes(itemName) && 
+                            trade.input.every(input => this.inventory.some(item => item.name === input))) {
+                            
+                            // Remove traded items
+                            for (const input of trade.input) {
+                                const index = this.inventory.findIndex(item => item.name === input);
+                                if (index !== -1) {
+                                    this.inventory.splice(index, 1);
+                                }
+                            }
+
+                            // Add received items
+                            for (const output of trade.output) {
+                                this.addText(output.notice + '\n');
+                                this.inventory.push(output);
+                            }
+                            
+                            this.updateChips();
+                            this.updateInventoryDisplay();
+                            return;
+                        } else {
+                            this.addText(trade.failure + '\n');
+                            return;
+                        }
+                    }
+                }
+            }
+
+            save() {
+                if (!this.world) return;
+                
+                const saveData = {
+                    ...this.world,
+                    meta: {
+                        ...this.world.meta,
+                        spawn_points: [this.currentRoom],
+                        starter_inventory: this.inventory
+                    }
+                };
+                
+                const blob = new Blob([JSON.stringify(saveData, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'save.json';
+                a.click();
+                URL.revokeObjectURL(url);
+                
+                this.addText("Game saved!\n");
+            }
+
+            restart() {
+                location.reload();
+            }
+
+            checkWin() {
+                if (!this.world || !this.world.meta.parallel_portal) return false;
+                const room = this.getRoomById(this.currentRoom);
+                return room?.name === this.world.meta.parallel_portal.portal_room;
+            }
+
+            showWinMessage() {
+                const winMessage = document.getElementById('winMessage');
+                winMessage.innerHTML = `
+  ____                            _         _       _   _                   
+ / ___|___  _ __   __ _ _ __ __ _| |_ _   _| | __ _| |_(_) ___  _ __  ___   
+| |   / _ \\| '_ \\ / _\` | '__/ _\` | __| | | | |/ _\` | __| |/ _ \\| '_ \\/ __|  
+| |__| (_) | | | | (_| | | | (_| | |_| |_| | | (_| | |_| | (_) | | | \\__ \\_ 
+ \\____\\___/|_| |_|\\__, |_|  \\__,_|\\__|\\__,_|_|\\__,_|\\__|_|\\___/|_| |_|___( )
+                  |___/                                                  |/ 
+__   __           __        ___         _   _   _ 
+\\ \\ / /__  _   _  \\ \\      / (_)_ __   | | | | | |
+ \\ V / _ \\| | | |  \\ \\ /\\ / /| | '_ \\  | | | | | |
+  | | (_) | |_| |   \\ V  V / | | | | | |_| |_| |_|
+  |_|\\___/ \\__,_|    \\_/\\_/  |_|_| |_| (_) (_) (_)`;
+                winMessage.style.display = 'block';
+            }
+
+            updateInventoryDisplay() {
+                const panel = document.getElementById('inventoryPanel');
+                if (!panel || !panel.classList.contains('open')) return;
+
+                let html = '<h3 style="color: #4a9eff; margin-bottom: 10px;">📦 Inventory</h3>';
+                
+                const sortedInventory = [...this.inventory].sort((a, b) => 
+                    a.name.localeCompare(b.name)
+                );
+                
+                for (const item of sortedInventory) {
+                    const notes = item.notes || 'Normal item';
+                    html += `<div class="inventory-item">${item.name} - ${notes}</div>`;
+                }
+                
+                if (sortedInventory.length === 0) {
+                    html += '<div class="inventory-item">Empty</div>';
+                }
+                
+                panel.innerHTML = html;
+            }
+
+            toggleInventory() {
+                let invPanel = document.getElementById('inventoryPanel');
+                if (!invPanel) {
+                    // Create the panel if it doesn't exist
+                    const container = document.getElementById('chipsContainer');
+                    invPanel = document.createElement('div');
+                    invPanel.id = 'inventoryPanel';
+                    container.appendChild(invPanel);
+                }
+                invPanel.classList.toggle('open');
+                this.updateInventoryDisplay();
+            }
+
+            updateChips() {
+                const container = document.getElementById('chipsContainer');
+                
+                // Save inventory panel state before updating
+                const invPanel = document.getElementById('inventoryPanel');
+                const wasOpen = invPanel?.classList.contains('open');
+                
+                const chips = [];
+                
+                // Always show inventory button first
+                chips.push(`<div class="chip inventory-btn" onclick="game.toggleInventory()">📦 Inventory</div>`);
+                
+                const room = this.getRoomById(this.currentRoom);
+                if (!room) return;
+
+                // Check for win condition
+                if (this.checkWin()) {
+                    this.showWinMessage();
+                    container.innerHTML = chips.join('') + '<div id="inventoryPanel"></div>';
+                    return;
+                }
+
+                // Navigation chips
+                for (const direction of Object.keys(room.exits)) {
+                    chips.push(`<div class="chip" onclick="game.go('${direction}')">Go ${direction}</div>`);
+                }
+
+                // Item chips (both visible and hard to find)
+                if (room.items) {
+                    for (const item of room.items) {
+                        const myTypes = this.findTypes();
+                        let difficulty = 'normal';
+                        
+                        if (!item.found && item.find_difficulty && item.find_difficulty > 0) {
+                            let adv = false;
+                            let dis = false;
+                            
+                            if (item.check) {
+                                const advTypes = new Set(item.check.advantage_if_types || []);
+                                const disTypes = new Set(item.check.disadvantage_if_missing_types || []);
+                                
+                                if (advTypes.size > 0) {
+                                    adv = [...advTypes].every(t => myTypes.has(t));
+                                }
+                                
+                                if (disTypes.size > 0 && ![...disTypes].some(t => myTypes.has(t))) {
+                                    dis = true;
+                                }
+                            }
+                            
+                            // Make it translucent if hard to find
+                            if (item.find_difficulty > 0 || dis) {
+                                difficulty = 'hard-to-find';
+                            }
+                        }
+                        
+                        const itemNameEscaped = item.name.replace(/'/g, "\\'");
+                        chips.push(`<div class="chip ${difficulty === 'hard-to-find' ? 'hard-to-find' : ''}" onclick="game.getItem('${itemNameEscaped}')">Get ${item.name}</div>`);
+                    }
+                }
+
+                // Look chip
+                chips.push(`<div class="chip" onclick="game.look()">Look</div>`);
+
+                // Talk chips
+                if (room.npcs) {
+                    for (const npc of room.npcs) {
+                        const npcNameEscaped = npc.name.replace(/'/g, "\\'");
+                        chips.push(`<div class="chip" onclick="game.talk('${npcNameEscaped}')">Talk ${npc.name}</div>`);
+                    }
+                }
+
+                // Give chips (for trades)
+                if (room.trades) {
+                    const tradeableItems = new Set();
+                    for (const trade of room.trades) {
+                        for (const input of trade.input) {
+                            if (this.inventory.some(item => item.name === input)) {
+                                tradeableItems.add(`${input} to ${trade.name}`);
+                            }
+                        }
+                    }
+                    
+                    for (const trade of tradeableItems) {
+                        const [item, person] = trade.split(' to ');
+                        const itemEscaped = item.replace(/'/g, "\\'");
+                        const personEscaped = person.replace(/'/g, "\\'");
+                        chips.push(`<div class="chip" onclick="game.give('${itemEscaped}', '${personEscaped}')">Give ${trade}</div>`);
+                    }
+                }
+
+                // Craft chips
+                if (this.world && this.world.meta.crafting) {
+                    for (const recipe of this.world.meta.crafting.interactions) {
+                        if (this.craftable(recipe.output)) {
+                            const outputEscaped = recipe.output.replace(/'/g, "\\'");
+                            chips.push(`<div class="chip" onclick="game.craft('${outputEscaped}')">Craft ${recipe.output}</div>`);
+                        }
+                    }
+                }
+
+                // System chips
+                chips.push(`<div class="chip" onclick="game.save()">Save</div>`);
+                chips.push(`<div class="chip" onclick="game.restart()">Restart</div>`);
+
+                container.innerHTML = chips.join('') + '<div id="inventoryPanel"></div>';
+                
+                // Restore inventory panel state if it was open
+                if (wasOpen) {
+                    const newPanel = document.getElementById('inventoryPanel');
+                    newPanel.classList.add('open');
+                    this.updateInventoryDisplay();
+                }
+            }
+        }
+
+        // Start the game
+        const game = new Game();
+        window.game = game;
+    </script>
+</body>
+</html>
