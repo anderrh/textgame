@@ -38,17 +38,39 @@
 
         #imageContainer {
             width: 100%;
-            aspect-ratio: 1;
-            max-height: 40vh;
+            height: 25vh;
             background: #000;
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: height 0.3s ease;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        #imageContainer.expanded {
+            height: 50vh;
+        }
+
+        #imageContainer.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 200;
+            background: #000;
         }
 
         #roomImage {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            touch-action: none;
         }
 
         #textArea {
@@ -61,6 +83,11 @@
             line-height: 1.6;
             white-space: pre-wrap;
             word-wrap: break-word;
+            transition: all 0.3s ease;
+        }
+
+        #imageContainer.expanded + #textArea {
+            max-height: 30vh;
         }
 
         #chipsContainer {
@@ -264,7 +291,62 @@
             }
 
             setupEventListeners() {
-                // Inventory panel is now toggled by chip, no separate button needed
+                // Image interaction handlers
+                const imageContainer = document.getElementById('imageContainer');
+                const roomImage = document.getElementById('roomImage');
+                let pressTimer = null;
+                let isLongPress = false;
+                let lastTap = 0;
+                
+                // Double tap to toggle size
+                imageContainer?.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const currentTime = new Date().getTime();
+                    const tapLength = currentTime - lastTap;
+                    
+                    if (tapLength < 500 && tapLength > 0) {
+                        // Double tap detected
+                        imageContainer.classList.toggle('expanded');
+                        // Adjust text area scroll after size change
+                        setTimeout(() => {
+                            const textArea = document.getElementById('textArea');
+                            if (textArea) textArea.scrollTop = textArea.scrollHeight;
+                        }, 350);
+                    }
+                    lastTap = currentTime;
+                });
+                
+                // Press and hold for fullscreen
+                const startPress = (e) => {
+                    e.preventDefault();
+                    isLongPress = false;
+                    pressTimer = setTimeout(() => {
+                        isLongPress = true;
+                        imageContainer?.classList.add('fullscreen');
+                    }, 500); // 500ms hold for fullscreen
+                };
+                
+                const endPress = (e) => {
+                    e.preventDefault();
+                    if (pressTimer) clearTimeout(pressTimer);
+                    if (isLongPress) {
+                        imageContainer?.classList.remove('fullscreen');
+                        isLongPress = false;
+                    }
+                };
+                
+                // Touch events for mobile
+                imageContainer?.addEventListener('touchstart', startPress, { passive: false });
+                imageContainer?.addEventListener('touchend', endPress, { passive: false });
+                imageContainer?.addEventListener('touchcancel', endPress, { passive: false });
+                
+                // Mouse events for desktop
+                imageContainer?.addEventListener('mousedown', startPress);
+                imageContainer?.addEventListener('mouseup', endPress);
+                imageContainer?.addEventListener('mouseleave', endPress);
+                
+                // Prevent context menu on long press
+                imageContainer?.addEventListener('contextmenu', (e) => e.preventDefault());
             }
 
             d20() {
@@ -380,6 +462,10 @@
                 const room = this.getRoomById(this.currentRoom);
                 if (!room) return;
 
+                // Clear text area for new room
+                const textArea = document.getElementById('textArea');
+                textArea.innerHTML = '';
+
                 // Load image and music
                 const imageName = `images/${this.currentRoom}a.png`;
                 const musicName = `audio/${this.currentRoom}a.m4a`;
@@ -393,13 +479,15 @@
                     text += '[Click anywhere to start audio]\n\n';
                 }
                 
-                text += `<span class="room-title">${room.name}</span>\n-----------------\n${room.description}\n`;
+                text += `<span class="room-title">${room.name}</span>\n`;
+                text += '-----------------\n';
+                text += `${room.description}\n\n`;
 
                 // NPCs
                 if (room.npcs && room.npcs.length > 0) {
                     text += `<span class="npc-count">There ${room.npcs.length === 1 ? 'is 1 person' : `are ${room.npcs.length} people`} in the room:</span>\n`;
                     for (const npc of room.npcs) {
-                        text += `${npc.name} - ${npc.short_desc || npc.description || 'Person'}\n`;
+                        text += ` • ${npc.name} - ${npc.short_desc || npc.description || 'Person'}\n`;
                     }
                     text += '\n';
                 }
@@ -408,7 +496,7 @@
                 const exitCount = Object.keys(room.exits).length;
                 text += `<span class="destination-count">There ${exitCount === 1 ? 'is 1 destination' : `are ${exitCount} destinations`}:</span>\n`;
                 for (const [direction, exits] of Object.entries(room.exits)) {
-                    text += ` ${direction}`;
+                    text += ` • ${direction}`;
                     for (const exit of exits) {
                         text += ` - ${exit.short_desc}`;
                     }
@@ -477,9 +565,14 @@
                         }
                         
                         textArea.innerHTML += chunkText;
+                        
+                        // Always scroll to bottom to keep new text visible
                         textArea.scrollTop = textArea.scrollHeight;
+                        
                         setTimeout(typeChar, typingSpeed);
                     } else {
+                        // Final scroll to ensure everything is visible
+                        textArea.scrollTop = textArea.scrollHeight;
                         this.isTyping = false;
                         this.typeText();
                     }
@@ -502,8 +595,10 @@
                     const exit = exits[i];
                     if (this.hasRequires(exit.requires)) {
                         this.currentRoom = exit.to;
-                        this.addText('\n\n\n\n\n' + exit.traversal);
-                        this.describeRoom();
+                        // Add clear separation between traversal and room description
+                        this.addText('\n\n\n\n\n' + exit.traversal + '\n\n');
+                        // Small delay before room description for readability
+                        setTimeout(() => this.describeRoom(), 100);
                         return;
                     }
                 }
