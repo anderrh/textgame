@@ -110,16 +110,17 @@
         }
 
         #inventoryPanel {
-            position: absolute;
-            bottom: 100%;
-            left: 10px;
-            right: 10px;
+            position: fixed;
+            bottom: 20vh;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 500px;
             max-height: 300px;
             background: rgba(30, 30, 30, 0.98);
             border: 2px solid #666;
             border-radius: 10px;
             padding: 15px;
-            margin-bottom: 10px;
             z-index: 99;
             overflow-y: auto;
             display: none;
@@ -206,9 +207,8 @@
             <img id="roomImage" alt="Room">
         </div>
         <div id="textArea"></div>
-        <div id="chipsContainer">
-            <div id="inventoryPanel"></div>
-        </div>
+        <div id="chipsContainer"></div>
+        <div id="inventoryPanel"></div>
     </div>
     <div id="winMessage"></div>
     <audio id="bgMusic" loop></audio>
@@ -223,10 +223,20 @@
                 this.isTyping = false;
                 this.currentAudio = null;
                 this.fadeInterval = null;
+                this.musicStarted = false;
+                this.pendingMusic = null;
                 this.init();
             }
 
             async init() {
+                // Add click listener for first interaction to start music
+                document.addEventListener('click', () => {
+                    if (!this.musicStarted && this.pendingMusic) {
+                        this.musicStarted = true;
+                        this.startNewMusic(this.pendingMusic);
+                    }
+                }, { once: true });
+
                 // Load world data - try the provided filename first
                 try {
                     const response = await fetch('world_hando_expanded.json');
@@ -298,6 +308,12 @@
             }
 
             async playMusic(filename) {
+                // Store the music to play if we haven't started yet
+                if (!this.musicStarted) {
+                    this.pendingMusic = filename;
+                    return;
+                }
+                
                 const audio = document.getElementById('bgMusic');
                 
                 // Clear any existing fade intervals
@@ -371,8 +387,13 @@
                 this.loadImage(imageName);
                 this.playMusic(musicName);
 
-                // Build description
-                let text = `<span class="room-title">${room.name}</span>\n-----------------\n${room.description}\n`;
+                // Build description - add click instruction if music hasn't started
+                let text = '';
+                if (!this.musicStarted) {
+                    text += '[Click anywhere to start audio]\n\n';
+                }
+                
+                text += `<span class="room-title">${room.name}</span>\n-----------------\n${room.description}\n`;
 
                 // NPCs
                 if (room.npcs && room.npcs.length > 0) {
@@ -739,16 +760,11 @@ __   __           __        ___         _   _   _
             }
 
             toggleInventory() {
-                let invPanel = document.getElementById('inventoryPanel');
-                if (!invPanel) {
-                    // Create the panel if it doesn't exist
-                    const container = document.getElementById('chipsContainer');
-                    invPanel = document.createElement('div');
-                    invPanel.id = 'inventoryPanel';
-                    container.appendChild(invPanel);
+                const invPanel = document.getElementById('inventoryPanel');
+                if (invPanel) {
+                    invPanel.classList.toggle('open');
+                    this.updateInventoryDisplay();
                 }
-                invPanel.classList.toggle('open');
-                this.updateInventoryDisplay();
             }
 
             updateChips() {
@@ -769,7 +785,11 @@ __   __           __        ___         _   _   _
                 // Check for win condition
                 if (this.checkWin()) {
                     this.showWinMessage();
-                    container.innerHTML = chips.join('') + '<div id="inventoryPanel"></div>';
+                    container.innerHTML = chips.join('');
+                    // Restore inventory state
+                    if (wasOpen && invPanel) {
+                        invPanel.classList.add('open');
+                    }
                     return;
                 }
 
@@ -856,12 +876,11 @@ __   __           __        ___         _   _   _
                 chips.push(`<div class="chip" onclick="game.save()">Save</div>`);
                 chips.push(`<div class="chip" onclick="game.restart()">Restart</div>`);
 
-                container.innerHTML = chips.join('') + '<div id="inventoryPanel"></div>';
+                container.innerHTML = chips.join('');
                 
                 // Restore inventory panel state if it was open
-                if (wasOpen) {
-                    const newPanel = document.getElementById('inventoryPanel');
-                    newPanel.classList.add('open');
+                if (wasOpen && invPanel) {
+                    invPanel.classList.add('open');
                     this.updateInventoryDisplay();
                 }
             }
