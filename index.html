@@ -861,6 +861,46 @@
                 this.addText("Game saved!\n");
             }
 
+            async loadSave() {
+                // Create invisible file input
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.accept = '.json';
+                
+                fileInput.onchange = async (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        try {
+                            const text = await file.text();
+                            const saveData = JSON.parse(text);
+                            
+                            // Load the saved game state
+                            this.world = saveData;
+                            this.currentRoom = saveData.meta.spawn_points[0];
+                            this.inventory = [...saveData.meta.starter_inventory];
+                            
+                            // Clear and redraw everything
+                            const textArea = document.getElementById('textArea');
+                            textArea.innerHTML = '';
+                            
+                            this.addText("Save file loaded successfully!\n\n");
+                            this.describeRoom();
+                        } catch (error) {
+                            this.addText("Error loading save file. Please check the file and try again.\n");
+                            console.error(error);
+                        }
+                    } else {
+                        // No file selected, do a normal restart
+                        if (confirm('No save file selected. Start a new game?')) {
+                            location.reload();
+                        }
+                    }
+                };
+                
+                // Trigger file selection dialog
+                fileInput.click();
+            }
+
             restart() {
                 location.reload();
             }
@@ -1025,7 +1065,7 @@ __   __           __        ___         _   _   _
 
                 // System chips
                 chips.push(`<div class="chip" onclick="game.save()">Save</div>`);
-                chips.push(`<div class="chip" onclick="game.restart()">Restart</div>`);
+                chips.push(`<div class="chip" onclick="game.loadSave()">Load</div>`);
 
                 container.innerHTML = chips.join('');
                 
