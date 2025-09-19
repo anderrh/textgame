@@ -202,7 +202,7 @@
             border: 2px solid #666;
             border-radius: 10px;
             padding: 15px;
-            padding-top: 85px; /* Make room for speed controls */
+            padding-top: 55px; /* Less space needed for compact controls */
             z-index: 100;
             display: none;
             box-shadow: 0 5px 30px rgba(0, 0, 0, 0.7);
@@ -435,7 +435,7 @@
             #gameContainer {
                 max-width: 100%;
                 height: 100vh;
-                /* Use smaller viewport height on iOS to account for UI */
+                /* Use smaller viewport height on mobile to account for UI */
                 height: 100svh; 
                 box-shadow: none;
                 border-radius: 0;
@@ -462,7 +462,7 @@
             }
             
             #chipsContainer {
-                /* Better bottom padding for iOS */
+                /* Better bottom padding for mobile */
                 padding-bottom: max(env(safe-area-inset-bottom, 0) + 10px, 20px);
                 max-height: 28vh; /* Slightly smaller to avoid bottom bar */
             }
@@ -501,6 +501,56 @@
             }
         }
         
+        /* Android-specific fixes */
+        @supports not (-webkit-touch-callout: none) {
+            /* Non-iOS mobile browsers (primarily Android) */
+            @media (max-width: 768px) and (pointer: coarse) {
+                body {
+                    position: relative;
+                    overflow: hidden;
+                    touch-action: none;
+                }
+                
+                #gameContainer {
+                    height: 100vh;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                }
+                
+                #textArea {
+                    /* Android scroll optimization */
+                    overflow-scrolling: auto;
+                    -webkit-overflow-scrolling: auto;
+                }
+                
+                #chipsContainer {
+                    /* Android scroll optimization */
+                    overflow-scrolling: auto;
+                    -webkit-overflow-scrolling: auto;
+                    /* Ensure bottom padding on Android */
+                    padding-bottom: 20px;
+                }
+                
+                /* Fix for Android Chrome URL bar */
+                #imageContainer {
+                    height: 22vh;
+                }
+                
+                #imageContainer.expanded {
+                    height: 43vh;
+                }
+                
+                /* Ensure textarea works on Android */
+                #logContent {
+                    -webkit-user-select: text;
+                    user-select: text;
+                }
+            }
+        }
+        
         /* Viewport meta tag respect */
         @viewport {
             width: device-width;
@@ -523,18 +573,17 @@
     <div id="winMessage"></div>
     <div id="logOverlay" onclick="game.closeLog()"></div>
     <div id="logPanel">
-        <div style="position: absolute; top: 15px; left: 15px; right: 15px;">
-            <button id="logClose" onclick="game.closeLog()" style="position: absolute; top: 0; right: 0;">×</button>
-            <h3 style="color: #4a9eff; margin-bottom: 10px;">📜 Session Log</h3>
+        <div style="position: absolute; top: 15px; left: 15px; right: 15px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <h3 style="color: #4a9eff; margin: 0;">📜 Log</h3>
+                <span style="color: #666; font-size: 14px;">Speed:</span>
+                <button class="speed-button" onclick="game.decreaseSpeed()" style="width: 24px; height: 24px;">-</button>
+                <span id="speedIndicator" style="color: #4a9eff; min-width: 15px; text-align: center; font-size: 14px;">2</span>
+                <button class="speed-button" onclick="game.increaseSpeed()" style="width: 24px; height: 24px;">+</button>
+            </div>
+            <button id="logClose" onclick="game.closeLog()" style="width: 30px; height: 30px; background: #666; border: none; border-radius: 5px; color: white; cursor: pointer; font-size: 18px;">×</button>
         </div>
-        <div style="position: absolute; top: 50px; left: 15px; right: 15px; display: flex; align-items: center; gap: 10px; font-size: 14px;">
-            <span style="color: #888;">Text Speed:</span>
-            <button class="speed-button" onclick="game.decreaseSpeed()">-</button>
-            <span id="speedIndicator" style="color: #4a9eff; min-width: 60px; text-align: center;">4 chars</span>
-            <button class="speed-button" onclick="game.increaseSpeed()">+</button>
-            <span style="color: #666; font-size: 12px; margin-left: 10px;">(1=slow, 8=fast)</span>
-        </div>
-        <textarea id="logContent" readonly style="margin-top: 35px;"></textarea>
+        <textarea id="logContent" readonly></textarea>
     </div>
     <audio id="bgMusic" loop></audio>
 
@@ -551,7 +600,7 @@
                 this.musicStarted = false;
                 this.pendingMusic = null;
                 this.sessionLog = []; // Track all text shown to user
-                this.textSpeed = 4; // Characters per chunk (1-8)
+                this.textSpeed = 2; // Characters per chunk (1-8)
                 this.init();
             }
 
@@ -650,7 +699,7 @@
                     endPress(e);
                 }, { passive: false });
                 
-                // Double tap to toggle size (backup for iOS)
+                // Double tap to toggle size (works on both iOS and Android)
                 imageContainer?.addEventListener('click', (e) => {
                     e.preventDefault();
                     const currentTime = new Date().getTime();
@@ -695,6 +744,23 @@
                 
                 // Prevent context menu on long press
                 imageContainer?.addEventListener('contextmenu', (e) => e.preventDefault());
+                
+                // Android-specific touch handling for better scrolling
+                if (navigator.userAgent.toLowerCase().indexOf('android') > -1) {
+                    const scrollableElements = [
+                        document.getElementById('textArea'),
+                        document.getElementById('chipsContainer'),
+                        document.getElementById('logContent')
+                    ];
+                    
+                    scrollableElements.forEach(element => {
+                        if (element) {
+                            // Ensure smooth scrolling on Android
+                            element.style.overflowY = 'auto';
+                            element.style.WebkitOverflowScrolling = 'auto';
+                        }
+                    });
+                }
             }
 
             d20() {
@@ -1047,7 +1113,7 @@
             updateSpeedIndicator() {
                 const indicator = document.getElementById('speedIndicator');
                 if (indicator) {
-                    indicator.textContent = `${this.textSpeed} char${this.textSpeed !== 1 ? 's' : ''}`;
+                    indicator.textContent = this.textSpeed.toString();
                 }
             }
 
