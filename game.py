@@ -3,6 +3,7 @@ import sys
 import json
 import random
 import signal
+import av
 
 def handler(signum, frame):
     pass
@@ -10,6 +11,7 @@ def handler(signum, frame):
 signal.signal(signal.SIGINT, handler)
 
 def main():
+  av.init()
   print("\n"*50)
   with open("world_small.json" if len(sys.argv) < 2 else sys.argv[1], "r") as world_file:
     world = json.loads(world_file.read())
@@ -223,8 +225,10 @@ def game(world):
   current_room = random.choice(world["meta"]["spawn_points"])
   do_exit = False
   inventory = world['meta']['starter_inventory']
-
+  av.display_image(f"images/{current_room}a.png")
   while (not do_exit):
+    av.play_music(f"audio/{current_room}a.mp3")
+    av.display_image(f"images/{current_room}a.png")
     if win(world, current_room):
       print("""
   ____                            _         _       _   _                   
@@ -258,7 +262,7 @@ __   __           __        ___         _   _   _
     
     if command == "GO":
       if not len (text.split()) == 1:
-        current_room,text = go(world,inventory,get_room_by_id(world,current_room),text.split()[1].upper())
+        current_room,text = go(world,inventory,get_room_by_id(world,current_room)," ".join(text.split()[1:]).upper())
         print(text + "\n")
       else:
         print("you can't go that way\n")
@@ -385,7 +389,7 @@ __   __           __        ___         _   _   _
       item_to_get = " ".join(text.split()[1:]) if len(text.split()) > 1 else ""
       if craftible(world,inventory,item_to_get):
         inventory = use_items_for_crafting(world,inventory,item_to_get)
-        print (f"you craft the {item_to_get}")
+        #print (f"you craft the {item_to_get}")
         for item in inventory:
           if item['name'].upper() == item_to_get.upper():
 
