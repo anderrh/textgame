@@ -169,7 +169,7 @@
             border: 2px solid #666;
             border-radius: 10px;
             padding: 15px;
-            z-index: 99;
+            z-index: 150; /* Increased z-index */
             overflow-y: auto;
             display: none;
             box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
@@ -527,6 +527,22 @@
                     bottom: 0;
                 }
                 
+                /* Fix inventory panel positioning for Android */
+                #inventoryPanel {
+                    position: fixed !important;
+                    bottom: 120px !important; /* Fixed position above chips */
+                    left: 50% !important;
+                    transform: translateX(-50%) !important;
+                    z-index: 200 !important; /* Higher z-index for Android */
+                    width: 85% !important;
+                    max-height: 40vh !important;
+                    background: rgba(30, 30, 30, 0.95) !important;
+                }
+                
+                #inventoryPanel.open {
+                    display: block !important;
+                }
+                
                 #textArea {
                     /* Android scroll optimization */
                     overflow-scrolling: auto;
@@ -582,6 +598,12 @@
                     background: #3a3a3a !important;
                     border-color: #666 !important;
                 }
+                
+                /* Ensure inventory button works on Android */
+                .chip.inventory-btn {
+                    position: relative !important;
+                    z-index: 50 !important;
+                }
             }
         }
         
@@ -615,7 +637,7 @@
                 <span id="speedIndicator" style="color: #4a9eff; min-width: 15px; text-align: center; font-size: 14px;">2</span>
                 <button class="speed-button" onclick="game.increaseSpeed()" style="width: 24px; height: 24px;">+</button>
             </div>
-            <button id="logClose" onclick="game.closeLog()" style="width: 30px; height: 30px; background: #666; border: none; border-radius: 5px; color: white; cursor: pointer; font-size: 18px;">×</button>
+            <button id="logClose" onclick="game.closeLog()" style="width: 30px; height: 30px; background: #666; border: none; border-radius: 5px; color: white; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;">×</button>
         </div>
         <textarea id="logContent" readonly></textarea>
     </div>
@@ -1485,7 +1507,11 @@ __   __           __        ___         _   _   _
                 const panel = document.getElementById('inventoryPanel');
                 if (!panel || !panel.classList.contains('open')) return;
 
-                let html = '<h3 style="color: #4a9eff; margin-bottom: 10px;">📦 Inventory</h3>';
+                let html = '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">';
+                html += '<h3 style="color: #4a9eff; margin: 0;">📦 Inventory</h3>';
+                // Use direct window.game reference to ensure it works
+                html += '<button onclick="window.game.closeInventory(); return false;" style="width: 30px; height: 30px; background: #666; border: none; border-radius: 5px; color: white; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;">×</button>';
+                html += '</div>';
                 
                 const sortedInventory = [...this.inventory].sort((a, b) => 
                     a.name.localeCompare(b.name)
@@ -1507,7 +1533,16 @@ __   __           __        ___         _   _   _
                 const invPanel = document.getElementById('inventoryPanel');
                 if (invPanel) {
                     invPanel.classList.toggle('open');
-                    this.updateInventoryDisplay();
+                    if (invPanel.classList.contains('open')) {
+                        this.updateInventoryDisplay();
+                    }
+                }
+            }
+
+            closeInventory() {
+                const invPanel = document.getElementById('inventoryPanel');
+                if (invPanel) {
+                    invPanel.classList.remove('open');
                 }
             }
 
@@ -1631,25 +1666,28 @@ __   __           __        ___         _   _   _
                         chip.style.userSelect = 'none';
                         chip.style.webkitTouchCallout = 'none';
                         
-                        // Add touch event handlers
-                        chip.addEventListener('touchstart', (e) => {
-                            e.preventDefault();
-                            chip.style.background = '#3a3a3a';
-                        }, { passive: false });
-                        
-                        chip.addEventListener('touchend', (e) => {
-                            e.preventDefault();
-                            chip.style.background = '';
-                            // Execute the onclick handler
-                            const onclickAttr = chip.getAttribute('onclick');
-                            if (onclickAttr) {
-                                try {
-                                    eval(onclickAttr);
-                                } catch(err) {
-                                    console.error('Chip action error:', err);
+                        // Don't override the inventory button's existing onclick
+                        if (!chip.classList.contains('inventory-btn')) {
+                            // Add touch event handlers for other chips
+                            chip.addEventListener('touchstart', (e) => {
+                                e.preventDefault();
+                                chip.style.background = '#3a3a3a';
+                            }, { passive: false });
+                            
+                            chip.addEventListener('touchend', (e) => {
+                                e.preventDefault();
+                                chip.style.background = '';
+                                // Execute the onclick handler
+                                const onclickAttr = chip.getAttribute('onclick');
+                                if (onclickAttr) {
+                                    try {
+                                        eval(onclickAttr);
+                                    } catch(err) {
+                                        console.error('Chip action error:', err);
+                                    }
                                 }
-                            }
-                        }, { passive: false });
+                            }, { passive: false });
+                        }
                     });
                 }
                 
