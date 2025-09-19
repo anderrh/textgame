@@ -655,6 +655,11 @@
                     this.inventory = [...this.world.meta.starter_inventory];
                     
                     this.setupEventListeners();
+                    
+                    // For initial room, clear the text area first
+                    const textArea = document.getElementById('textArea');
+                    textArea.innerHTML = '';
+                    
                     this.describeRoom();
                 } catch (error) {
                     // If that fails, try the original filename
@@ -665,6 +670,11 @@
                         this.inventory = [...this.world.meta.starter_inventory];
                         
                         this.setupEventListeners();
+                        
+                        // For initial room, clear the text area first
+                        const textArea = document.getElementById('textArea');
+                        textArea.innerHTML = '';
+                        
                         this.describeRoom();
                     } catch (error2) {
                         this.addText("Error loading world data. Please ensure world_hando_expanded.json or world_small.json is available.");
@@ -970,9 +980,7 @@
                 const room = this.getRoomById(this.currentRoom);
                 if (!room) return;
 
-                // Clear text area for new room
-                const textArea = document.getElementById('textArea');
-                textArea.innerHTML = '';
+                // Don't clear text area - it's now done in go() before traversal
 
                 // Load image and music
                 const imageName = `images/${this.currentRoom}a.png`;
@@ -1119,7 +1127,7 @@
                 if (!room) return;
 
                 if (!(direction in room.exits)) {
-                    this.addText("You can't go that way\n");
+                    // This shouldn't happen with chip system, but keep as safety
                     return;
                 }
 
@@ -1128,15 +1136,21 @@
                     const exit = exits[i];
                     if (this.hasRequires(exit.requires)) {
                         this.currentRoom = exit.to;
-                        // Add clear separation between traversal and room description
-                        this.addText('\n\n\n\n\n' + exit.traversal + '\n\n');
+                        
+                        // Clear text area BEFORE adding traversal text
+                        const textArea = document.getElementById('textArea');
+                        textArea.innerHTML = '';
+                        
+                        // Add traversal text
+                        this.addText(exit.traversal + '\n\n');
+                        
                         // Small delay before room description for readability
                         setTimeout(() => this.describeRoom(), 100);
                         return;
                     }
                 }
 
-                // If we get here, we're blocked
+                // If we get here, we're blocked (still show blocked text as it's narrative)
                 this.addText(exits[exits.length - 1].blocked_text + '\n');
             }
 
@@ -1173,9 +1187,8 @@
                     }
                     
                     this.updateChips();
-                } else {
-                    this.addText(`You search and you cannot find the ${itemName}\n`);
                 }
+                // Removed error message - chips prevent picking up non-existent items
             }
 
             increaseSpeed() {
@@ -1325,24 +1338,8 @@
                             }
                         }
                     }
-                } else {
-                    this.addText("You can't quite piece it together\n");
-                    
-                    // Show what can be crafted
-                    if (this.world) {
-                        let foundAny = false;
-                        let craftableItems = "You could craft:\n";
-                        for (const recipe of this.world.meta.crafting.interactions) {
-                            if (this.craftable(recipe.output)) {
-                                if (!foundAny) {
-                                    this.addText(craftableItems);
-                                    foundAny = true;
-                                }
-                                this.addText(recipe.output + '\n');
-                            }
-                        }
-                    }
                 }
+                // Removed error message - chips only show craftable items
                 
                 this.updateChips();
                 this.updateInventoryDisplay();
