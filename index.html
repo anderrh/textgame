@@ -216,6 +216,14 @@
             margin: 10px 0;
         }
 
+        .conditional-text {
+            color: #ff9eff;
+            font-style: italic;
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 3px solid #ff9eff;
+        }
+
         #winMessage {
             position: fixed;
             top: 50%;
@@ -514,6 +522,18 @@
                 };
             }
 
+            getConditionalDescriptions(room) {
+                if (!room.conditional_descriptions) return [];
+                
+                const activeDescriptions = [];
+                for (const condDesc of room.conditional_descriptions) {
+                    if (this.hasRequires(condDesc.requirements)) {
+                        activeDescriptions.push(condDesc.text);
+                    }
+                }
+                return activeDescriptions;
+            }
+
             describeRoom() {
                 const room = this.getRoomById(this.currentRoom);
                 if (!room) return;
@@ -538,6 +558,12 @@
                 text += `<span class="room-title">${room.name}</span>\n`;
                 text += '-----------------\n';
                 text += `${room.description}\n\n`;
+
+                // Add conditional descriptions
+                const conditionalTexts = this.getConditionalDescriptions(room);
+                for (const condText of conditionalTexts) {
+                    text += `<span class="conditional-text">${condText}</span>\n\n`;
+                }
 
                 // NPCs
                 if (room.npcs && room.npcs.length > 0) {
@@ -676,6 +702,19 @@
                     this.inventory.push(item);
                     room.items.splice(itemIndex, 1);
                     this.addText(`You take the ${item.name}\n`);
+                    
+                    // Check if this unlocked any conditional text
+                    const conditionalTexts = this.getConditionalDescriptions(room);
+                    for (const condText of conditionalTexts) {
+                        // Check if this is a newly revealed text
+                        if (!this.revealedTexts) this.revealedTexts = new Set();
+                        const textKey = `${this.currentRoom}_${condText}`;
+                        if (!this.revealedTexts.has(textKey)) {
+                            this.revealedTexts.add(textKey);
+                            this.addText(`\n<span class="conditional-text">New insight: ${condText}</span>\n`);
+                        }
+                    }
+                    
                     this.updateChips();
                 } else {
                     this.addText(`You search and you cannot find the ${itemName}\n`);
@@ -720,6 +759,19 @@
                 } else {
                     this.addText("You don't find anything special.\n");
                 }
+                
+                // Check for any conditional descriptions that might be newly visible
+                const room2 = this.getRoomById(this.currentRoom);
+                const conditionalTexts = this.getConditionalDescriptions(room2);
+                for (const condText of conditionalTexts) {
+                    if (!this.revealedTexts) this.revealedTexts = new Set();
+                    const textKey = `${this.currentRoom}_${condText}`;
+                    if (!this.revealedTexts.has(textKey)) {
+                        this.revealedTexts.add(textKey);
+                        this.addText(`\n<span class="conditional-text">You notice: ${condText}</span>\n`);
+                    }
+                }
+                
                 this.updateChips();
             }
 
@@ -778,6 +830,18 @@
                             notes: recipe.notes
                         });
                         this.addText(`You craft the ${itemName}\n${recipe.notice}\n`);
+                        
+                        // Check if this crafting unlocked any conditional text
+                        const room = this.getRoomById(this.currentRoom);
+                        const conditionalTexts = this.getConditionalDescriptions(room);
+                        for (const condText of conditionalTexts) {
+                            if (!this.revealedTexts) this.revealedTexts = new Set();
+                            const textKey = `${this.currentRoom}_${condText}`;
+                            if (!this.revealedTexts.has(textKey)) {
+                                this.revealedTexts.add(textKey);
+                                this.addText(`\n<span class="conditional-text">Something changes: ${condText}</span>\n`);
+                            }
+                        }
                     }
                 } else {
                     this.addText("You can't quite piece it together\n");
