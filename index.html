@@ -45,6 +45,64 @@
             padding-bottom: env(safe-area-inset-bottom, 0);
         }
 
+        #passwordDialog {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1a1a1a;
+            border: 2px solid #4a9eff;
+            border-radius: 10px;
+            padding: 30px;
+            z-index: 300;
+            display: none;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+            max-width: 90%;
+            width: 400px;
+        }
+
+        #passwordDialog h2 {
+            color: #4a9eff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #passwordInput {
+            width: 100%;
+            padding: 10px;
+            background: #0a0a0a;
+            border: 1px solid #666;
+            border-radius: 5px;
+            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        #passwordSubmit {
+            width: 100%;
+            padding: 10px;
+            background: #4a9eff;
+            border: none;
+            border-radius: 5px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        #passwordSubmit:hover {
+            background: #6abbff;
+        }
+
+        #passwordError {
+            color: #ff6666;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+
         #imageContainer {
             width: 100%;
             height: 25vh;
@@ -641,9 +699,92 @@
         </div>
         <textarea id="logContent" readonly></textarea>
     </div>
+    
+    <!-- Password Dialog -->
+    <div id="passwordDialog">
+        <h2>🔒 Game Data Encrypted</h2>
+        <input type="password" id="passwordInput" placeholder="Enter password" autocomplete="off">
+        <button id="passwordSubmit" onclick="game.submitPassword()">Decrypt & Start Game</button>
+        <div id="passwordError">Incorrect password. Please try again.</div>
+    </div>
+    
     <audio id="bgMusic" loop></audio>
 
     <script>
+        // AES Encryption/Decryption utilities using Web Crypto API
+        class CryptoHelper {
+            static async deriveKey(password, salt) {
+                const encoder = new TextEncoder();
+                const passwordKey = await crypto.subtle.importKey(
+                    'raw',
+                    encoder.encode(password),
+                    'PBKDF2',
+                    false,
+                    ['deriveKey']
+                );
+                
+                return crypto.subtle.deriveKey(
+                    {
+                        name: 'PBKDF2',
+                        salt: salt,
+                        iterations: 100000,
+                        hash: 'SHA-256'
+                    },
+                    passwordKey,
+                    { name: 'AES-CBC', length: 128 },
+                    false,
+                    ['decrypt', 'encrypt']
+                );
+            }
+
+            static async decrypt(encryptedData, password) {
+                try {
+                    //console.log('Decrypting data of length:', encryptedData.length);
+                    //console.log('First 32 bytes (hex):', Array.from(encryptedData.slice(0, 32)).map(b => b.toString(16).padStart(2, '0')).join(' '));
+                    
+                    // Extract salt (first 16 bytes)
+                    const salt = encryptedData.slice(0, 16);
+                    // Extract IV (next 16 bytes)
+                    const iv = encryptedData.slice(16, 32);
+                    // Rest is the encrypted content
+                    const encrypted = encryptedData.slice(32);
+                    
+                    //console.log('Salt (hex):', Array.from(salt).map(b => b.toString(16).padStart(2, '0')).join(''));
+                    //console.log('IV (hex):', Array.from(iv).map(b => b.toString(16).padStart(2, '0')).join(''));
+                    
+                    const key = await this.deriveKey(password, salt);
+                    
+                    const decrypted = await crypto.subtle.decrypt(
+                        {
+                            name: 'AES-CBC',
+                            iv: iv
+                        },
+                        key,
+                        encrypted
+                    );
+                    
+                    const decoder = new TextDecoder();
+                    return decoder.decode(decrypted);
+                } catch (error) {
+                    console.error('Decryption error:', error);
+                    return null;
+                }
+            }
+
+            // Helper to check if data looks encrypted (starts with valid binary data)
+            static isLikelyEncrypted(data) {
+                // If it's ArrayBuffer or Uint8Array, it's likely encrypted
+                if (data instanceof ArrayBuffer || data instanceof Uint8Array) {
+                    return true;
+                }
+                // If it's a string that starts with JSON, it's not encrypted
+                if (typeof data === 'string' && (data.trim().startsWith('{') || data.trim().startsWith('['))) {
+                    return false;
+                }
+                return false;
+            }
+        }
+
         class Game {
             constructor() {
                 this.world = null;
@@ -657,6 +798,7 @@
                 this.pendingMusic = null;
                 this.sessionLog = []; // Track all text shown to user
                 this.textSpeed = 2; // Characters per chunk (1-8)
+                this.encryptedData = null; // Store encrypted data if found
                 this.init();
             }
 
@@ -669,40 +811,136 @@
                     }
                 }, { once: true });
 
-                // Load world data - try the provided filename first
+                // Try to load world data
+                await this.loadWorldData();
+            }
+
+            async loadWorldData() {
                 try {
-                    const response = await fetch('world_hando_expanded.json');
-                    this.world = await response.json();
-                    this.currentRoom = this.world.meta.spawn_points[Math.floor(Math.random() * this.world.meta.spawn_points.length)];
-                    this.inventory = [...this.world.meta.starter_inventory];
+                    // Try the provided filename first
+                    const response = await fetch('world_hando_encrypted.bin');
                     
-                    this.setupEventListeners();
+                    // ALWAYS fetch as binary first to avoid corrupting encrypted data
+                    const buffer = await response.arrayBuffer();
+                    const bytes = new Uint8Array(buffer);
                     
-                    // For initial room, clear the text area first
-                    const textArea = document.getElementById('textArea');
-                    textArea.innerHTML = '';
+                    // Check if it's JSON by looking at first byte
+                    // JSON files start with { (123) or [ (91) or whitespace (32, 9, 10, 13)
+                    const firstByte = bytes[0];
+                    const textDecoder = new TextDecoder();
                     
-                    await this.describeRoom();
+                    if (firstByte === 123 || firstByte === 91 || firstByte === 32 || firstByte === 9 || firstByte === 10 || firstByte === 13) {
+                        // Likely JSON, try to parse
+                        try {
+                            const text = textDecoder.decode(bytes);
+                            const data = JSON.parse(text);
+                            this.initializeGame(data);
+                        } catch (e) {
+                            // Not valid JSON, treat as encrypted
+                            await this.handleEncryptedData(bytes);
+                        }
+                    } else {
+                        // Binary data, treat as encrypted
+                        await this.handleEncryptedData(bytes);
+                    }
                 } catch (error) {
                     // If that fails, try the original filename
                     try {
                         const response = await fetch('world_small.json');
-                        this.world = await response.json();
-                        this.currentRoom = this.world.meta.spawn_points[Math.floor(Math.random() * this.world.meta.spawn_points.length)];
-                        this.inventory = [...this.world.meta.starter_inventory];
+                        const buffer = await response.arrayBuffer();
+                        const bytes = new Uint8Array(buffer);
                         
-                        this.setupEventListeners();
+                        const firstByte = bytes[0];
+                        const textDecoder = new TextDecoder();
                         
-                        // For initial room, clear the text area first
-                        const textArea = document.getElementById('textArea');
-                        textArea.innerHTML = '';
-                        
-                        await this.describeRoom();
+                        if (firstByte === 123 || firstByte === 91 || firstByte === 32 || firstByte === 9 || firstByte === 10 || firstByte === 13) {
+                            try {
+                                const text = textDecoder.decode(bytes);
+                                const data = JSON.parse(text);
+                                this.initializeGame(data);
+                            } catch (e) {
+                                await this.handleEncryptedData(bytes);
+                            }
+                        } else {
+                            await this.handleEncryptedData(bytes);
+                        }
                     } catch (error2) {
                         this.addText("Error loading world data. Please ensure world_hando_expanded.json or world_small.json is available.");
                         console.error(error2);
                     }
                 }
+            }
+
+            async handleEncryptedData(data) {
+                // Store encrypted data and show password dialog
+                this.encryptedData = data;
+                const dialog = document.getElementById('passwordDialog');
+                dialog.style.display = 'block';
+                
+                // Focus the password input
+                const passwordInput = document.getElementById('passwordInput');
+                passwordInput.focus();
+                
+                // Handle Enter key in password field
+                passwordInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.submitPassword();
+                    }
+                });
+            }
+
+            async submitPassword() {
+                const passwordInput = document.getElementById('passwordInput');
+                const password = passwordInput.value;
+                
+                if (!password) {
+                    this.showPasswordError();
+                    return;
+                }
+                
+                // Try to decrypt
+                const decrypted = await CryptoHelper.decrypt(this.encryptedData, password);
+                
+                if (decrypted) {
+                    try {
+                        const data = JSON.parse(decrypted);
+                        // Hide dialog
+                        document.getElementById('passwordDialog').style.display = 'none';
+                        // Initialize game with decrypted data
+                        this.initializeGame(data);
+                    } catch (error) {
+                        this.showPasswordError();
+                    }
+                } else {
+                    this.showPasswordError();
+                }
+            }
+
+            showPasswordError() {
+                const errorDiv = document.getElementById('passwordError');
+                errorDiv.style.display = 'block';
+                setTimeout(() => {
+                    errorDiv.style.display = 'none';
+                }, 3000);
+                
+                // Clear and refocus password field
+                const passwordInput = document.getElementById('passwordInput');
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+
+            initializeGame(worldData) {
+                this.world = worldData;
+                this.currentRoom = this.world.meta.spawn_points[Math.floor(Math.random() * this.world.meta.spawn_points.length)];
+                this.inventory = [...this.world.meta.starter_inventory];
+                
+                this.setupEventListeners();
+                
+                // For initial room, clear the text area first
+                const textArea = document.getElementById('textArea');
+                textArea.innerHTML = '';
+                
+                this.describeRoom();
             }
 
             setupEventListeners() {
