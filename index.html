@@ -127,6 +127,13 @@
             font-size: 14px;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            /* Prevent Android touch-to-search */
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            touch-action: manipulation;
         }
 
         .chip:hover, .chip:active {
@@ -530,8 +537,20 @@
                     /* Android scroll optimization */
                     overflow-scrolling: auto;
                     -webkit-overflow-scrolling: auto;
-                    /* Ensure bottom padding on Android */
-                    padding-bottom: 20px;
+                    /* Add extra bottom padding for Android navigation bar */
+                    padding-bottom: 80px !important;
+                    /* Ensure scrolling works properly */
+                    overflow-y: scroll !important;
+                    /* Add some visual indication that there's more content */
+                    padding-right: 5px;
+                }
+                
+                /* Visual scroll indicator for Android */
+                #chipsContainer::after {
+                    content: '';
+                    display: block;
+                    height: 60px; /* Extra space at bottom for safety */
+                    width: 100%;
                 }
                 
                 /* Fix for Android Chrome URL bar */
@@ -547,6 +566,21 @@
                 #logContent {
                     -webkit-user-select: text;
                     user-select: text;
+                }
+                
+                /* Additional touch-to-search prevention for Android */
+                .chip {
+                    -webkit-touch-callout: none !important;
+                    -webkit-user-select: none !important;
+                    touch-action: manipulation !important;
+                    /* Prevent long-press context menu */
+                    -webkit-context-menu: none !important;
+                }
+                
+                /* Ensure chips are always clickable on Android */
+                .chip:active {
+                    background: #3a3a3a !important;
+                    border-color: #666 !important;
                 }
             }
         }
@@ -760,6 +794,54 @@
                             element.style.WebkitOverflowScrolling = 'auto';
                         }
                     });
+                    
+                    // Prevent touch-to-search on chips
+                    const chipsContainer = document.getElementById('chipsContainer');
+                    if (chipsContainer) {
+                        // Prevent default touch behavior that triggers search
+                        chipsContainer.addEventListener('touchstart', (e) => {
+                            if (e.target.classList.contains('chip')) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                            }
+                        }, { passive: false });
+                        
+                        // Convert touch to click for chips
+                        chipsContainer.addEventListener('touchend', (e) => {
+                            if (e.target.classList.contains('chip')) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                // Trigger the onclick directly
+                                e.target.click();
+                            }
+                        }, { passive: false });
+                        
+                        // Prevent context menu on long press
+                        chipsContainer.addEventListener('contextmenu', (e) => {
+                            if (e.target.classList.contains('chip')) {
+                                e.preventDefault();
+                                return false;
+                            }
+                        });
+                    }
+                    
+                    // Add visual feedback for Android bottom padding
+                    const updateChipsVisibility = () => {
+                        const chips = chipsContainer;
+                        if (chips && chips.scrollHeight > chips.clientHeight) {
+                            chips.style.borderBottom = '2px dashed #666';
+                        }
+                    };
+                    
+                    // Check on load and when chips update
+                    setTimeout(updateChipsVisibility, 100);
+                    
+                    // Override updateChips to add Android-specific handling
+                    const originalUpdateChips = this.updateChips.bind(this);
+                    this.updateChips = function() {
+                        originalUpdateChips();
+                        setTimeout(updateChipsVisibility, 10);
+                    };
                 }
             }
 
@@ -1536,6 +1618,37 @@ __   __           __        ___         _   _   _
                 chips.push(`<div class="chip" onclick="game.loadSave()">Load</div>`);
 
                 container.innerHTML = chips.join('');
+                
+                // Android-specific: Re-attach touch prevention after updating chips
+                if (navigator.userAgent.toLowerCase().indexOf('android') > -1) {
+                    const allChips = container.querySelectorAll('.chip');
+                    allChips.forEach(chip => {
+                        // Disable text selection completely
+                        chip.style.webkitUserSelect = 'none';
+                        chip.style.userSelect = 'none';
+                        chip.style.webkitTouchCallout = 'none';
+                        
+                        // Add touch event handlers
+                        chip.addEventListener('touchstart', (e) => {
+                            e.preventDefault();
+                            chip.style.background = '#3a3a3a';
+                        }, { passive: false });
+                        
+                        chip.addEventListener('touchend', (e) => {
+                            e.preventDefault();
+                            chip.style.background = '';
+                            // Execute the onclick handler
+                            const onclickAttr = chip.getAttribute('onclick');
+                            if (onclickAttr) {
+                                try {
+                                    eval(onclickAttr);
+                                } catch(err) {
+                                    console.error('Chip action error:', err);
+                                }
+                            }
+                        }, { passive: false });
+                    });
+                }
                 
                 // Restore inventory panel state if it was open
                 if (wasOpen && invPanel) {
