@@ -172,6 +172,23 @@
             display: block;
         }
 
+        #logOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 99;
+            display: none;
+            touch-action: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        #logOverlay.open {
+            display: block;
+        }
+
         #logPanel {
             position: fixed;
             top: 10%;
@@ -187,15 +204,27 @@
             z-index: 100;
             display: none;
             box-shadow: 0 5px 30px rgba(0, 0, 0, 0.7);
+            /* iOS scroll fix */
+            -webkit-overflow-scrolling: touch;
+            overflow: hidden;
         }
 
         #logPanel.open {
             display: block;
         }
 
+        /* Prevent body scroll when log is open */
+        body.log-open {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+        }
+
         #logContent {
             height: calc(100% - 40px);
             overflow-y: auto;
+            overflow-x: hidden;
             padding: 10px;
             background: rgba(10, 10, 10, 0.8);
             border-radius: 5px;
@@ -203,8 +232,14 @@
             line-height: 1.5;
             white-space: pre-wrap;
             word-wrap: break-word;
+            /* iOS smooth scrolling */
+            -webkit-overflow-scrolling: touch;
+            /* Ensure touch events work */
+            touch-action: pan-y;
+            /* Create scrolling context */
+            position: relative;
+            z-index: 1;
         }
-
         #logClose {
             position: absolute;
             top: 10px;
@@ -316,6 +351,12 @@
             margin: 10px 0;
             padding: 10px;
             border-left: 3px solid #ff9eff;
+        }
+
+        .item-notice {
+            color: #88ddff;
+            font-style: italic;
+            margin: 5px 0;
         }
 
         #winMessage {
@@ -868,7 +909,13 @@
                     const item = room.items[itemIndex];
                     this.inventory.push(item);
                     room.items.splice(itemIndex, 1);
-                    this.addText(`You take the ${item.name}\n`);
+                    
+                    // Print both the standard message and the item's notice
+                    let message = `You take the ${item.name}\n`;
+                    if (item.notice) {
+                        message += `<span class="item-notice">${item.notice}</span>\n`;
+                    }
+                    this.addText(message);
                     
                     // Check if this unlocked any conditional text
                     const conditionalTexts = this.getConditionalDescriptions(room);
@@ -961,13 +1008,20 @@
                         r.output.toUpperCase() === itemName.toUpperCase()
                     );
                     if (recipe) {
-                        this.inventory.push({
+                        const craftedItem = {
                             name: recipe.output,
                             type: recipe.type,
                             notice: recipe.notice,
                             notes: recipe.notes
-                        });
-                        this.addText(`You craft the ${itemName}\n${recipe.notice}\n`);
+                        };
+                        this.inventory.push(craftedItem);
+                        
+                        // Show crafting message and the item's notice
+                        let message = `You craft the ${itemName}\n`;
+                        if (craftedItem.notice) {
+                            message += `<span class="item-notice">${craftedItem.notice}</span>\n`;
+                        }
+                        this.addText(message);
                         
                         // Check if this crafting unlocked any conditional text
                         const room = this.getRoomById(this.currentRoom);
@@ -1023,9 +1077,13 @@
                                 }
                             }
 
-                            // Add received items
+                            // Add received items with their notices
                             for (const output of trade.output) {
-                                this.addText(output.notice + '\n');
+                                let message = '';
+                                if (output.notice) {
+                                    message = `<span class="item-notice">${output.notice}</span>\n`;
+                                }
+                                this.addText(message);
                                 this.inventory.push(output);
                             }
                             
