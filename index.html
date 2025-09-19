@@ -202,7 +202,7 @@
             border: 2px solid #666;
             border-radius: 10px;
             padding: 15px;
-            padding-top: 50px;
+            padding-top: 85px; /* Make room for speed controls */
             z-index: 100;
             display: none;
             box-shadow: 0 5px 30px rgba(0, 0, 0, 0.7);
@@ -364,6 +364,32 @@
             margin: 5px 0;
         }
 
+        .speed-button {
+            width: 30px;
+            height: 30px;
+            background: #444;
+            color: white;
+            border: 1px solid #666;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .speed-button:hover {
+            background: #555;
+            border-color: #888;
+        }
+
+        .speed-button:active {
+            background: #333;
+            transform: scale(0.95);
+        }
+
         #winMessage {
             position: fixed;
             top: 50%;
@@ -501,7 +527,14 @@
             <button id="logClose" onclick="game.closeLog()" style="position: absolute; top: 0; right: 0;">×</button>
             <h3 style="color: #4a9eff; margin-bottom: 10px;">📜 Session Log</h3>
         </div>
-        <textarea id="logContent" readonly></textarea>
+        <div style="position: absolute; top: 50px; left: 15px; right: 15px; display: flex; align-items: center; gap: 10px; font-size: 14px;">
+            <span style="color: #888;">Text Speed:</span>
+            <button class="speed-button" onclick="game.decreaseSpeed()">-</button>
+            <span id="speedIndicator" style="color: #4a9eff; min-width: 60px; text-align: center;">4 chars</span>
+            <button class="speed-button" onclick="game.increaseSpeed()">+</button>
+            <span style="color: #666; font-size: 12px; margin-left: 10px;">(1=slow, 8=fast)</span>
+        </div>
+        <textarea id="logContent" readonly style="margin-top: 35px;"></textarea>
     </div>
     <audio id="bgMusic" loop></audio>
 
@@ -518,6 +551,7 @@
                 this.musicStarted = false;
                 this.pendingMusic = null;
                 this.sessionLog = []; // Track all text shown to user
+                this.textSpeed = 4; // Characters per chunk (1-8)
                 this.init();
             }
 
@@ -887,7 +921,7 @@
                 // Type out character by character
                 let index = 0;
                 const typingSpeed = 10; // Delay between character chunks
-                const charsPerChunk = 4; // Drop 4 characters at once for faster reading
+                const charsPerChunk = this.textSpeed; // Use the adjustable speed
                 
                 const typeChar = () => {
                     if (index < text.length) {
@@ -996,6 +1030,27 @@
                 }
             }
 
+            increaseSpeed() {
+                if (this.textSpeed < 8) {
+                    this.textSpeed++;
+                    this.updateSpeedIndicator();
+                }
+            }
+
+            decreaseSpeed() {
+                if (this.textSpeed > 1) {
+                    this.textSpeed--;
+                    this.updateSpeedIndicator();
+                }
+            }
+
+            updateSpeedIndicator() {
+                const indicator = document.getElementById('speedIndicator');
+                if (indicator) {
+                    indicator.textContent = `${this.textSpeed} char${this.textSpeed !== 1 ? 's' : ''}`;
+                }
+            }
+
             showLog() {
                 const logPanel = document.getElementById('logPanel');
                 const logContent = document.getElementById('logContent');
@@ -1013,6 +1068,9 @@
                     // Join all session log entries with some separation
                     logContent.value = this.sessionLog.join('\n──────────────\n');
                     logPanel.classList.add('open');
+                    
+                    // Update speed indicator
+                    this.updateSpeedIndicator();
                     
                     // Scroll to bottom to show most recent
                     setTimeout(() => {
