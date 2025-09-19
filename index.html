@@ -660,7 +660,7 @@
                     const textArea = document.getElementById('textArea');
                     textArea.innerHTML = '';
                     
-                    this.describeRoom();
+                    await this.describeRoom();
                 } catch (error) {
                     // If that fails, try the original filename
                     try {
@@ -675,7 +675,7 @@
                         const textArea = document.getElementById('textArea');
                         textArea.innerHTML = '';
                         
-                        this.describeRoom();
+                        await this.describeRoom();
                     } catch (error2) {
                         this.addText("Error loading world data. Please ensure world_hando_expanded.json or world_small.json is available.");
                         console.error(error2);
@@ -958,10 +958,23 @@
 
             async loadImage(filename) {
                 const img = document.getElementById('roomImage');
-                img.src = filename;
-                img.onerror = () => {
-                    img.src = ''; // Clear if image not found
-                };
+                
+                // Create a promise that resolves when image loads
+                return new Promise((resolve) => {
+                    // Preload the image first
+                    const preloader = new Image();
+                    preloader.onload = () => {
+                        // Once preloaded, set it to the actual img element
+                        img.src = filename;
+                        resolve();
+                    };
+                    preloader.onerror = () => {
+                        img.src = ''; // Clear if image not found
+                        resolve();
+                    };
+                    // Start loading with high priority
+                    preloader.src = filename;
+                });
             }
 
             getConditionalDescriptions(room) {
@@ -976,20 +989,19 @@
                 return activeDescriptions;
             }
 
-            describeRoom() {
+            async describeRoom() {
                 const room = this.getRoomById(this.currentRoom);
                 if (!room) return;
 
-                // Don't clear text area - it's now done in go() before traversal
-
-                // Load image and music
+                // Load image FIRST and wait for it to complete
                 const imageName = `images/${this.currentRoom}a.png`;
-                const musicName = `audio/${this.currentRoom}a.m4a`;
+                await this.loadImage(imageName);
                 
-                this.loadImage(imageName);
+                // Only after image is loaded, start music
+                const musicName = `audio/${this.currentRoom}a.m4a`;
                 this.playMusic(musicName);
 
-                // Build description - add click instruction if music hasn't started
+                // Now build and show description text
                 let text = '';
                 if (!this.musicStarted) {
                     text += '[Click anywhere to start audio]\n\n';
@@ -1065,15 +1077,8 @@
                 const text = this.textQueue.shift();
                 const textArea = document.getElementById('textArea');
                 
-                // For instant display (like after GO command), show immediately
-                if (text.includes('\n\n\n\n\n')) {
-                    textArea.innerHTML = text;
-                    textArea.scrollTop = textArea.scrollHeight;
-                    this.isTyping = false;
-                    this.typeText();
-                    return;
-                }
-
+                // No need for image loading delays anymore - images are already loaded
+                
                 // Type out character by character
                 let index = 0;
                 const typingSpeed = 10; // Delay between character chunks
@@ -1145,6 +1150,7 @@
                         this.addText(exit.traversal + '\n\n');
                         
                         // Small delay before room description for readability
+                        // describeRoom is now async and will load image before text
                         setTimeout(() => this.describeRoom(), 100);
                         return;
                     }
@@ -1431,7 +1437,7 @@
                             textArea.innerHTML = '';
                             
                             this.addText("Save file loaded successfully!\n\n");
-                            this.describeRoom();
+                            await this.describeRoom();
                         } catch (error) {
                             this.addText("Error loading save file. Please check the file and try again.\n");
                             console.error(error);
