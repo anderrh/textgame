@@ -797,22 +797,32 @@
             }
 
             async init() {
-                // Add click listener for first interaction to start music
-                const startAudioOnInteraction = () => {
+                // Single handler for all interaction types to prevent duplicates
+                const startAudioOnInteraction = (e) => {
+                    // Remove all listeners at once to prevent multiple triggers
+                    ['click', 'touchstart', 'keydown'].forEach(eventType => {
+                        document.removeEventListener(eventType, startAudioOnInteraction);
+                    });
+                    
                     if (!this.musicStarted) {
                         this.musicStarted = true;
                         // If we have pending music, play it
                         if (this.pendingMusic) {
-                            this.startNewMusic(this.pendingMusic);
-                            this.pendingMusic = null; // Clear it after starting
+                            const musicToPlay = this.pendingMusic;
+                            this.pendingMusic = null; // Clear BEFORE playing
+                            this.startNewMusic(musicToPlay);
                         }
                     }
                 };
                 
-                // Add multiple event types to catch first interaction
+                // Add the same handler to multiple events
                 ['click', 'touchstart', 'keydown'].forEach(eventType => {
-                    document.addEventListener(eventType, startAudioOnInteraction, { once: true });
+                    document.addEventListener(eventType, startAudioOnInteraction);
                 });
+
+                // Initialize queue for music changes
+                this.nextMusic = null;
+                this.isFading = false;
 
                 // Try to load world data
                 await this.loadWorldData();
@@ -1159,46 +1169,80 @@
             }
 
             async playMusic(filename) {
-                // Always update pendingMusic to the latest requested track
-                this.pendingMusic = filename;
-                
-                // If music hasn't started yet, just store and wait for user interaction
+                // Store as pending if music hasn't started
                 if (!this.musicStarted) {
+                    this.pendingMusic = filename;
                     return;
                 }
                 
-                // Music has started, play immediately
                 const audio = document.getElementById('bgMusic');
                 
-                // Clear any existing fade intervals
+                // If we're already playing this exact file, do nothing
+                if (audio && audio.src && audio.src.includes(filename) && !audio.paused && audio.volume > 0) {
+                    return; // Already playing this track at normal volume
+                }
+                
+                // Store the next music to play
+                this.nextMusic = filename;
+                
+                // If we're already fading, the fade will pick up the new nextMusic
+                if (this.isFading) {
+                    return;
+                }
+                
+                // Clear any existing fade intervals (cleanup)
                 if (this.fadeInterval) {
                     clearInterval(this.fadeInterval);
                     this.fadeInterval = null;
                 }
                 
-                // Fade out current music if playing
-                if (audio && audio.volume > 0 && !audio.paused) {
+                // Start fade out if something is playing
+                if (audio && !audio.paused && audio.volume > 0) {
+                    this.isFading = true;
                     let fadeVolume = audio.volume;
-                    const fadeOut = setInterval(() => {
+                    
+                    this.fadeInterval = setInterval(() => {
                         fadeVolume -= 0.1;
                         if (fadeVolume <= 0) {
                             audio.volume = 0;
                             audio.pause();
-                            clearInterval(fadeOut);
-                            // Now start new music
-                            this.startNewMusic(filename);
+                            clearInterval(this.fadeInterval);
+                            this.fadeInterval = null;
+                            this.isFading = false;
+                            
+                            // Play the most recently requested music
+                            if (this.nextMusic) {
+                                const musicToPlay = this.nextMusic;
+                                this.nextMusic = null;
+                                this.startNewMusic(musicToPlay);
+                            }
                         } else {
                             audio.volume = fadeVolume;
                         }
                     }, 50);
                 } else {
-                    // No music playing, start immediately
+                    // Nothing playing, start immediately
+                    this.nextMusic = null;
                     this.startNewMusic(filename);
                 }
             }
 
             startNewMusic(filename) {
                 const audio = document.getElementById('bgMusic');
+                
+                // Don't restart if it's the same file already playing
+                if (audio.src && audio.src.includes(filename) && !audio.paused) {
+                    // Just make sure it's at full volume
+                    audio.volume = 1;
+                    return;
+                }
+                
+                // Clear any lingering intervals
+                if (this.fadeInterval) {
+                    clearInterval(this.fadeInterval);
+                    this.fadeInterval = null;
+                }
+                
                 audio.src = filename;
                 audio.volume = 0;
                 
@@ -1215,20 +1259,12 @@
                             audio.volume = fadeVolume;
                         }
                     }, 50);
-                }).catch(() => {
+                }).catch((err) => {
                     // Audio couldn't play (likely autoplay policy)
+                    console.log('Audio play failed:', err);
                 });
                 
                 this.currentAudio = audio;
-            }
-
-            // Add method to check and start pending music after user interaction
-            checkAndStartPendingMusic() {
-                if (this.musicStarted && this.pendingMusic) {
-                    const temp = this.pendingMusic;
-                    this.pendingMusic = null; // Clear before playing to avoid loops
-                    this.startNewMusic(temp);
-                }
             }
 
             async loadImage(filename) {
@@ -1272,9 +1308,6 @@
                 // Start music setup immediately
                 const musicName = `audio/${this.currentRoom}a.m4a`;
                 this.playMusic(musicName);
-                
-                // Check if we should start music now (in case user clicked during page load)
-                this.checkAndStartPendingMusic();
 
                 // Build and show description text IMMEDIATELY
                 let text = '';
@@ -1427,11 +1460,14 @@
                         const textArea = document.getElementById('textArea');
                         textArea.innerHTML = '';
                         
+                        // Clear the text queue to prevent text buildup during rapid movement
+                        this.textQueue = [];
+                        this.isTyping = false;
+                        
                         // Add traversal text
                         this.addText(exit.traversal + '\n\n');
                         
                         // Small delay before room description for readability
-                        // Note: describeRoom is no longer blocking on images
                         setTimeout(() => this.describeRoom(), 100);
                         return;
                     }
