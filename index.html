@@ -702,7 +702,7 @@
     
     <!-- Password Dialog -->
     <div id="passwordDialog">
-        <h2>🔒 Game Data Encrypted</h2>
+        <h2>🔐 Game Data Encrypted</h2>
         <input type="password" id="passwordInput" placeholder="Enter password" autocomplete="off">
         <button id="passwordSubmit" onclick="game.submitPassword()">Decrypt & Start Game</button>
         <div id="passwordError">Incorrect password. Please try again.</div>
@@ -739,18 +739,12 @@
 
             static async decrypt(encryptedData, password) {
                 try {
-                    //console.log('Decrypting data of length:', encryptedData.length);
-                    //console.log('First 32 bytes (hex):', Array.from(encryptedData.slice(0, 32)).map(b => b.toString(16).padStart(2, '0')).join(' '));
-                    
                     // Extract salt (first 16 bytes)
                     const salt = encryptedData.slice(0, 16);
                     // Extract IV (next 16 bytes)
                     const iv = encryptedData.slice(16, 32);
                     // Rest is the encrypted content
                     const encrypted = encryptedData.slice(32);
-                    
-                    //console.log('Salt (hex):', Array.from(salt).map(b => b.toString(16).padStart(2, '0')).join(''));
-                    //console.log('IV (hex):', Array.from(iv).map(b => b.toString(16).padStart(2, '0')).join(''));
                     
                     const key = await this.deriveKey(password, salt);
                     
@@ -801,6 +795,7 @@
                 this.encryptedData = null; // Store encrypted data if found
                 this.init();
             }
+
             async init() {
                 // Add click listener for first interaction to start music
                 const startAudioOnInteraction = () => {
@@ -813,10 +808,10 @@
                         }
                     }
                 };
-    
+                
                 // Add multiple event types to catch first interaction
                 ['click', 'touchstart', 'keydown'].forEach(eventType => {
-                document.addEventListener(eventType, startAudioOnInteraction, { once: true });
+                    document.addEventListener(eventType, startAudioOnInteraction, { once: true });
                 });
 
                 // Try to load world data
@@ -826,7 +821,7 @@
             async loadWorldData() {
                 try {
                     // Try the provided filename first
-                    const response = await fetch('world_hando_encrypted.bin');
+                    const response = await fetch('world_hando_expanded.json');
                     
                     // ALWAYS fetch as binary first to avoid corrupting encrypted data
                     const buffer = await response.arrayBuffer();
@@ -1164,12 +1159,15 @@
             }
 
             async playMusic(filename) {
+                // Always update pendingMusic to the latest requested track
                 this.pendingMusic = filename;
-                // Store the music to play if we haven't started yet
+                
+                // If music hasn't started yet, just store and wait for user interaction
                 if (!this.musicStarted) {
                     return;
                 }
                 
+                // Music has started, play immediately
                 const audio = document.getElementById('bgMusic');
                 
                 // Clear any existing fade intervals
@@ -1224,23 +1222,29 @@
                 this.currentAudio = audio;
             }
 
+            // Add method to check and start pending music after user interaction
+            checkAndStartPendingMusic() {
+                if (this.musicStarted && this.pendingMusic) {
+                    const temp = this.pendingMusic;
+                    this.pendingMusic = null; // Clear before playing to avoid loops
+                    this.startNewMusic(temp);
+                }
+            }
+
             async loadImage(filename) {
                 const img = document.getElementById('roomImage');
                 
-                // Create a promise that resolves when image loads
+                // Return a promise but DON'T await it in describeRoom
                 return new Promise((resolve) => {
-                    // Preload the image first
                     const preloader = new Image();
                     preloader.onload = () => {
-                        // Once preloaded, set it to the actual img element
                         img.src = filename;
                         resolve();
                     };
                     preloader.onerror = () => {
-                        img.src = ''; // Clear if image not found
+                        img.src = ''; 
                         resolve();
                     };
-                    // Start loading with high priority
                     preloader.src = filename;
                 });
             }
@@ -1256,34 +1260,28 @@
                 }
                 return activeDescriptions;
             }
-            checkAndStartPendingMusic() {
-                if (this.musicStarted && this.pendingMusic) {
-                    const temp = this.pendingMusic;
-                    this.pendingMusic = null; // Clear before playing to avoid loops
-                    this.startNewMusic(temp);
-                }
-            }
-                
+
             async describeRoom() {
                 const room = this.getRoomById(this.currentRoom);
                 if (!room) return;
 
-                // Load image FIRST and wait for it to complete
+                // Start loading image but DON'T wait for it
                 const imageName = `images/${this.currentRoom}a.png`;
-                await this.loadImage(imageName);
-    
-                // Only after image is loaded, start music
+                const imagePromise = this.loadImage(imageName);  // Note: no await here!
+                
+                // Start music setup immediately
                 const musicName = `audio/${this.currentRoom}a.m4a`;
                 this.playMusic(musicName);
-    
-                // Check if we should start music now (in case user clicked during image load)
+                
+                // Check if we should start music now (in case user clicked during page load)
                 this.checkAndStartPendingMusic();
 
-                // Now build and show description text
+                // Build and show description text IMMEDIATELY
                 let text = '';
                 if (!this.musicStarted) {
                     text += '[Click anywhere to start audio]\n\n';
                 }
+                
                 // Format room title with full first word underlined
                 const roomName = room.name;
                 const firstSpaceIndex = roomName.indexOf(' ');
@@ -1330,8 +1328,17 @@
                     text += '\n';
                 }
 
+                // Start showing text immediately
                 this.addText(text);
                 this.updateChips();
+                
+                // Optional: You can still wait for the image in the background if you want
+                // to do something when it finishes (like log it), but it won't block anything
+                imagePromise.then(() => {
+                    console.log('Image loaded for room:', this.currentRoom);
+                }).catch(err => {
+                    console.log('Image failed to load:', err);
+                });
             }
 
             addText(text) {
@@ -1353,8 +1360,6 @@
                 this.isTyping = true;
                 const text = this.textQueue.shift();
                 const textArea = document.getElementById('textArea');
-                
-                // No need for image loading delays anymore - images are already loaded
                 
                 // Type out character by character
                 let index = 0;
@@ -1409,7 +1414,6 @@
                 if (!room) return;
 
                 if (!(direction in room.exits)) {
-                    // This shouldn't happen with chip system, but keep as safety
                     return;
                 }
 
@@ -1427,13 +1431,13 @@
                         this.addText(exit.traversal + '\n\n');
                         
                         // Small delay before room description for readability
-                        // describeRoom is now async and will load image before text
+                        // Note: describeRoom is no longer blocking on images
                         setTimeout(() => this.describeRoom(), 100);
                         return;
                     }
                 }
 
-                // If we get here, we're blocked (still show blocked text as it's narrative)
+                // If we get here, we're blocked
                 this.addText(exits[exits.length - 1].blocked_text + '\n');
             }
 
@@ -1471,7 +1475,6 @@
                     
                     this.updateChips();
                 }
-                // Removed error message - chips prevent picking up non-existent items
             }
 
             increaseSpeed() {
@@ -1622,7 +1625,6 @@
                         }
                     }
                 }
-                // Removed error message - chips only show craftable items
                 
                 this.updateChips();
                 this.updateInventoryDisplay();
