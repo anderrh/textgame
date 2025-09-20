@@ -793,6 +793,9 @@
                 this.sessionLog = []; // Track all text shown to user
                 this.textSpeed = 2; // Characters per chunk (1-8)
                 this.encryptedData = null; // Store encrypted data if found
+                this.typingTimeout = null; // Store timeout reference for cancellation
+                this.currentTypingText = ''; // Track current text being typed
+                this.currentTextIndex = 0; // Track position in current text
                 this.init();
             }
 
@@ -1374,6 +1377,39 @@
                 });
             }
 
+            // Instantly complete any typing and flush all queued text
+            flushText() {
+                // Cancel any current typing timeout
+                if (this.typingTimeout) {
+                    clearTimeout(this.typingTimeout);
+                    this.typingTimeout = null;
+                }
+                
+                // If currently typing, finish the current text instantly
+                if (this.isTyping && this.currentTypingText) {
+                    const textArea = document.getElementById('textArea');
+                    // Add any remaining part of current text
+                    const remainingText = this.currentTypingText.substring(this.currentTextIndex || 0);
+                    textArea.innerHTML += remainingText;
+                }
+                
+                // Flush all queued text instantly
+                while (this.textQueue.length > 0) {
+                    const text = this.textQueue.shift();
+                    const textArea = document.getElementById('textArea');
+                    textArea.innerHTML += text;
+                }
+                
+                // Reset typing state
+                this.isTyping = false;
+                this.currentTypingText = '';
+                this.currentTextIndex = 0;
+                
+                // Scroll to bottom
+                const textArea = document.getElementById('textArea');
+                textArea.scrollTop = textArea.scrollHeight;
+            }
+
             addText(text) {
                 this.textQueue.push(text);
                 // Add to session log (strip HTML tags for cleaner log)
@@ -1387,15 +1423,19 @@
             async typeText() {
                 if (this.textQueue.length === 0) {
                     this.isTyping = false;
+                    this.currentTypingText = '';
+                    this.currentTextIndex = 0;
                     return;
                 }
 
                 this.isTyping = true;
                 const text = this.textQueue.shift();
+                this.currentTypingText = text; // Track what we're typing
                 const textArea = document.getElementById('textArea');
                 
                 // Type out character by character
                 let index = 0;
+                this.currentTextIndex = 0; // Track where we are in case we need to flush
                 const typingSpeed = 10; // Delay between character chunks
                 const charsPerChunk = this.textSpeed; // Use the adjustable speed
                 
@@ -1425,16 +1465,20 @@
                             }
                         }
                         
+                        this.currentTextIndex = index; // Update position
                         textArea.innerHTML += chunkText;
                         
                         // Always scroll to bottom to keep new text visible
                         textArea.scrollTop = textArea.scrollHeight;
                         
-                        setTimeout(typeChar, typingSpeed);
+                        this.typingTimeout = setTimeout(typeChar, typingSpeed);
                     } else {
                         // Final scroll to ensure everything is visible
                         textArea.scrollTop = textArea.scrollHeight;
                         this.isTyping = false;
+                        this.currentTypingText = '';
+                        this.currentTextIndex = 0;
+                        this.typingTimeout = null;
                         this.typeText();
                     }
                 };
@@ -1456,13 +1500,12 @@
                     if (this.hasRequires(exit.requires)) {
                         this.currentRoom = exit.to;
                         
+                        // Flush any pending text instantly before clearing
+                        this.flushText();
+                        
                         // Clear text area BEFORE adding traversal text
                         const textArea = document.getElementById('textArea');
                         textArea.innerHTML = '';
-                        
-                        // Clear the text queue to prevent text buildup during rapid movement
-                        this.textQueue = [];
-                        this.isTyping = false;
                         
                         // Add traversal text
                         this.addText(exit.traversal + '\n\n');
@@ -1746,6 +1789,9 @@
                             this.world = saveData;
                             this.currentRoom = saveData.meta.spawn_points[0];
                             this.inventory = [...saveData.meta.starter_inventory];
+                            
+                            // Flush any pending text before clearing
+                            this.flushText();
                             
                             // Clear and redraw everything
                             const textArea = document.getElementById('textArea');
