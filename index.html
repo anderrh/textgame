@@ -801,15 +801,23 @@
                 this.encryptedData = null; // Store encrypted data if found
                 this.init();
             }
-
             async init() {
                 // Add click listener for first interaction to start music
-                document.addEventListener('click', () => {
-                    if (!this.musicStarted && this.pendingMusic) {
+                const startAudioOnInteraction = () => {
+                    if (!this.musicStarted) {
                         this.musicStarted = true;
-                        this.startNewMusic(this.pendingMusic);
+                        // If we have pending music, play it
+                        if (this.pendingMusic) {
+                            this.startNewMusic(this.pendingMusic);
+                            this.pendingMusic = null; // Clear it after starting
+                        }
                     }
-                }, { once: true });
+                };
+    
+                // Add multiple event types to catch first interaction
+                ['click', 'touchstart', 'keydown'].forEach(eventType => {
+                document.addEventListener(eventType, startAudioOnInteraction, { once: true });
+                });
 
                 // Try to load world data
                 await this.loadWorldData();
@@ -1156,9 +1164,9 @@
             }
 
             async playMusic(filename) {
+                this.pendingMusic = filename;
                 // Store the music to play if we haven't started yet
                 if (!this.musicStarted) {
-                    this.pendingMusic = filename;
                     return;
                 }
                 
@@ -1248,7 +1256,14 @@
                 }
                 return activeDescriptions;
             }
-
+            checkAndStartPendingMusic() {
+                if (this.musicStarted && this.pendingMusic) {
+                    const temp = this.pendingMusic;
+                    this.pendingMusic = null; // Clear before playing to avoid loops
+                    this.startNewMusic(temp);
+                }
+            }
+                
             async describeRoom() {
                 const room = this.getRoomById(this.currentRoom);
                 if (!room) return;
@@ -1256,17 +1271,19 @@
                 // Load image FIRST and wait for it to complete
                 const imageName = `images/${this.currentRoom}a.png`;
                 await this.loadImage(imageName);
-                
+    
                 // Only after image is loaded, start music
                 const musicName = `audio/${this.currentRoom}a.m4a`;
                 this.playMusic(musicName);
+    
+                // Check if we should start music now (in case user clicked during image load)
+                this.checkAndStartPendingMusic();
 
                 // Now build and show description text
                 let text = '';
                 if (!this.musicStarted) {
                     text += '[Click anywhere to start audio]\n\n';
                 }
-                
                 // Format room title with full first word underlined
                 const roomName = room.name;
                 const firstSpaceIndex = roomName.indexOf(' ');
